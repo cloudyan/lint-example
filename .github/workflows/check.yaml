@@ -1,0 +1,67 @@
+name: CI
+
+env:
+  # 7 GiB by default on GitHub, setting to 6 GiB
+  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+  NODE_OPTIONS: --max-old-space-size=6144
+
+on:
+  push:
+    branches:
+      - main
+      - release/*
+      - feat/*
+      - fix/*
+      - perf/*
+      - dev
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    name: 'Lint: node-16, ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm # npm, yarn or pnpm
+
+      - name: Env
+        run: node -v && npm -v
+
+      - name: Install
+        run: npm ci --prefer-offline # npm ci or yarn
+
+      # https://stackoverflow.com/questions/67307001/how-to-run-commitlint-in-github-workflow-on-every-commit-of-a-push
+      # https://github.com/marketplace/actions/commit-linter
+      - name: commitlint
+        uses: wagoid/commitlint-github-action@v4
+        # pull_request
+        # run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+      # https://github.com/marketplace/actions/lint-action
+      # 需要结合 lint-staged 做 lint
+      - name: Check formatting
+        run: npm run prettier -- --check
+
+      # - name: Eslint
+      #   run: npm run eslint -- --max-warnings 0
+
+      - name: Test
+        run: npm test
