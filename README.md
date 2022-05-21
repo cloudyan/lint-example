@@ -15,6 +15,18 @@ lint example
 7. stylelint
 8. editorconfig
 
+### .npmrc && .nvmrc
+
+```bash
+node -v > .nvmrc
+```
+
+```ini
+engine-strict=true
+package-lock=true
+registry=https://registry.npmjs.org/
+```
+
 ### prettier
 
 usage
