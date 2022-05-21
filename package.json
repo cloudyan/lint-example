@@ -15,14 +15,15 @@
   "author": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky install",
-    "eslint": "eslint .",
-    "prettier": "prettier .",
-    "format": "npm run prettier -- --write",
     "alex": "alex .",
+    "eslint": "eslint .",
+    "format": "npm run prettier -- --write",
+    "prepare": "husky install",
+    "prettier": "prettier .",
     "sort": "npx sort-package-json",
     "test": "echo 'test success'",
-    "test:fail": "echo \"Error: no test specified\" && exit 1"
+    "test:fail": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc -p ."
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
@@ -36,6 +37,7 @@
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
+    "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },
   "engines": {

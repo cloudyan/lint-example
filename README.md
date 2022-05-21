@@ -2,6 +2,10 @@
 
 lint example
 
+- 项目中如何接入
+- IDE 编辑器如何接入
+- CI 流程如何接入
+
 ## lint 列表
 
 接入步骤
@@ -12,8 +16,9 @@ lint example
 4. lint-staged
 5. commitlint
 6. editorconfig
-7. eslint
-8. stylelint
+7. typecheck
+8. eslint
+9. stylelint
 
 ### .npmrc && .nvmrc
 
@@ -103,11 +108,11 @@ package.json
 
 ```json
 "lint-staged": {
+  "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
+    "prettier --write"
+  ],
   "*.ts?(x)": [
     "prettier --parser=typescript --write --ignore-unknown"
-  ],
-  "*": [
-    "prettier --write --ignore-unknown"
   ],
 }
 ```
@@ -161,7 +166,7 @@ module.exports = {
       ],
     ],
   },
-}
+};
 ```
 
 测试
@@ -210,6 +215,15 @@ quote_type = single
 
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
+### typecheck
+
+```json
+{
+  "test:typecheck": "tsc -p .",
+  "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit"
+}
+```
+
 ## 源代码
 
 src 包含各类型的源代码, 用于测试验证，包括但不限于以下类型
@@ -228,3 +242,5 @@ src 包含各类型的源代码, 用于测试验证，包括但不限于以下�
 - ejs,html
 - vue
 - react
+
+关于 yaml 文件扩展名, [官方](https://yaml.org/faq.html) 官方推荐我们使用 `.yaml`。

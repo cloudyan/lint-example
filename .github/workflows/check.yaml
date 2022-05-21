@@ -1,26 +1,35 @@
-name: Check
+name: CI
+
+env:
+  # 7 GiB by default on GitHub, setting to 6 GiB
+  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+  NODE_OPTIONS: --max-old-space-size=6144
 
 on:
-  pull_request:
-    # Run on to branches with an open PR
-    branches:
-      - '*'
-    paths-ignore:
-      - '**.md'
   push:
     branches:
       - main
-      - feature/*
+      - release/*
+      - feat/*
+      - fix/*
+      - perf/*
       - dev
-    # Do not run on tags
-    # tags-ignore:
-    #   - "*"
     paths-ignore:
       - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: true
 
 jobs:
-  check:
+  lint:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
+    name: 'Lint: node-16, ubuntu-latest'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -48,8 +57,8 @@ jobs:
 
       # https://github.com/marketplace/actions/lint-action
       # 需要结合 lint-staged 做 lint
-      - name: Prettier
-        run: npm run prettier -- --list-different
+      - name: Check formatting
+        run: npm run prettier -- --check
 
       # - name: Eslint
       #   run: npm run eslint -- --max-warnings 0
