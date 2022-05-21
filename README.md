@@ -169,7 +169,7 @@ module.exports = {
 ```bash
 npx commitlint --from HEAD~1 --to HEAD --verbose
 
-echo 'foo: xxx' | commitlint
+echo 'foo: xxx' | npx commitlint --verbose
 ```
 
 TODO
