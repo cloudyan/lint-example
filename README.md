@@ -61,6 +61,22 @@ pnpm dlx husky-init && pnpm install # pnpm
 npx auto-husky
 ```
 
+config
+
+```bash
+# usage 启用 Git 挂钩
+npm set-script prepare "husky install"
+npm run prepare
+
+# Add a hook:
+npx husky add .husky/pre-commit "npm test"
+npx husky add .husky/pre-commit "npm run lint-staged"
+npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"'
+
+# husky uninstall
+npm uninstall husky && git config --unset core.hooksPath
+```
+
 ## 源代码
 
 src 包含各类型的源代码, 用于测试验证，包括但不限于以下类型
