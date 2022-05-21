@@ -89,6 +89,27 @@ npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"'
 npm uninstall husky && git config --unset core.hooksPath
 ```
 
+### lint-staged
+
+config
+
+```bash
+npx husky add .husky/pre-commit "npx --no-install lint-staged"
+```
+
+package.json
+
+```json
+"lint-staged": {
+  "*.ts?(x)": [
+    "prettier --parser=typescript --write --ignore-unknown"
+  ],
+  "*": [
+    "prettier --write --ignore-unknown"
+  ],
+}
+```
+
 ## 源代码
 
 src 包含各类型的源代码, 用于测试验证，包括但不限于以下类型
