@@ -37,6 +37,8 @@ prettier --write '**/?(.)*.{md,css,scss,js,json,yaml,yml}' && git --no-pager dif
 
 config
 
+格式化当前目录所有内容时，必须结合 `.prettierignore` 使用
+
 ```json
 "scripts": {
   "prettier": "prettier -w .",
@@ -45,10 +47,6 @@ config
 ```
 
 ### husky
-
-
-
-
 
 ## 源代码
 
