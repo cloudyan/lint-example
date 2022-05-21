@@ -56,6 +56,8 @@ config
 }
 ```
 
+规则配置详见 [.prettierrc.js](.prettierrc.js)
+
 ### husky
 
 usage
@@ -83,7 +85,7 @@ npm run prepare
 # Add a hook:
 npx husky add .husky/pre-commit "npm test"
 npx husky add .husky/pre-commit "npm run lint-staged"
-npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"'
+npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"' # 这个执行有问题
 
 # husky uninstall
 npm uninstall husky && git config --unset core.hooksPath
@@ -108,6 +110,66 @@ package.json
     "prettier --write --ignore-unknown"
   ],
 }
+```
+
+### commitlint
+
+usage
+
+```bash
+npm install @commitlint/cli @commitlint/config-conventional -D
+```
+
+config
+
+```bash
+# Add hook
+cat <<EEE > .husky/commit-msg
+#!/bin/sh
+. "\$(dirname "\$0")/_/husky.sh"
+
+npx --no -- commitlint --edit "\${1}"
+EEE
+
+
+# Make hook executable
+chmod a+x .husky/commit-msg
+```
+
+规则配置文件
+
+```js
+// commitlint.config.js
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'header-max-length': [1, 'always', 100],
+    // prettier-ignore
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat',
+        'fix',
+        'enhance',
+        'chore',
+        'test',
+        'doc',
+        'refactor',
+        'style',
+        'revert',
+      ],
+    ],
+  },
+}
+```
+
+测试
+
+```bash
+npx commitlint --from HEAD~1 --to HEAD --verbose
+
+echo 'foo: xxx' | commitlint
 ```
 
 ## 源代码
