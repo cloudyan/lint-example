@@ -17,13 +17,11 @@ lint example
 
 ### prettier
 
-install
-
-`npm i prettier lint-staged -D`
-
-command
+usage
 
 ```bash
+npm i prettier lint-staged -D
+
 prettier -w .                 # --write
 prettier -w -u "src/**/*.js"  # --ignore-unknown
 prettier -w 'src/**/*.{js,ts,jsx,tsx,json,md,css,less,scss,html,yaml,yml}'
@@ -47,6 +45,21 @@ config
 ```
 
 ### husky
+
+usage
+
+```bash
+# 自动安装（推荐）
+# https://typicode.github.io/husky/#/?id=automatic-recommended
+npx husky-init && npm install       # npm
+npx husky-init && yarn              # Yarn 1
+yarn dlx husky-init --yarn2 && yarn # Yarn 2+
+pnpm dlx husky-init && pnpm install # pnpm
+
+或使用
+
+npx auto-husky
+```
 
 ## 源代码
 

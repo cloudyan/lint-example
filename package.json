@@ -18,11 +18,14 @@
     "prettier": "prettier -w .",
     "prettier:ci": "prettier -c .",
     "sort": "npx sort-package-json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 'test success'",
+    "test:fail": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "lint-staged": "^12.4.1",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "husky": "^7.0.0"
   },
   "engines": {
     "node": "16",
