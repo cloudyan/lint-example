@@ -19,6 +19,7 @@ lint example
 7. typecheck
 8. eslint
 9. stylelint
+10. conventional-changelog
 
 ### .npmrc && .nvmrc
 
