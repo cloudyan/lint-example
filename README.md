@@ -11,9 +11,9 @@ lint example
 3. husky
 4. lint-staged
 5. commitlint
-6. eslint
-7. stylelint
-8. editorconfig
+6. editorconfig
+7. eslint
+8. stylelint
 
 ### .npmrc && .nvmrc
 
@@ -171,6 +171,44 @@ npx commitlint --from HEAD~1 --to HEAD --verbose
 
 echo 'foo: xxx' | commitlint
 ```
+
+TODO
+
+- 这个如果错误能给中文提示吗？
+- 交互式方案
+
+### editorconfig
+
+为什么要加
+
+> .editorconfig 是可移植自定义编辑器设置。
+> 实现跨平台、编辑器和 IDE 统一编程风格, 提高代码阅读质量。
+
+即使团队统一编程风格、编辑器，仍不能保证历史遗留代码、第三方开源库等风格一致，还可能存在编码问题，非 utf-8 等
+
+> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
+
+config
+
+```ini
+# .editorconfig
+# https://editorconfig.org/
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{js,ts}]
+quote_type = single
+```
+
+在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
 ## 源代码
 
