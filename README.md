@@ -36,7 +36,7 @@ npm i prettier lint-staged -D
 
 prettier -w .                 # --write
 prettier -w -u "src/**/*.js"  # --ignore-unknown
-prettier -w 'src/**/*.{js,ts,jsx,tsx,json,md,css,less,scss,html,yaml,yml}'
+prettier -w 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}'
 
 prettier -c "src/**/*.js"     # --check
 prettier -l "src/**/*.js"     # --list-different

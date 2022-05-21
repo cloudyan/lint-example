@@ -2,6 +2,9 @@ name: Check
 
 on:
   pull_request:
+    # Run on to branches with an open PR
+    branches:
+      - '*'
     paths-ignore:
       - '**.md'
   push:
@@ -9,6 +12,9 @@ on:
       - main
       - feature/*
       - dev
+    # Do not run on tags
+    # tags-ignore:
+    #   - "*"
     paths-ignore:
       - '**.md'
 
@@ -30,8 +36,8 @@ jobs:
       - name: Env
         run: node -v && npm -v
 
-      - name: Install dependencies
-        run: npm ci # npm ci or yarn
+      - name: Install
+        run: npm ci --prefer-offline # npm ci or yarn
 
       # https://stackoverflow.com/questions/67307001/how-to-run-commitlint-in-github-workflow-on-every-commit-of-a-push
       # https://github.com/marketplace/actions/commit-linter
@@ -40,8 +46,13 @@ jobs:
         # pull_request
         # run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-      - name: Prettier format
-        run: npm run prettier:ci
+      # https://github.com/marketplace/actions/lint-action
+      # 需要结合 lint-staged 做 lint
+      - name: Prettier
+        run: npm run prettier -- --list-different
+
+      # - name: Eslint
+      #   run: npm run eslint -- --max-warnings 0
 
       - name: Test
         run: npm test

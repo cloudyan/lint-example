@@ -16,23 +16,23 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "prettier": "prettier -w .",
-    "prettier:ci": "prettier -c .",
+    "eslint": "eslint .",
+    "prettier": "prettier .",
+    "format": "npm run prettier -- --write",
+    "alex": "alex .",
     "sort": "npx sort-package-json",
     "test": "echo 'test success'",
     "test:fail": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write --ignore-unknown"
-    ],
-    "*": [
-      "prettier --write --ignore-unknown"
+    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
+    "alex": "^10.0.0",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
