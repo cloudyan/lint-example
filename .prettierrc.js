@@ -23,14 +23,16 @@ module.exports = {
       },
     },
     {
-      files: ['*.json5'],
+      files: '*.{json,json5}',
       options: {
+        semi: false,
         singleQuote: false,
         quoteProps: 'preserve',
+        trailingComma: 'none',
       },
     },
     {
-      files: ['*.yml'],
+      files: '*.{yaml,yml}',
       options: {
         singleQuote: false,
       },

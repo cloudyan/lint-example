@@ -156,8 +156,6 @@ module.exports = {
       'error',
       {
         code: 120,
-        ignoreUrls: true,
-        ignorePattern: true,
       },
     ],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

@@ -17,8 +17,8 @@
   "scripts": {
     "alex": "alex .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "eslint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue",
-    "eslint:fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx,.vue",
+    "eslint": "eslint .",
+    "eslint:fix": "eslint --fix .",
     "format": "npm run prettier -- --write",
     "prepare": "husky install",
     "prettier": "prettier .",
@@ -29,8 +29,9 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,md,html}": [
-      "prettier --write"
+    "*.{js,jsx,ts,tsx,vue,yml,yaml,css,less,scss,md,html}": [
+      "prettier --write",
+      "npm run eslint:fix"
     ]
   },
   "browserslist": {
