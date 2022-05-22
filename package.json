@@ -27,7 +27,7 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
+    "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,md,html}": [
       "prettier --write"
     ]
   },
