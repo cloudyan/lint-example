@@ -235,6 +235,26 @@ quote_type = single
 }
 ```
 
+### eslint
+
+### stylelint
+
+### conventional-changelog
+
+usage
+
+```bash
+npm i conventional-changelog-cli -D
+```
+
+config
+
+```json
+"scripts": {
+  "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+}
+```
+
 ## 源代码
 
 src 包含各类型的源代码, 用于测试验证，包括但不限于以下类型
