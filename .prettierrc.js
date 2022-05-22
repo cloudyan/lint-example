@@ -3,7 +3,7 @@
 // 文档 https://prettier.io/docs/en/options.html
 module.exports = {
   printWidth: 120, // default 80
-  // semi: false, // default true
+  semi: false, // default true
   singleQuote: true, // default false
   tabWidth: 2, // default 2
   trailingComma: 'all', // default es5
@@ -23,17 +23,19 @@ module.exports = {
       },
     },
     {
-      files: ['*.json5'],
+      files: '*.{json,json5}',
       options: {
+        semi: false,
         singleQuote: false,
         quoteProps: 'preserve',
+        trailingComma: 'none',
       },
     },
     {
-      files: ['*.yml'],
+      files: '*.{yaml,yml}',
       options: {
         singleQuote: false,
       },
     },
   ],
-};
+}

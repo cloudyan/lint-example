@@ -1,6 +1,6 @@
 {
   "name": "lint-example",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "lint example",
   "keywords": [],
   "homepage": "https://github.com/cloudyan/lint-example#readme",
@@ -16,27 +16,56 @@
   "main": "index.js",
   "scripts": {
     "alex": "alex .",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "eslint": "eslint .",
+    "eslint:fix": "eslint --fix .",
     "format": "npm run prettier -- --write",
     "prepare": "husky install",
     "prettier": "prettier .",
     "sort": "npx sort-package-json",
     "test": "echo 'test success'",
     "test:fail": "echo \"Error: no test specified\" && exit 1",
+    "test:staged": "jest --bail --findRelatedTests",
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
-      "prettier --write"
+    "*.{js,jsx,ts,tsx,vue,yml,yaml,css,less,scss,html}": [
+      "prettier --write",
+      "npm run eslint:fix"
     ]
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "react": "^17.0.2"
+  },
   "devDependencies": {
+    "@babel/core": "^7.18.0",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.18.0",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "alex": "^10.0.0",
+    "conventional-changelog-cli": "^2.2.2",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-markdown": "^2.2.1",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
+    "prettier-eslint": "^15.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },
