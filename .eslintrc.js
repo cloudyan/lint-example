@@ -112,6 +112,7 @@ module.exports = {
     polyfills: ['fetch', 'Promise', 'URL', 'object-assign'],
   },
   rules: {
+    'prettier/prettier': 'error',
     // ...(isTsProject ? tsEslintConfig : {}),
     // ...jsEslintConfig,
 

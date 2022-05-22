@@ -260,7 +260,7 @@ npm i -D eslint-config-prettier
 npm i -D eslint-plugin-import
 
 # error  Parsing error: No Babel config file detected for xxx.js. Either disable config file checking with requireConfigFile: false, or configure Babel so that it can find the config files
-# 缺少 babel 配置, 添加 babel.config.js 后 OK
+# 报错: 缺少 babel 配置, 添加 babel.config.js 后 OK
 
 # airbnb
 npm i -D eslint-config-airbnb-base
