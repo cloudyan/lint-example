@@ -62,7 +62,7 @@ jobs:
         run: echo ${{ toJSON(steps.run_commitlint.outputs.results) }}
 
       # https://github.com/marketplace/actions/lint-action
-      # 需要结合 lint-staged 做 lint
+      # 需要结合 lint-staged 做 lint, 检查区间
       - name: Check formatting
         run: npm run prettier -- --check
 
