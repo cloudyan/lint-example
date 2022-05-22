@@ -2,13 +2,13 @@ const isTsProject = false
 
 module.exports = {
   root: true,
-  // requireConfigFile: false,
   // project: './tsconfig.json',
 
   parser: isTsProject ? '@typescript-eslint/parser' : '@babel/eslint-parser',
 
   // parser: 'vue-eslint-parser',
   parserOptions: {
+    requireConfigFile: false,
     // parser: 'babel-eslint',
     // parser: {
     //   // Script parser for `<script>`
@@ -41,18 +41,18 @@ module.exports = {
   },
 
   extends: [
-    // 'eslint-config-airbnb-base',
-    'prettier',
+    'eslint-config-airbnb-base',
+    // 'prettier',
     // 'prettier/react', // has been merged into "prettier" in eslint-config-prettier 8.0.0
-  ]
-    .concat
-    // isTsProject
-    //   ? [
-    //       // 'prettier/@typescript-eslint', // has been merged into "prettier" in eslint-config-prettier 8.0.0
-    //       'plugin:@typescript-eslint/recommended',
-    //     ]
-    //   : ['plugin:react/recommended'],
-    (),
+  ],
+  // .concat
+  // // isTsProject
+  // //   ? [
+  // //       // 'prettier/@typescript-eslint', // has been merged into "prettier" in eslint-config-prettier 8.0.0
+  // //       'plugin:@typescript-eslint/recommended',
+  // //     ]
+  // //   : ['plugin:react/recommended'],
+  // (),
   // plugins: [
   //   'eslint-comments',
   //   // 'import', // 暂不开启
@@ -97,22 +97,22 @@ module.exports = {
       },
     },
   ],
-  settings: {
-    // support import modules from TypeScript files in JavaScript files
-    'import/resolver': {
-      node: {
-        extensions: isTsProject ? ['.js', '.jsx', '.ts', '.tsx', '.d.ts'] : ['.js', '.jsx'],
-      },
-    },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx', '.d.ts'],
-    },
-    'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx', '.d.ts'],
-    'import/external-module-folders': ['node_modules', 'node_modules/@types'],
-    polyfills: ['fetch', 'Promise', 'URL', 'object-assign'],
-  },
+  // settings: {
+  //   // support import modules from TypeScript files in JavaScript files
+  //   'import/resolver': {
+  //     node: {
+  //       extensions: isTsProject ? ['.js', '.jsx', '.ts', '.tsx', '.d.ts'] : ['.js', '.jsx'],
+  //     },
+  //   },
+  //   'import/parsers': {
+  //     '@typescript-eslint/parser': ['.ts', '.tsx', '.d.ts'],
+  //   },
+  //   'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx', '.d.ts'],
+  //   'import/external-module-folders': ['node_modules', 'node_modules/@types'],
+  //   polyfills: ['fetch', 'Promise', 'URL', 'object-assign'],
+  // },
   rules: {
-    'prettier/prettier': 'error',
+    // 'prettier/prettier': 'error',
     // ...(isTsProject ? tsEslintConfig : {}),
     // ...jsEslintConfig,
 
@@ -141,6 +141,7 @@ module.exports = {
     // 'vue/require-default-prop': 'off',
     // // 'vue/no-unused-components': '1',
     // 'vue/singleline-html-element-content-newline': 'off',
+
     'comma-dangle': [
       'error',
       {

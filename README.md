@@ -255,15 +255,18 @@ quote_type = single
 ```bash
 # base
 npm i -D eslint @babel/eslint-parser
+npm i -D eslint-config-airbnb-base
+
 # prettier
-npm i -D eslint-config-prettier
+npm i -D eslint-config-prettier # X 关闭所有可能和 Prettier 冲突的 ESLint 规则，不推荐
+# 推荐使用 prettier-eslint prettier-stylelint
+npm i -D prettier-eslint prettier-stylelint
+
 npm i -D eslint-plugin-import
 
 # error  Parsing error: No Babel config file detected for xxx.js. Either disable config file checking with requireConfigFile: false, or configure Babel so that it can find the config files
 # 报错: 缺少 babel 配置, 添加 babel.config.js 后 OK
 
-# airbnb
-npm i -D eslint-config-airbnb-base
 # xo
 npm i -D eslint-formatter-pretty
 
@@ -304,7 +307,8 @@ npm i -D @babel/core @babel/preset-env
 接入 stylelint
 
 ```bash
-npm i -D stylelint stylelint-config-css-modules stylelint-config-prettier stylelint-config-rational-order stylelint-config-standard stylelint-declaration-block-no-ignored-properties stylelint-no-unsupported-browser-features stylelint-order
+npm i -D stylelint prettier-stylelint
+npm i -D stylelint-config-css-modules stylelint-config-prettier stylelint-config-rational-order stylelint-config-standard stylelint-declaration-block-no-ignored-properties stylelint-no-unsupported-browser-features stylelint-order
 
 # prettier
 npm i -D prettier-plugin-jsdoc prettier-plugin-style-order
@@ -388,7 +392,13 @@ ESlint 集成了 prettier 的校验规则，因此 VSCode 中不需要再单独�
 
 ## 常见问题
 
-### 解决 Prettier 和 ESLint 冲突
+### 解决冲突
+
+- EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
+- Prettier 作为**代码格式化**工具
+- 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做
+
+解决冲突，**关闭所有可能和 Prettier 冲突的 ESLint 规则**， 通过 `eslint-config-prettier` 包处理。将 `prettier` 加到 `extends` 数组的最后
 
 vscode 配置了在文件保存时进行格式化和 ESLint 自动修复：
 

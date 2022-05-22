@@ -44,6 +44,9 @@
       "last 1 safari version"
     ]
   },
+  "dependencies": {
+    "react": "^17.0.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.18.0",
     "@babel/eslint-parser": "^7.17.0",
@@ -53,12 +56,12 @@
     "alex": "^10.0.0",
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.16.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-formatter-pretty": "^4.1.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
+    "prettier-eslint": "^15.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },

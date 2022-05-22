@@ -1,9 +1,13 @@
 {
-  // "editor.formatOnSave": true, // 保存时自动格式化
+  "editor.formatOnSave": true, // 保存时自动格式化
   // "[javascript]": {
   //   "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
   // },
-  "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
+  // "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
   // "[javascript]": {
   //   "editor.formatOnSave": true
   // },
