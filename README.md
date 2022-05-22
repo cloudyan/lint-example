@@ -178,6 +178,16 @@ npx commitlint --from HEAD~1 --to HEAD --verbose
 echo 'foo: xxx' | npx commitlint --verbose
 ```
 
+Git 使用详细模式提交 `-v`，也称为 `--verbose`
+
+```bash
+# 使用此标志，Git 将在提交消息模板的底部包含更改的差异
+git commit --verbose
+
+# 将 Git 配置为始终使用详细模式
+git config --global commit.verbose true
+```
+
 TODO
 
 - 这个如果错误能给中文提示吗？
