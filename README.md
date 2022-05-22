@@ -401,7 +401,7 @@ vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修
 2. ESLint 插件也根据 `.eslintrc` 文件中的配置对代码进行美化和校验
    1. 当使用 `eslint-plugin-prettier` 插件时，会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
    2. 当.prettierrc 的配置和官方默认配置不一致的时候, 编辑器处理时就冲突了
-3. eslint-config-prettier 配置包可用于解决冲突，会**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
+3. eslint-config-prettier: 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
 
 怎么解决
 
