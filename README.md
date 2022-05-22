@@ -295,7 +295,15 @@ npm i -D eslint-plugin-import eslint-plugin-vue
 config
 
 ```js
+  "eslint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue",
+  "eslint:fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx,.vue",
 
+  "eslint": "eslint .",
+  "eslint:fix": "eslint --fix .",
+```
+
+```bash
+npm run eslint:fix -- --ext '.{js,jsx,ts,tsx,json,vue,yml,yaml,css,less,scss,md,html}'
 ```
 
 ### babel
@@ -423,9 +431,9 @@ src 包含各类型的源代码, 用于测试验证，包括但不限于以下�
 - ts
 - jsx
 - tsx
-- json
+- json X
 - json5
-- md
+- md X
 - css
 - less
 - scss

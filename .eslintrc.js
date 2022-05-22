@@ -1,4 +1,4 @@
-const isTsProject = false
+const isTsProject = true
 
 module.exports = {
   root: true,
@@ -53,17 +53,17 @@ module.exports = {
   // //     ]
   // //   : ['plugin:react/recommended'],
   // (),
-  // plugins: [
-  //   'eslint-comments',
-  //   // 'import', // 暂不开启
-  //   'react',
-  //   // 'jsx-a11y', // 这个暂时不必要
-  //   // 'promise',
-  //   'jest',
-  //   'unicorn', // 可强制约束文件命名格式，默认 kebabCase 格式
-  //   'react-hooks',
-  //   'markdown', // 需要 .eslintrc.js 配置 root: true
-  // ],
+  plugins: [
+    // 'eslint-comments',
+    // // 'import', // 暂不开启
+    // 'react',
+    // // 'jsx-a11y', // 这个暂时不必要
+    // // 'promise',
+    // 'jest',
+    // 'unicorn', // 可强制约束文件命名格式，默认 kebabCase 格式
+    // 'react-hooks',
+    'markdown', // 需要 .eslintrc.js 配置 root: true
+  ],
   env: {
     browser: true,
     node: true,
