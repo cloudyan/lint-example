@@ -1,20 +1,47 @@
 {
-  "[javascript]": {
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "jest.jestCommandLine": "yarn jest --watchAll",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  // "eslint.format.enable": true,
-  // //保存时进行格式化
-  // "editor.codeActionsOnSave": {
-  //   "source.fixAll.eslint": true,
-  //   "source.fixAll.stylelint":true
+  // "editor.formatOnSave": true, // 保存时自动格式化
+  // "[javascript]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
   // },
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
+  // "[javascript]": {
+  //   "editor.formatOnSave": true
+  // },
+  // "[typescript]": {
+  //   "editor.formatOnSave": true
+  // },
+  // "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  // "eslint.options": {
+  //   "overrideConfigFile": "babel.config.js"
+  // },
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.format.enable": true,
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    // 以上是默认, 下面新增 html vue,
+    // 因为需要 plugin 包支持，建议这两个添加到 Vue 相关项目的工作区环境配置中
+    "html", // 需要 eslint-plugin-html
+    "vue" // 需要 eslint-plugin-vue
+  ],
+
+  // "typescript.tsdk": "node_modules/typescript/lib",
+  // "jest.jestCommandLine": "yarn jest --watchAll",
+
+  // 保存代码时，自动修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.stylelint": true
+  }
   // //自动格式化粘贴的代码
   // "files.autoSave": "afterDelay"
 }
