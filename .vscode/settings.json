@@ -1,0 +1,20 @@
+{
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "jest.jestCommandLine": "yarn jest --watchAll",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // "eslint.format.enable": true,
+  // //保存时进行格式化
+  // "editor.codeActionsOnSave": {
+  //   "source.fixAll.eslint": true,
+  //   "source.fixAll.stylelint":true
+  // },
+  // //自动格式化粘贴的代码
+  // "files.autoSave": "afterDelay"
+}
