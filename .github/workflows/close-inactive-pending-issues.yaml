@@ -2,7 +2,7 @@ name: Close Inactive Pending Issues
 
 on:
   schedule:
-    - cron: '30 23 * * *' # At 23:30 UTC every day
+    - cron: "30 23 * * *" # At 23:30 UTC every day
 
 jobs:
   check-need-info:
@@ -11,9 +11,9 @@ jobs:
       - name: close-issues
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'close-issues'
+          actions: "close-issues"
           token: ${{ secrets.GITHUB_TOKEN }}
-          labels: 'pending'
+          labels: "pending"
           inactive-day: 7
           body: |
             This issue will be closed automatically due to being inactive for a long time.
