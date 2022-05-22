@@ -34,3 +34,5 @@ yarn-error.log
 **/es/**
 **/__snapshots__/**
 **/.node/**
+
+temp
