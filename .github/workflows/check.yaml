@@ -66,8 +66,8 @@ jobs:
       - name: Check formatting
         run: npm run prettier -- --check
 
-      # - name: Eslint
-      #   run: npm run eslint -- --max-warnings 0
+      - name: ESLint
+        run: npm run eslint -- --max-warnings 0
 
       - name: Test
         run: npm test
