@@ -23,6 +23,7 @@ lint example
 9. stylelint
 10. browserlist
 11. conventional-changelog
+12. sonar
 
 ### 如何执行落地？
 
@@ -258,9 +259,10 @@ npm i -D eslint @babel/eslint-parser
 npm i -D eslint-config-airbnb-base
 
 # prettier
-npm i -D eslint-config-prettier # X 关闭所有可能和 Prettier 冲突的 ESLint 规则，不推荐
+npm i -D eslint-config-prettier # 关闭所有可能和 Prettier 冲突的 ESLint 规则
 # 推荐使用 prettier-eslint prettier-stylelint
 npm i -D prettier-eslint prettier-stylelint
+# eslint-plugin-prettier 不推荐使用，有问题
 
 npm i -D eslint-plugin-import
 
@@ -305,6 +307,10 @@ npm i -D @babel/core @babel/preset-env
 ### stylelint
 
 接入 stylelint
+
+- `stylelint-config-standard` stylelint 的推荐配置
+- `stylelint-order` css 属性排序插件，合理的排序加快页面渲染
+- `stylelint-scss` 增加支持 scss 语法
 
 ```bash
 npm i -D stylelint prettier-stylelint
@@ -363,62 +369,51 @@ config
 
 ## IDE 编辑器接入 lint
 
-- prettier 是一个校验代码格式化的工具
-- ESlint 是校验语法的工具
-
-VSCode 相关插件
-
-- [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
-
-```json
-{
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": ["prettier"],
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  }
-}
-```
-
-package.json 中直接添加插件 prettier, 这样 ESlint 的窗口也会直接输出 prettier 的报错信息。
-
-为了自动格式化 prettier 的错误也需要添加相应的规则。
-
-ESlint 集成了 prettier 的校验规则，因此 VSCode 中不需要再单独安装 prettier 插件。
-
-## 常见问题
-
-### 解决冲突
+分工
 
 - EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
 - Prettier 作为**代码格式化**工具
 - 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做
 
-解决冲突，**关闭所有可能和 Prettier 冲突的 ESLint 规则**， 通过 `eslint-config-prettier` 包处理。将 `prettier` 加到 `extends` 数组的最后
+VSCode 相关插件
 
-vscode 配置了在文件保存时进行格式化和 ESLint 自动修复：
+- [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+
+## 常见问题
+
+### 解决冲突
+
+为什么会产生冲突？
+
+vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修复，当保存文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，导致代码变得不符合 ESLint 规则了。
+
+1. Prettier 插件根据 `.prettierrc` 文件中的配置来美化代码
+2. ESLint 插件也根据 `.eslintrc` 文件中的配置对代码进行美化和校验
+   1. 当使用 `eslint-plugin-prettier` 插件时，会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
+   2. 当.prettierrc 的配置和官方默认配置不一致的时候, 编辑器处理时就冲突了
+3. eslint-config-prettier 配置包可用于解决冲突，会**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
+
+怎么解决
+
+推荐使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 先把代码用 prettier 格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
 
 ```json
-  "editor.formatOnSave": true, // 保存时自动格式化
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true // 保存时使用eslint校验文件
+  "editor.formatOnSave": false, // 保存时自动格式化
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    // "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 ```
 
-保存文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，导致代码变得不符合 ESLint 规则了。
-
-解决方案，使用 `prettier-eslint`
-
-`prettier-eslint` 是先把代码用 prettier 格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
-
-eslint-plugin-prettier 插件用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
-
-当.prettierrc 的配置和官方默认配置不一致的时候，就会出现上面那种问题。
+- https://zhuanlan.zhihu.com/p/347339865
+- https://zhuanlan.zhihu.com/p/142105418
 
 ## 源代码
 
@@ -438,5 +433,60 @@ src 包含各类型的源代码, 用于测试验证，包括但不限于以下�
 - ejs,html
 - vue
 - react
+
+可以使用 jest 结合 lint-staged 只检测发生改动的文件
+
+```json
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": ["npm run test:staged"]
+  }
+```
+
+`"test:staged": "jest --bail --findRelatedTests",`
+
+- bail: 只要遇到运行失败的单测用例即退出
+- findRelatedTests: 检测指定的文件路径
+
+```js
+// jest.config.js
+// https://jestjs.io/docs/cli
+module.exports = {
+  roots: ['<rootdir>/src'], // 查找src目录中的文件
+  collectCoverage: true, // 统计覆盖率
+  coverageDirectory: 'coverage', // 覆盖率结果输出的文件夹
+
+  // collectCoverageFrom 会影响输出所有符合要求的文件的覆盖率, 改用排除法，只从被检测的文件中提取覆盖率
+  collectCoverageFrom: ['!src/**/*.d.ts', '!src/**/*{.json,.snap,.less,.scss}'],
+  coverageThreshold: {
+    // 所有文件总的覆盖率要求
+    global: {
+      branches: 60,
+      functions: 60,
+      lines: 60,
+      statements: 60,
+    },
+    // 匹配到的单个文件的覆盖率要求
+    // 这里也支持通配符的配置
+    './src/**/*.{ts,tsx}': {
+      branches: 40,
+      functions: 40,
+      lines: 40,
+      statements: 40,
+    },
+  },
+  // 匹配单测用例的文件
+  testMatch: ['<rootdir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}', '<rootdir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
+  // 当前环境是jsdom还是node
+  testEnvironment: 'jsdom',
+  // 设置别名，若不设置，运行单测时会不认识@符号
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootdir>/src/$1',
+  },
+}
+```
+
+- https://www.cnblogs.com/xumengxuan/p/14921634.html
+
+## 其他
 
 关于 yaml 文件扩展名, [官方](https://yaml.org/faq.html) 官方推荐我们使用 `.yaml`。

@@ -1,5 +1,10 @@
 {
   "editor.formatOnSave": false, // 保存时自动格式化
+  // 保存代码时，自动修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.stylelint": true
+  },
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -36,16 +41,11 @@
     "vue", // 需要 eslint-plugin-vue
     ".*ignore",
     "gitignore"
-  ],
+  ]
 
   // "typescript.tsdk": "node_modules/typescript/lib",
   // "jest.jestCommandLine": "yarn jest --watchAll",
 
-  // 保存代码时，自动修复
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
-    "source.fixAll.stylelint": true
-  }
   // //自动格式化粘贴的代码
   // "files.autoSave": "afterDelay"
 }

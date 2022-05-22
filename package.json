@@ -25,6 +25,7 @@
     "sort": "npx sort-package-json",
     "test": "echo 'test success'",
     "test:fail": "echo \"Error: no test specified\" && exit 1",
+    "test:staged": "jest --bail --findRelatedTests",
     "typecheck": "tsc -p ."
   },
   "lint-staged": {

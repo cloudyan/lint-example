@@ -152,14 +152,14 @@ module.exports = {
         functions: 'ignore',
       },
     ],
-    // 'max-len': [
-    //   'error',
-    //   {
-    //     code: 120,
-    //     ignoreUrls: true,
-    //     ignorePattern: true,
-    //   },
-    // ],
+    'max-len': [
+      'error',
+      {
+        code: 120,
+        ignoreUrls: true,
+        ignorePattern: true,
+      },
+    ],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-else-return': 'off',
