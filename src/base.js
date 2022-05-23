@@ -1,5 +1,5 @@
 const noop = (...rest) => {
-  console.log(rest)
+	console.log(rest)
 }
 export const sumNumber = noop(1, 2)
 

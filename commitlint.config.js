@@ -1,10 +1,10 @@
 module.exports = {
-  extends: ['@commitlint/config-conventional'],
-  // https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
-  rules: {
-    'header-max-length': [1, 'always', 100],
-    // prettier-ignore
-    'type-enum': [2, 'always', [
+	extends: ['@commitlint/config-conventional'],
+	// https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+	rules: {
+		'header-max-length': [1, 'always', 100],
+		// prettier-ignore
+		'type-enum': [2, 'always', [
       'feat', // 新特性、新功能(A new feature)
       'fix', // 修补bug(A bug fix)
       'docs', // 仅文档变动(Documentation only changes)
@@ -19,11 +19,11 @@ module.exports = {
       // 'release', // 新建发布版本(Create a release commit)
       // 'update', // 普通更新（不是 feat, 不是 fix）
     ]],
-    'type-case': [0],
-    'type-empty': [0],
-    'scope-empty': [0],
-    'scope-case': [0],
-    'subject-full-stop': [0, 'never'],
-    'subject-case': [0, 'never'],
-  },
+		'type-case': [0],
+		'type-empty': [0],
+		'scope-empty': [0],
+		'scope-case': [0],
+		'subject-full-stop': [0, 'never'],
+		'subject-case': [0, 'never'],
+	},
 }

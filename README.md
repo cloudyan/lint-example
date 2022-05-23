@@ -87,6 +87,8 @@ TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
 > EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
 
+editorconfig 可以指定文件进行格式化
+
 config
 
 > Unix-style newlines with a newline ending every file
@@ -692,7 +694,8 @@ module.exports = {
 
 ## TODO
 
-  - [ ] .editorconfig 添加后的作用，不加有什么影响
+  - [x] .editorconfig 添加后的作用，不加有什么影响
+    - 当把 indent_size = 4 indent_style = tab 后，再保存文件，就会应用格式化，比如 settting.json, .eslintrc.js
   - [ ] .editorconfig 对 prettier 的影响
   - [ ] prettier 的适用范围（哪些 ext）
   - [ ] eslint 的适用范围（哪些 ext）
