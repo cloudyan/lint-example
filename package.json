@@ -31,10 +31,10 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,html}": [
+    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}": [
       "prettier --write"
     ],
-    "*.{js,jsx,ts,tsx,vue,html}": [
+    "*.{js,jsx,ts,tsx}": [
       "npm run eslint:fix"
     ]
   },

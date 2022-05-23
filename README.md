@@ -179,7 +179,32 @@ npm uninstall husky && git config --unset core.hooksPath
 
 git hooks 可以通过 `--no-verify` 跳过检查，所以需要再 CI 流程中卡点
 
+#### 为什么用 husky？
+
+我们只会用到“提交工作流”钩子，提交工作流包含 4 个钩子：
+
+  - `pre-commit` 在提交信息**编辑前**运行，在这个阶段塞入**代码检查**流程，检查未通过返回非零值即可停止提交流程；
+  - `prepare-commit-msg` 在默认信息被创建之后运行，此时正是**启动编辑器前**，可在这个阶段加载 `commitizen` 之类的辅助填写工具；
+  - `commit-msg` 在**完成编辑后**运行，可在这个阶段借助 `commitlint` 进行提交信息规范性检查；
+  - `post-commit` 在**提交完成后**运行，在这个阶段一般做一些通知操作。
+
+使用 Git 钩子最直观的方式是操作 .git/hooks 下的示例文件，将对应钩子文件的 .sample 后缀名移除即可启用。然而这种操作方式存在弊端：
+
+  - 需要操作项目范围外的 .git 目录
+  - 无法同步 .git/hooks 到远程仓库
+
+两个弊端可以通过为 Git 指定 hooks 目录完美避过，Husky 便是基于此方案实现
+
+```bash
+# 指定 Git hooksPath 为根目录下的 .husky 目录
+git config core.hooksPath .husky
+```
+
 ### lint-staged
+
+如果对项目中所有文件一次性格式化，大范围的修改很可能出现不可控的情况。
+
+这时可以借助 lint-staged 将处理范围限制在 Git 暂存区内 (staged) 的文件。
 
 config
 
@@ -315,6 +340,8 @@ eslint 只检查 `.{js,ts,jsx,tsx,vue,html}` 中的脚本, 不会处理 `.css`, 
     - `eslint-config-airbnb/hooks`
   - [JavaScript Standard Style](https://standardjs.com/)
     - `eslint-config-standard`
+  - AlloyTeam
+    - [`eslint-config-alloy`](https://github.com/AlloyTeam/eslint-config-alloy)
   - Prettier
     - `eslint-config-prettier` 解决 eslint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 prettier 冲突的 eslint 规则**。
     - `prettier-eslint` 将 prettier 首先运行，执行结果给 eslint --fix
@@ -390,7 +417,17 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: [
+    // 插件加载规则 extPlugin = `plugin:${pluginName}/${configName}`
+    // plugin:(此处不能有空格)包名/配置名称。解析时plugin是解析成 eslint-plugin-vue。如果有空格会解析失败
+    // plugin 可以省略包名的前缀 `eslint-plugin-`
+    // 'eslint:recommended',
+    // 'plugin:vue/vue3-recommended',   // vue3.x
+    // 'plugin:vue/recommended',        // vue2.x
+
+    'react',
+    '@typescript-eslint',
+  ],
   rules: {
 
   },
@@ -655,13 +692,13 @@ module.exports = {
 ## 常见问题
 
   - [x] .editorconfig 有什么用，是否会对 prettier 有影响
-  - [ ] prettier 与 eslint 的适用范围（哪些 ext）
+  - [x] prettier 与 eslint 的适用范围（哪些 ext）
   - [x] prettier 和 eslint 规则冲突
   - [ ] @typescript-eslint/eslint-plugin 与 eslint 规则冲突
   - [x] prettier 与 markdownlint 规则冲突
   - [ ] commitlint 如何交互式操作
   - [ ] prettier 和 eslint 在 VSCode editor.formatOnSave 生效
-  - [ ] eslint 如何在 webpack 本地开发中卡点
+  - [x] eslint 如何在本地开发运行时中卡点（webpack?）
   - [ ] commitlint 如何在 CI 中卡点
   - [ ] 使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点
 
@@ -671,14 +708,15 @@ module.exports = {
 
 有了 Prettier 还需要 EditorConfig 吗？两者配置不同会怎么样？
 
-我们需要重演一下两者的作用过程：
+对比两者的作用过程：
 
   - EditorConfig 作用于预览和输入阶段
   - Prettier 在保存和提交阶段重新组织代码，Prettier 会成为代码形态的最终决定者。
+  - 要考虑配置优先级
 
 实际上如 [Prettier 编辑器配置](https://prettier.io/docs/en/configuration.html#editorconfig) 所描述，Prettier 对 `.editorconfig` 文件在特定配置下做了转换。
 
-如果`options.editorconfig`是true并且您的项目中有一个`.editorconfig`文件，Prettier 将解析它并将其属性转换为相应的 Prettier 配置。此配置将被`.prettierrc`等覆盖。目前，支持以下 EditorConfig 属性：
+如果`options.editorconfig`是true，并且您的项目中有一个`.editorconfig`文件，Prettier 将解析它并将其属性转换为相应的 Prettier 配置。此配置将被`.prettierrc`等覆盖。目前，支持以下 EditorConfig 属性：
 
   - `end_of_line`
   - `indent_style`
@@ -725,9 +763,13 @@ module.exports = {
 ### prettier 与 eslint 的适用范围
 
   - prettier 作为**代码格式化**工具
-    - `.{js,ts,jsx,tsx,css,less,scss,json,vue,html}` 以及 `.{md,yml,yaml}` 等
+    - `.{js,ts,jsx,tsx,css,less,scss,json,json5}` 以及 `.{vue,html,graphql,markdown,yml,yaml}` 等
   - eslint **代码质量**方面的语法检查，查找并修复 JavaScript 代码中的问题
     - `.{js,ts,jsx,tsx}` 以及 `.{vue,html}`
+
+prettier 支持自动推断解析器，所以无需手动配置。更多参考 <https://prettier.io/docs/en/options.html#parser>
+
+常见的有
 
 ### @typescript-eslint/eslint-plugin 与 eslint 规则冲突
 
@@ -742,3 +784,45 @@ module.exports = {
   //   "editor.defaultFormatter": "esbenp.prettier-vscode"
   // },
 ```
+
+### eslint 如何在本地开发运行时中卡点（webpack?）
+
+webpack 是通过引入 eslint-loader 来启动eslint的
+
+```js
+const path = require('path')
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [path.join(__dirname, 'src')],
+        options: {
+          fix: true
+        }
+      }
+    ]
+}
+```
+
+没 webpack？可以通过 [onchange](https://www.npmjs.com/package/onchange) 进行代码的监听，然后自动格式化代码。
+
+```js
+"scripts": {
+  "format": "onchange 'src/**/*.js' -- prettier --write {{changed}}",
+  // "format": "onchange 'test/**/*.js' 'src/**/*.js' 'src/**/*.vue' -- prettier --write {{changed}}"
+}
+```
+
+## 扩展阅读
+
+  - [全面梳理代码规范化：EditorConfig + Prettier + ESLint](https://juejin.cn/post/6952842182252298248)
+  - [ESLint 工作原理探讨](https://zhuanlan.zhihu.com/p/53680918)
+  - [自定义 Git - Git 钩子](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90)
+
+### 知识点
+
+  - [mrm](https://www.npmjs.com/package/mrm) 是配置文件生成工具, Command line tool to help you keep configuration (package.json, .gitignore, .eslintrc, etc.) of your open source projects in sync.
+  - [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) 为您的程序搜索并加载配置。
