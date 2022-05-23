@@ -51,7 +51,7 @@ lint example
 
 ### 版本控制
 
-add .npmrc && .nvmrc
+add `.npmrc` && `.nvmrc`, 并且 lock 文件要入库。
 
 ```bash
 node -v > .nvmrc
@@ -63,6 +63,17 @@ package-lock=true
 registry=https://registry.npmjs.org/
 ```
 
+package.json
+
+```json
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  }
+```
+
+CI 流程通过 `npm ci` 校验 lock 文件等
+
 TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
 ### editorconfig
@@ -71,10 +82,9 @@ TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
 > .editorconfig 是可移植自定义编辑器设置。
 > 实现跨平台、编辑器和 IDE 统一编程风格, 提高代码阅读质量。
+> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
 
 即使团队统一编程风格、编辑器，仍不能保证历史遗留代码、第三方开源库等风格一致，还可能存在编码问题，非 utf-8 等
-
-> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
 
 config
 
@@ -99,6 +109,8 @@ trim_trailing_whitespace = true
 quote_type = single
 ```
 
+EditorConfig 解决了编辑器配置层面的编码风格一致性问题。但代码风格的部分并未涉及，比如句尾分号、逗号、多行对象书写规范等
+
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
 ### prettier
@@ -108,12 +120,12 @@ usage
 ```bash
 npm i prettier lint-staged -D
 
-prettier -w .                 # --write
-prettier -w -u "src/**/*.js"  # --ignore-unknown
-prettier -w 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}'
+prettier --write .                              # -w
+prettier -write --ignore-unknown "src/**/*.js"  # -w -u
+prettier -write 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}'
 
-prettier -c "src/**/*.js"     # --check
-prettier -l "src/**/*.js"     # --list-different
+prettier --check "src/**/*.js"                  # -c
+prettier --list-different "src/**/*.js"         # -l
 
 # prettier diff
 prettier --write '**/?(.)*.{md,css,scss,js,json,yaml,yml}' && git --no-pager diff && git checkout -- .
@@ -165,6 +177,8 @@ npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"' # 这个执行
 npm uninstall husky && git config --unset core.hooksPath
 ```
 
+git hooks 可以通过 `--no-verify` 跳过检查，所以需要再 CI 流程中卡点
+
 ### lint-staged
 
 config
@@ -177,8 +191,11 @@ package.json
 
 ```json
 "lint-staged": {
-  "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
+  "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,html}": [
     "prettier --write"
+  ],
+  "*.{js,jsx,ts,tsx,vue,html}": [
+    "npm run eslint:fix"
   ],
   "*.ts?(x)": [
     "prettier --parser=typescript --write --ignore-unknown"
@@ -270,7 +287,7 @@ TODO
 一些原则
 
   - 按照 prettier 原则，尽量减少格式化对开发的干扰
-    - 不应该因为尾分号分心，满篇飘红，而应交给格式化工具自动处理，此时 eslint 应关闭规则
+    - 不应该因为尾分号分心，满篇飘红，而应交给格式化工具自动处理，此时 eslint 应关闭格式化相关规则
     - eslint 更应该关注语法检查
 
 接入之前有必要先熟悉下一些配置和常识
@@ -374,13 +391,15 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {},
+  rules: {
+
+  },
 }
 ```
 
 package.json
 
-```js
+```json
   "eslint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue",
   "eslint:fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx,.vue",
 
@@ -396,6 +415,14 @@ npm run eslint:fix -- --ext '.{js,jsx,ts,tsx,json,vue,yml,yaml,css,less,scss,md,
 
 ```bash
 npm i -D @babel/core @babel/preset-env
+```
+
+babel.config.js
+
+```js
+module.exports = {
+  presets: ['@babel/preset-env'],
+}
 ```
 
 ### stylelint
@@ -423,7 +450,9 @@ vscode 插件
 
 ### browserlist
 
-```json5
+package.json
+
+```json
   "browserslist": [
     "> 1%",
     "last 2 versions",
@@ -431,8 +460,11 @@ vscode 插件
     "Android >= 4",
     "ios >= 8"
   ],
+```
 
-// 或
+或
+
+```json
   "browserslist": {
     "production": [
       ">0.2%",
@@ -499,7 +531,7 @@ VSCode 相关插件
 
 在项目中新建配置 `.vscode/settings.json`
 
-```json
+```js
 {
   "editor.formatOnSave": true, // 保存时自动格式化
   // 保存代码时，自动修复
@@ -543,56 +575,6 @@ VSCode 相关插件
 关于 Sublime Text，暂未做探究
 
   - [SublimeLinter](https://github.com/airbnb/javascript/blob/master/linters/SublimeLinter/SublimeLinter.sublime-settings)
-
-## 常见问题
-
-### 解决冲突
-
-#### Prettier 与 ESLint 规则冲突
-
-为什么会产生冲突
-
-vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修复，当保存文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，导致代码变得不符合 ESLint 规则了。
-
-  - Prettier 插件根据 `.prettierrc` 文件中的配置来美化代码
-  - ESLint 插件也根据 `.eslintrc` 文件中的配置对代码进行美化和校验
-    - 当使用 `eslint-plugin-prettier` 插件时，会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
-    - 当.prettierrc 的配置和官方默认配置不一致的时候, 编辑器处理时就冲突了
-  - eslint-config-prettier: 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
-
-怎么解决
-
-推荐使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 先把代码用 prettier 格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
-
-```json
-  "editor.formatOnSave": false, // 保存时自动格式化
-  "[javascript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    // "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-```
-
-  - <https://zhuanlan.zhihu.com/p/347339865>
-  - <https://zhuanlan.zhihu.com/p/142105418>
-
-#### @typescript-eslint/eslint-plugin 与 eslint 规则冲突
-
-一个配置开，一个配置关，冲突就产生了。
-
-#### prettier 与 markdownlint 冲突
-
-调试为 prettier 对应的规则，或关闭 prettier 格式化
-
-```json
-  // "[markdown]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
-```
 
 ## 测试代码
 
@@ -669,3 +651,94 @@ module.exports = {
 ## 其他
 
 关于 yaml 文件扩展名, [官方](https://yaml.org/faq.html) 官方推荐我们使用 `.yaml`。
+
+## 常见问题
+
+  - [x] .editorconfig 有什么用，是否会对 prettier 有影响
+  - [ ] prettier 与 eslint 的适用范围（哪些 ext）
+  - [x] prettier 和 eslint 规则冲突
+  - [ ] @typescript-eslint/eslint-plugin 与 eslint 规则冲突
+  - [x] prettier 与 markdownlint 规则冲突
+  - [ ] commitlint 如何交互式操作
+  - [ ] prettier 和 eslint 在 VSCode editor.formatOnSave 生效
+  - [ ] eslint 如何在 webpack 本地开发中卡点
+  - [ ] commitlint 如何在 CI 中卡点
+  - [ ] 使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点
+
+## 解决方案
+
+### prettier 与 editorconfig 配置冲突
+
+有了 Prettier 还需要 EditorConfig 吗？两者配置不同会怎么样？
+
+我们需要重演一下两者的作用过程：
+
+  - EditorConfig 作用于预览和输入阶段
+  - Prettier 在保存和提交阶段重新组织代码，Prettier 会成为代码形态的最终决定者。
+
+实际上如 [Prettier 编辑器配置](https://prettier.io/docs/en/configuration.html#editorconfig) 所描述，Prettier 对 `.editorconfig` 文件在特定配置下做了转换。
+
+如果`options.editorconfig`是true并且您的项目中有一个`.editorconfig`文件，Prettier 将解析它并将其属性转换为相应的 Prettier 配置。此配置将被`.prettierrc`等覆盖。目前，支持以下 EditorConfig 属性：
+
+  - `end_of_line`
+  - `indent_style`
+  - `indent_size/tab_width`
+  - `max_line_length`
+
+没发现配置项 `options.editorconfig`，最新的 VSCode 配置项如下 `useEditorConfig: true`, 默认为 true
+
+参见 <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
+
+```js
+"prettier.useEditorConfig": true
+// 为 true, .editorconfig 优先级更高
+// 为 false, .prettierrc.js 优先级更高
+// 默认优先级关系是: .editorconfig 配置 > .prettierrc.js 配置 > Prettier 默认值。
+```
+
+考虑到 EditorConfig 覆盖所有类型的文件，所以
+
+  - EditorConfig 配置优先
+  - 其他格式化属性由 Prettier 控制
+
+### prettier 与 eslint 规则冲突
+
+为什么会产生冲突, prettier 会对代码做格式化，eslint 也可以做格式化，当配置规则不一致时，冲突就出现了。
+
+此时，IDE vscode 在编辑文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，也会代码变得不符合 ESLint 规则了，满篇飘红。
+
+此时规则冲突会出现两个问题
+
+  1. 格式化处理顺序不一致，可能产生非预期行为
+    - 先 `eslint --fix`, 后 `prettier`
+    - 先 `prettier`，后 `eslint --fix`
+  1. 使用 `eslint-plugin-prettier` 插件时, 会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从 .prettierrc 文件中读取配置, 出现诡异问题
+
+怎么解决
+
+  - 使用 `eslint-config-prettier` 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
+  - 使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 解决格式化先后问题，默认会用 prettier 先格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
+
+  - <https://zhuanlan.zhihu.com/p/347339865>
+  - <https://zhuanlan.zhihu.com/p/142105418>
+
+### prettier 与 eslint 的适用范围
+
+  - prettier 作为**代码格式化**工具
+    - `.{js,ts,jsx,tsx,css,less,scss,json,vue,html}` 以及 `.{md,yml,yaml}` 等
+  - eslint **代码质量**方面的语法检查，查找并修复 JavaScript 代码中的问题
+    - `.{js,ts,jsx,tsx}` 以及 `.{vue,html}`
+
+### @typescript-eslint/eslint-plugin 与 eslint 规则冲突
+
+同样的规则约束两边各有一个配置，一个开，一个关，冲突就产生了。
+
+### prettier 与 markdownlint 规则冲突
+
+基于原则，格式化交给 prettier 处理，就需要适配对应格式对标 prettier。否则对此文件格式，关闭 prettier 格式化
+
+```js
+  // "[markdown]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+```
