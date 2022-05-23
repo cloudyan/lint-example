@@ -122,12 +122,12 @@ usage
 ```bash
 npm i prettier lint-staged -D
 
-prettier -w .                 # --write
-prettier -w -u "src/**/*.js"  # --ignore-unknown
-prettier -w 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}'
+prettier --write .                              # -w
+prettier -write --ignore-unknown "src/**/*.js"  # -w -u
+prettier -write 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}'
 
-prettier -c "src/**/*.js"     # --check
-prettier -l "src/**/*.js"     # --list-different
+prettier --check "src/**/*.js"                  # -c
+prettier --list-different "src/**/*.js"         # -l
 
 # prettier diff
 prettier --write '**/?(.)*.{md,css,scss,js,json,yaml,yml}' && git --no-pager diff && git checkout -- .
@@ -693,8 +693,7 @@ module.exports = {
 
 ## TODO
 
-  - [ ] .editorconfig 添加后的作用，不加有什么影响
-  - [ ] .editorconfig 对 prettier 的影响
+  - [ ] .editorconfig 有什么用，是否会对 prettier 有影响
   - [ ] prettier 的适用范围（哪些 ext）
   - [ ] eslint 的适用范围（哪些 ext）
   - [ ] prettier 和 eslint 的规则冲突
@@ -726,11 +725,15 @@ module.exports = {
   - `indent_size/tab_width`
   - `max_line_length`
 
+没发现配置项 `options.editorconfig`，最新的 VSCode 配置项如下 `useEditorConfig: true`, 默认为 true
+
+参见 https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+
 ```js
-// 最新的 VSCode 配置项如下, 没发现配置项 `options.editorconfig`
-// useEditorConfig: true
-// 为 ture, 优先级关系是: .editorconfig 配置 > .prettierrc.js 配置 > Prettier 默认值。
 "prettier.useEditorConfig": true
+// 为 true, .editorconfig 优先级更高
+// 为 false, .prettierrc.js 优先级更高
+// 默认优先级关系是: .editorconfig 配置 > .prettierrc.js 配置 > Prettier 默认值。
 ```
 
 考虑到 EditorConfig 覆盖所有类型的文件，所以建议是 EditorConfig 管理相交属性，其他属性则由 Prettier 控制。

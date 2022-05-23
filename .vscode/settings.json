@@ -5,6 +5,7 @@
     "source.fixAll.eslint": true, // 保存时使用eslint校验文件
     "source.fixAll.stylelint": true
   },
+  // "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     // 没生效？
     "editor.formatOnSave": true,
