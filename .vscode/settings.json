@@ -1,22 +1,24 @@
 {
-  "editor.formatOnSave": false, // 保存时自动格式化
+  "editor.formatOnSave": true, // 保存时自动格式化
   // 保存代码时，自动修复
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true, // 保存时使用eslint校验文件
     "source.fixAll.stylelint": true
   },
   "[javascript]": {
+    // 没生效？
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    // "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
+    // "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // 格式化时使用 prettier
   },
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    // "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // 格式化时使用 prettier
   },
-  "[jsonc]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
+  // "[jsonc]": {
+  //   "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  // },
   // "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   "eslint.workingDirectories": [{ "mode": "auto" }],
@@ -31,16 +33,14 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "html",
-    "vue",
-    "markdown",
+    "typescriptreact"
+    // "markdown",
     // 以上是默认, 下面新增 html vue,
     // 因为需要 plugin 包支持，建议这两个添加到 Vue 相关项目的工作区环境配置中
-    "html", // 需要 eslint-plugin-html
-    "vue", // 需要 eslint-plugin-vue
-    ".*ignore",
-    "gitignore"
+    // "html", // 需要 eslint-plugin-html
+    // "vue", // 需要 eslint-plugin-vue
+    // ".*ignore"
+    // "gitignore"
   ]
 
   // "typescript.tsdk": "node_modules/typescript/lib",

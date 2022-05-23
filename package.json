@@ -21,6 +21,7 @@
     "eslint:fix": "eslint --fix .",
     "format": "npm run prettier -- --write",
     "lint": "lint-staged --allow-empty",
+    "lint:md": "markdownlint --config ./.markdownlint.json README.md */README.md",
     "prepare": "husky install",
     "prettier": "prettier .",
     "sort": "npx sort-package-json",
@@ -30,8 +31,10 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue,yml,yaml,css,less,scss,html}": [
-      "prettier --write",
+    "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,html}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx,vue,html}": [
       "npm run eslint:fix"
     ]
   },
@@ -56,6 +59,8 @@
     "@babel/preset-env": "^7.18.0",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
     "alex": "^10.0.0",
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.16.0",
@@ -64,6 +69,7 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-markdown": "^2.2.1",
+    "eslint-plugin-react": "^7.30.0",
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",

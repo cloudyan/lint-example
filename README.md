@@ -2,64 +2,52 @@
 
 lint example
 
-- 项目中如何接入
-- IDE 编辑器如何接入
-  - `"editor.formatOnSave": true,`
-  - 解决 Prettier 和 ESLint 冲突
-- CI 流程如何接入
+## 如何执行落地？
+
+集成到 vscode, webpack 以及 CI 流程上。
+
+  - 项目中如何接入
+  - IDE 编辑器如何接入
+    - `"editor.formatOnSave": true,`
+    - 解决 Prettier 和 ESLint 冲突
+  - CI 流程如何接入
 
 分工
 
-- EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
-- Prettier 作为**代码格式化**工具
-- 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做
-
-## 菜单
-
-- [lint-example](#lint-example)
-  - [菜单](#菜单)
-    - [如何执行落地？](#如何执行落地)
-  - [项目中接入 lint](#项目中接入-lint)
-    - [版本控制](#版本控制)
-    - [editorconfig](#editorconfig)
-    - [prettier](#prettier)
-    - [husky](#husky)
-    - [lint-staged](#lint-staged)
-    - [commitlint](#commitlint)
-    - [typecheck](#typecheck)
-    - [eslint](#eslint)
-    - [babel](#babel)
-    - [stylelint](#stylelint)
-    - [browserlist](#browserlist)
-    - [conventional-changelog](#conventional-changelog)
-  - [IDE 编辑器接入 lint](#ide-编辑器接入-lint)
-  - [常见问题](#常见问题)
-    - [解决冲突](#解决冲突)
-  - [测试代码](#测试代码)
-  - [其他](#其他)
-
----
-
-### 如何执行落地？
-
-集成到 vscode, webpack 以及 CI 流程上。
+  - EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
+  - Prettier 作为**代码格式化**工具
+  - 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做(格式化的事儿，让 Prettier 来做)
 
 ## 项目中接入 lint
 
 接入步骤
 
-1. 版本控制
-2. editorconfig
-3. prettier
-4. husky
-5. lint-staged
-6. commitlint
-7. eslint
-8. stylelint
-9. browserlist
-10. typecheck
-11. conventional-changelog
-12. sonar
+  - [lint-example](#lint-example)
+    - [如何执行落地？](#如何执行落地)
+    - [项目中接入 lint](#项目中接入-lint)
+      - [版本控制](#版本控制)
+      - [editorconfig](#editorconfig)
+      - [prettier](#prettier)
+      - [husky](#husky)
+      - [lint-staged](#lint-staged)
+      - [commitlint](#commitlint)
+      - [eslint](#eslint)
+      - [babel](#babel)
+      - [stylelint](#stylelint)
+      - [browserlist](#browserlist)
+      - [typecheck](#typecheck)
+      - [conventional-changelog](#conventional-changelog)
+      - [sonar](#sonar)
+      - [markdownlint](#markdownlint)
+    - [IDE 编辑器接入 lint](#ide-编辑器接入-lint)
+    - [常见问题](#常见问题)
+      - [解决冲突](#解决冲突)
+        - [Prettier 与 ESLint 规则冲突](#prettier-与-eslint-规则冲突)
+        - [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
+    - [测试代码](#测试代码)
+    - [其他](#其他)
+
+---
 
 ### 版本控制
 
@@ -74,6 +62,8 @@ engine-strict=true
 package-lock=true
 registry=https://registry.npmjs.org/
 ```
+
+TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
 ### editorconfig
 
@@ -196,7 +186,7 @@ package.json
 }
 ```
 
-- https://juejin.cn/post/6844903864722784264
+  - <https://juejin.cn/post/6844903864722784264>
 
 ### commitlint
 
@@ -270,68 +260,125 @@ git config --global commit.verbose true
 
 TODO
 
-- 这个如果错误能给中文提示吗？
-- 交互式方案
-
-### typecheck
-
-```json
-{
-  "test:typecheck": "tsc -p .",
-  "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit"
-}
-```
+  - 这个如果错误能给中文提示吗？
+  - 交互式方案
 
 ### eslint
 
+> 查找并修复 JavaScript 代码中的问题
+
+一些原则
+
+  - 按照 prettier 原则，尽量减少格式化对开发的干扰
+    - 不应该因为尾分号分心，满篇飘红，而应交给格式化工具自动处理，此时 eslint 应关闭规则
+    - eslint 更应该关注语法检查
+
+接入之前有必要先熟悉下一些配置和常识
+
+eslint 只检查 `.{js,ts,jsx,tsx,vue,html}` 中的脚本, 不会处理 `.css`, `.less`, `.scss`, or `.json` 这些文件，prettier 可以
+
+  - Parser, 指定解析器, 能帮助 eslint 确定什么是解析错误。
+    - eslint 的默认解析器 `espree`, 不支持 babel 提供的实验性（如新功能）语法
+    - `@babel/eslint-parser` 支持 eslint 在 babel 转换的源代码上运行
+      - `@babel/eslint-plugin`
+    - `@typescript-eslint/parser` 支持 eslint 对 typescript 源代码进行 lint
+      - `@typescript-eslint/eslint-plugin`
+    - `vue-eslint-parser` 支持 eslint 解析 .vue 文件
+      - `eslint-plugin-vue`
+  - [Airbnb JavaScript Style](https://github.com/airbnb/javascript)
+    - `eslint-config-airbnb-base` If you don't need React
+      - `eslint`
+      - `eslint-plugin-import` 支持对 ES2015+ `import/export` 语法的校验
+    - `eslint-config-airbnb` 包含以下五项，不包含 `eslint-config-airbnb/hooks`
+      - `eslint`
+      - `eslint-plugin-import`
+      - `eslint-plugin-react` React 专用的校验规则插件 `plugin:react/recommended`
+      - `eslint-plugin-react-hooks`
+      - `eslint-plugin-jsx-a11y` 专注于检查 jsx 元素的可访问性
+    - `eslint-config-airbnb/hooks`
+  - [JavaScript Standard Style](https://standardjs.com/)
+    - `eslint-config-standard`
+  - Prettier
+    - `eslint-config-prettier` 解决 eslint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 prettier 冲突的 eslint 规则**。
+    - `prettier-eslint` 将 prettier 首先运行，执行结果给 eslint --fix
+    - `prettier-stylelint`
+  - typescript
+    - `@typescript-eslint/eslint-plugin`
+  - vue
+    - `eslint-plugin-vue`
+  - 其他
+    - `eslint-plugin-eslint-comments` 支持 eslint 指令注释，如 `//eslint-disable-line`, 底层没直接支持吗？
+    - `eslint-plugin-markdown` 支持 lint markdown 中的 JS、JSX、TypeScript 等
+    - `eslint-plugin-promise` 支持 lint promise
+    - `eslint-plugin-unicorn` XO, 🦄 独角兽, 一系列 eslint 规则
+    - `eslint-formatter-pretty` XO, 格式化 eslint 检查结果
+    - `eslint-plugin-compat` Lint 代码的浏览器兼容性，基于 browserslist 配置
+    - `eslint-plugin-jest` 仅在与测试相关的文件上运行规则
+    - `eslint-plugin-html` 用于检查和修复 HTML 文件中包含的内联脚本
+
+每个规则有【3】个错误级别
+
+  - "off"或 0: 关闭规则
+  - "warn"或 1: 打开规则, 作为警告（不会导致程序退出）
+  - "error"或 2: 打开规则, 作为错误（触发时程序会退出，退出代码为 1）
+
 接入 eslint
 
-- 按照 prettier 原则，尽量减少格式化对开发的干扰
-  - 不应该因为尾分号分心，而交给格式化工具自动处理，此时 eslint 应关闭规则
-
 ```bash
+# 初始化配置
+npm init @eslint/config
+# 选择: To check syntax and find problems
+
+# parser
+npm i -D @babel/eslint-parser
+npm i -D @typescript-eslint/parser
+
 # base
-npm i -D eslint @babel/eslint-parser
+npm i -D eslint eslint-plugin-import
 npm i -D eslint-config-airbnb-base
-
-# prettier
-# 如果不加此项，prettier 规则和 eslint 规则就可能冲突
-# 规则不同时，会出现 prettier 去掉尾分号，执行 eslint:fix 又给加上
-npm i -D eslint-config-prettier # 关闭所有可能和 Prettier 冲突的 ESLint 规则
-
-# 推荐使用 prettier-eslint prettier-stylelint
-npm i -D prettier-eslint prettier-stylelint
-# eslint-plugin-prettier 不推荐使用，有问题
-
-npm i -D eslint-plugin-import
-
 # error  Parsing error: No Babel config file detected for xxx.js. Either disable config file checking with requireConfigFile: false, or configure Babel so that it can find the config files
 # 报错: 缺少 babel 配置, 添加 babel.config.js 后 OK
 
-# xo
-npm i -D eslint-formatter-pretty
+# prettier
+npm i -D eslint-config-prettier
+# 如果不加此项，prettier 规则和 eslint 规则就可能冲突
+# 规则不同时，会出现 prettier 去掉尾分号，执行 eslint:fix 又给加上
 
-# plugin
-npm i -D eslint-plugin-babel eslint-plugin-eslint-comments
-npm i -D eslint-plugin-compat eslint-plugin-markdown eslint-plugin-promise eslint-plugin-unicorn
-# test
-npm i -D eslint-plugin-jest
-
-# ts
-# plugin:@typescript-eslint/recommended
-npm i -D @typescript-eslint/parser @typescript-eslint/recommended @typescript-eslint/eslint-plugin
-
-# react
-# plugin:react/recommended
-npm i -D eslint-plugin-jsx-a11y
-npm i -D eslint eslint-plugin-react eslint-plugin-react-hooks
-
-# vue
-npm i -D eslint-plugin-import eslint-plugin-vue
-
+# eslint-plugin-prettier 不推荐使用
+# 推荐使用 prettier-eslint prettier-stylelint
+npm i -D prettier-eslint prettier-stylelint
 ```
 
-config
+关于 `.eslintrc.js`
+
+```js
+module.exports = {
+  /**
+   * 默认情况下，ESLint会在所有父级目录里寻找配置文件，一直到根目录。
+   * 为了将ESLint限制在一个特定的项目，设置root: true；
+   * ESLint一旦发现配置文件中有 root: true，就会停止在父级目录中寻找。
+   */
+  root: true,
+  env: {
+    browser: true,
+    node: true,
+    es2021: true,
+  },
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: ['react', '@typescript-eslint'],
+  rules: {},
+}
+```
+
+package.json
 
 ```js
   "eslint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue",
@@ -355,9 +402,9 @@ npm i -D @babel/core @babel/preset-env
 
 接入 stylelint
 
-- `stylelint-config-standard` stylelint 的推荐配置
-- `stylelint-order` css 属性排序插件，合理的排序加快页面渲染
-- `stylelint-scss` 增加支持 scss 语法
+  - `stylelint-config-standard` stylelint 的推荐配置
+  - `stylelint-order` css 属性排序插件，合理的排序加快页面渲染
+  - `stylelint-scss` 增加支持 scss 语法
 
 ```bash
 npm i -D stylelint prettier-stylelint
@@ -371,8 +418,8 @@ npm i -D prettier-plugin-jsdoc prettier-plugin-style-order
 
 vscode 插件
 
-- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-- [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
+  - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+  - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
 
 ### browserlist
 
@@ -400,6 +447,15 @@ vscode 插件
   },
 ```
 
+### typecheck
+
+```json
+{
+  "test:typecheck": "tsc -p .",
+  "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit"
+}
+```
+
 ### conventional-changelog
 
 Commit 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
@@ -418,30 +474,91 @@ config
 }
 ```
 
-- [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
-- https://zhuanlan.zhihu.com/p/51894196
+  - [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
+  - <https://zhuanlan.zhihu.com/p/51894196>
+
+### sonar
+
+接入 sonar
+
+### markdownlint
+
+关于 markdown 格式优化
+
+  - <https://github.com/DavidAnson/markdownlint>
 
 ## IDE 编辑器接入 lint
 
+这里只涉及到 vscode
+
 VSCode 相关插件
 
-- [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+  - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+
+在项目中新建配置 `.vscode/settings.json`
+
+```json
+{
+  "editor.formatOnSave": true, // 保存时自动格式化
+  // 保存代码时，自动修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.stylelint": true
+  },
+
+  "[css]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[html]": {
+    // "editor.defaultFormatter": "HookyQR.beautify"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    // "editor.defaultFormatter": "HookyQR.beautify"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // "[markdown]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+}
+```
+
+关于 Sublime Text，暂未做探究
+
+  - [SublimeLinter](https://github.com/airbnb/javascript/blob/master/linters/SublimeLinter/SublimeLinter.sublime-settings)
 
 ## 常见问题
 
 ### 解决冲突
 
-为什么会产生冲突？
+#### Prettier 与 ESLint 规则冲突
+
+为什么会产生冲突
 
 vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修复，当保存文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，导致代码变得不符合 ESLint 规则了。
 
-1. Prettier 插件根据 `.prettierrc` 文件中的配置来美化代码
-2. ESLint 插件也根据 `.eslintrc` 文件中的配置对代码进行美化和校验
-   1. 当使用 `eslint-plugin-prettier` 插件时，会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
-   2. 当.prettierrc 的配置和官方默认配置不一致的时候, 编辑器处理时就冲突了
-3. eslint-config-prettier: 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
+  - Prettier 插件根据 `.prettierrc` 文件中的配置来美化代码
+  - ESLint 插件也根据 `.eslintrc` 文件中的配置对代码进行美化和校验
+    - 当使用 `eslint-plugin-prettier` 插件时，会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
+    - 当.prettierrc 的配置和官方默认配置不一致的时候, 编辑器处理时就冲突了
+  - eslint-config-prettier: 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
 
 怎么解决
 
@@ -460,27 +577,41 @@ vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修
   },
 ```
 
-- https://zhuanlan.zhihu.com/p/347339865
-- https://zhuanlan.zhihu.com/p/142105418
+  - <https://zhuanlan.zhihu.com/p/347339865>
+  - <https://zhuanlan.zhihu.com/p/142105418>
+
+#### @typescript-eslint/eslint-plugin 与 eslint 规则冲突
+
+一个配置开，一个配置关，冲突就产生了。
+
+#### prettier 与 markdownlint 冲突
+
+调试为 prettier 对应的规则，或关闭 prettier 格式化
+
+```json
+  // "[markdown]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+```
 
 ## 测试代码
 
 src 包含各类型的测试源代码, 用于测试验证，包括但不限于以下类型
 
-- js
-- ts
-- jsx
-- tsx
-- json X
-- json5
-- md X
-- css
-- less
-- scss
-- yaml,yml
-- ejs,html
-- vue
-- react
+  - js
+  - ts
+  - jsx
+  - tsx
+  - json X
+  - json5
+  - md X
+  - css
+  - less
+  - scss
+  - yaml,yml
+  - ejs,html
+  - vue
+  - react
 
 可以使用 jest 结合 lint-staged 只检测发生改动的文件
 
@@ -492,8 +623,8 @@ src 包含各类型的测试源代码, 用于测试验证，包括但不限于�
 
 `"test:staged": "jest --bail --findRelatedTests",`
 
-- bail: 只要遇到运行失败的单测用例即退出
-- findRelatedTests: 检测指定的文件路径
+  - bail: 只要遇到运行失败的单测用例即退出
+  - findRelatedTests: 检测指定的文件路径
 
 ```js
 // jest.config.js
@@ -533,7 +664,7 @@ module.exports = {
 }
 ```
 
-- https://www.cnblogs.com/xumengxuan/p/14921634.html
+  - <https://www.cnblogs.com/xumengxuan/p/14921634.html>
 
 ## 其他
 

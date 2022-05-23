@@ -103,7 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-
 # custom
-temp
+.DS_Store
 .dccache
+target/
+temp
