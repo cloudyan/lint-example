@@ -115,8 +115,6 @@ EditorConfig 解决了编辑器配置层面的编码风格一致性问题。但�
 
 ### prettier
 
-适用范围: 代码格式化
-
 usage
 
 ```bash
@@ -578,43 +576,6 @@ VSCode 相关插件
 
   - [SublimeLinter](https://github.com/airbnb/javascript/blob/master/linters/SublimeLinter/SublimeLinter.sublime-settings)
 
-## 常见问题
-
-### 解决冲突
-
-#### Prettier 与 ESLint 规则冲突
-
-为什么会产生冲突
-
-vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修复，当保存文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，导致代码变得不符合 ESLint 规则了。
-
-  - Prettier 插件根据 `.prettierrc` 文件中的配置来美化代码
-  - ESLint 插件也根据 `.eslintrc` 文件中的配置对代码进行美化和校验
-    - 当使用 `eslint-plugin-prettier` 插件时，会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从.prettierrc 文件中读取配置
-    - 当.prettierrc 的配置和官方默认配置不一致的时候, 编辑器处理时就冲突了
-  - eslint-config-prettier: 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
-
-怎么解决
-
-推荐使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 会用 prettier 先格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
-
-  - <https://zhuanlan.zhihu.com/p/347339865>
-  - <https://zhuanlan.zhihu.com/p/142105418>
-
-#### @typescript-eslint/eslint-plugin 与 eslint 规则冲突
-
-一个配置开，一个配置关，冲突就产生了。
-
-#### prettier 与 markdownlint 冲突
-
-调试为 prettier 对应的规则，或关闭 prettier 格式化
-
-```js
-  // "[markdown]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
-```
-
 ## 测试代码
 
 src 包含各类型的测试源代码, 用于测试验证，包括但不限于以下类型
@@ -691,23 +652,22 @@ module.exports = {
 
 关于 yaml 文件扩展名, [官方](https://yaml.org/faq.html) 官方推荐我们使用 `.yaml`。
 
-## TODO
+## 常见问题
 
-  - [ ] .editorconfig 有什么用，是否会对 prettier 有影响
-  - [ ] prettier 的适用范围（哪些 ext）
-  - [ ] eslint 的适用范围（哪些 ext）
-  - [ ] prettier 和 eslint 的规则冲突
-  - [ ] prettier 和 eslint 在 VSCode editor.formatOnSave 生效
+  - [x] .editorconfig 有什么用，是否会对 prettier 有影响
+  - [ ] prettier 与 eslint 的适用范围（哪些 ext）
+  - [x] prettier 和 eslint 规则冲突
   - [ ] @typescript-eslint/eslint-plugin 与 eslint 规则冲突
+  - [x] prettier 与 markdownlint 规则冲突
+  - [ ] commitlint 如何交互式操作
+  - [ ] prettier 和 eslint 在 VSCode editor.formatOnSave 生效
   - [ ] eslint 如何在 webpack 本地开发中卡点
   - [ ] commitlint 如何在 CI 中卡点
   - [ ] 使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点
-  - [ ] commitlint 如何交互式操作
-  - [ ] prettier 和 markdownlint 的规则冲突
 
-解决方案
+## 解决方案
 
-### prettier 与 editorconfig 配置相交？
+### prettier 与 editorconfig 配置冲突
 
 有了 Prettier 还需要 EditorConfig 吗？两者配置不同会怎么样？
 
@@ -727,7 +687,7 @@ module.exports = {
 
 没发现配置项 `options.editorconfig`，最新的 VSCode 配置项如下 `useEditorConfig: true`, 默认为 true
 
-参见 https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+参见 <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
 
 ```js
 "prettier.useEditorConfig": true
@@ -736,4 +696,49 @@ module.exports = {
 // 默认优先级关系是: .editorconfig 配置 > .prettierrc.js 配置 > Prettier 默认值。
 ```
 
-考虑到 EditorConfig 覆盖所有类型的文件，所以建议是 EditorConfig 管理相交属性，其他属性则由 Prettier 控制。
+考虑到 EditorConfig 覆盖所有类型的文件，所以
+
+  - EditorConfig 配置优先
+  - 其他格式化属性由 Prettier 控制
+
+### prettier 与 eslint 规则冲突
+
+为什么会产生冲突, prettier 会对代码做格式化，eslint 也可以做格式化，当配置规则不一致时，冲突就出现了。
+
+此时，IDE vscode 在编辑文件时，ESLint 先 fix 了代码，之后 prettier 格式化了代码，也会代码变得不符合 ESLint 规则了，满篇飘红。
+
+此时规则冲突会出现两个问题
+
+  1. 格式化处理顺序不一致，可能产生非预期行为
+    - 先 `eslint --fix`, 后 `prettier`
+    - 先 `prettier`，后 `eslint --fix`
+  1. 使用 `eslint-plugin-prettier` 插件时, 会用 prettier 替代了 eslint 本身对于代码美化部分的功能，而其中的配置是官方默认配置，并且不从 .prettierrc 文件中读取配置, 出现诡异问题
+
+怎么解决
+
+  - 使用 `eslint-config-prettier` 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
+  - 使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 解决格式化先后问题，默认会用 prettier 先格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
+
+  - <https://zhuanlan.zhihu.com/p/347339865>
+  - <https://zhuanlan.zhihu.com/p/142105418>
+
+### prettier 与 eslint 的适用范围
+
+  - prettier 作为**代码格式化**工具
+    - `.{js,ts,jsx,tsx,css,less,scss,json,vue,html}` 以及 `.{md,yml,yaml}` 等
+  - eslint **代码质量**方面的语法检查，查找并修复 JavaScript 代码中的问题
+    - `.{js,ts,jsx,tsx}` 以及 `.{vue,html}`
+
+### @typescript-eslint/eslint-plugin 与 eslint 规则冲突
+
+同样的规则约束两边各有一个配置，一个开，一个关，冲突就产生了。
+
+### prettier 与 markdownlint 规则冲突
+
+基于原则，格式化交给 prettier 处理，就需要适配对应格式对标 prettier。否则对此文件格式，关闭 prettier 格式化
+
+```js
+  // "[markdown]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+```
