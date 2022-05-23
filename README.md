@@ -51,7 +51,7 @@ lint example
 
 ### 版本控制
 
-add .npmrc && .nvmrc
+add `.npmrc` && `.nvmrc`, 并且 lock 文件要入库。
 
 ```bash
 node -v > .nvmrc
@@ -62,6 +62,17 @@ engine-strict=true
 package-lock=true
 registry=https://registry.npmjs.org/
 ```
+
+package.json
+
+```json
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  }
+```
+
+CI 流程通过 `npm ci` 校验 lock 文件等
 
 TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
@@ -102,6 +113,8 @@ quote_type = single
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
 ### prettier
+
+适用范围: 代码格式化
 
 usage
 
@@ -164,6 +177,8 @@ npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"' # 这个执行
 # husky uninstall
 npm uninstall husky && git config --unset core.hooksPath
 ```
+
+git hooks 可以通过 `--no-verify` 跳过检查，所以需要再 CI 流程中卡点
 
 ### lint-staged
 
@@ -273,7 +288,7 @@ TODO
 一些原则
 
   - 按照 prettier 原则，尽量减少格式化对开发的干扰
-    - 不应该因为尾分号分心，满篇飘红，而应交给格式化工具自动处理，此时 eslint 应关闭规则
+    - 不应该因为尾分号分心，满篇飘红，而应交给格式化工具自动处理，此时 eslint 应关闭格式化相关规则
     - eslint 更应该关注语法检查
 
 接入之前有必要先熟悉下一些配置和常识
@@ -377,7 +392,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {},
+  rules: {
+
+  },
 }
 ```
 
@@ -399,6 +416,14 @@ npm run eslint:fix -- --ext '.{js,jsx,ts,tsx,json,vue,yml,yaml,css,less,scss,md,
 
 ```bash
 npm i -D @babel/core @babel/preset-env
+```
+
+babel.config.js
+
+```js
+module.exports = {
+  presets: ['@babel/preset-env'],
+}
 ```
 
 ### stylelint
@@ -664,3 +689,18 @@ module.exports = {
 ## 其他
 
 关于 yaml 文件扩展名, [官方](https://yaml.org/faq.html) 官方推荐我们使用 `.yaml`。
+
+## TODO
+
+  - [ ] .editorconfig 添加后的作用，不加有什么影响
+  - [ ] .editorconfig 对 prettier 的影响
+  - [ ] prettier 的适用范围（哪些 ext）
+  - [ ] eslint 的适用范围（哪些 ext）
+  - [ ] prettier 和 eslint 的规则冲突
+  - [ ] prettier 和 eslint 在 VSCode editor.formatOnSave 生效
+  - [ ] @typescript-eslint/eslint-plugin 与 eslint 规则冲突
+  - [ ] eslint 如何在 webpack 本地开发中卡点
+  - [ ] commitlint 如何在 CI 中卡点
+  - [ ] 使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点
+  - [ ] commitlint 如何交互式操作
+  - [ ] prettier 和 markdownlint 的规则冲突
