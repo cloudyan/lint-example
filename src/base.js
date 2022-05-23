@@ -1,8 +1,3 @@
-// 测试校验 lint 规则
-import { useState } from 'react'
-
-console.log(useState)
-
 const noop = (...rest) => {
   console.log(rest)
 }
@@ -20,3 +15,5 @@ const props = { name: 'red', age: 20 }
 const { age = 20 } = props
 const { foo = [] } = obj1
 const [a1, b1] = arr1
+
+console.log(age, foo, a1, b1)
