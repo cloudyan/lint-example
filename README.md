@@ -8,28 +8,56 @@ lint example
   - 解决 Prettier 和 ESLint 冲突
 - CI 流程如何接入
 
-## 项目中接入 lint
+## 菜单
 
-接入步骤
+- [lint-example](#lint-example)
+  - [菜单](#菜单)
+    - [如何执行落地？](#如何执行落地)
+  - [项目中接入 lint](#项目中接入-lint)
+    - [版本控制](#版本控制)
+    - [editorconfig](#editorconfig)
+    - [prettier](#prettier)
+    - [husky](#husky)
+    - [lint-staged](#lint-staged)
+    - [commitlint](#commitlint)
+    - [typecheck](#typecheck)
+    - [eslint](#eslint)
+    - [babel](#babel)
+    - [stylelint](#stylelint)
+    - [browserlist](#browserlist)
+    - [conventional-changelog](#conventional-changelog)
+  - [IDE 编辑器接入 lint](#ide-编辑器接入-lint)
+  - [常见问题](#常见问题)
+    - [解决冲突](#解决冲突)
+  - [测试代码](#测试代码)
+  - [其他](#其他)
 
-1. add .npmrc && .nvmrc
-2. prettier
-3. husky
-4. lint-staged
-5. commitlint
-6. editorconfig
-7. typecheck
-8. eslint
-9. stylelint
-10. browserlist
-11. conventional-changelog
-12. sonar
+---
 
 ### 如何执行落地？
 
 集成到 vscode, webpack 以及 CI 流程上。
 
-### .npmrc && .nvmrc
+## 项目中接入 lint
+
+接入步骤
+
+1. 版本控制
+2. editorconfig
+3. prettier
+4. husky
+5. lint-staged
+6. commitlint
+7. eslint
+8. stylelint
+9. browserlist
+10. typecheck
+11. conventional-changelog
+12. sonar
+
+### 版本控制
+
+add .npmrc && .nvmrc
 
 ```bash
 node -v > .nvmrc
@@ -40,6 +68,43 @@ engine-strict=true
 package-lock=true
 registry=https://registry.npmjs.org/
 ```
+
+### editorconfig
+
+为什么要加
+
+> .editorconfig 是可移植自定义编辑器设置。
+> 实现跨平台、编辑器和 IDE 统一编程风格, 提高代码阅读质量。
+
+即使团队统一编程风格、编辑器，仍不能保证历史遗留代码、第三方开源库等风格一致，还可能存在编码问题，非 utf-8 等
+
+> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
+
+config
+
+> Unix-style newlines with a newline ending every file
+> 根目录的配置文件，编辑器会由当前目录向上查找，如果找到 `roor = true` 的文件，则不再查找
+
+```ini
+# .editorconfig
+# https://editorconfig.org/
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{js,ts}]
+quote_type = single
+```
+
+在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
+
 
 ### prettier
 
@@ -200,42 +265,6 @@ TODO
 
 - 这个如果错误能给中文提示吗？
 - 交互式方案
-
-### editorconfig
-
-为什么要加
-
-> .editorconfig 是可移植自定义编辑器设置。
-> 实现跨平台、编辑器和 IDE 统一编程风格, 提高代码阅读质量。
-
-即使团队统一编程风格、编辑器，仍不能保证历史遗留代码、第三方开源库等风格一致，还可能存在编码问题，非 utf-8 等
-
-> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
-
-config
-
-> Unix-style newlines with a newline ending every file
-> 根目录的配置文件，编辑器会由当前目录向上查找，如果找到 `roor = true` 的文件，则不再查找
-
-```ini
-# .editorconfig
-# https://editorconfig.org/
-
-root = true
-
-[*]
-charset = utf-8
-end_of_line = lf
-indent_size = 2
-indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
-
-[*.{js,ts}]
-quote_type = single
-```
-
-在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
 ### typecheck
 
@@ -423,9 +452,9 @@ vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修
 - https://zhuanlan.zhihu.com/p/347339865
 - https://zhuanlan.zhihu.com/p/142105418
 
-## 源代码
+## 测试代码
 
-src 包含各类型的源代码, 用于测试验证，包括但不限于以下类型
+src 包含各类型的测试源代码, 用于测试验证，包括但不限于以下类型
 
 - js
 - ts
