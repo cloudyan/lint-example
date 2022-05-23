@@ -42,7 +42,7 @@ jobs:
           cache: npm # npm, yarn or pnpm
 
       - name: Env
-        run: node -v && npm -v
+        run: npm version # node -v && npm -v
 
       - name: Install
         run: npm ci --prefer-offline # npm ci or yarn
