@@ -8,6 +8,12 @@ lint example
   - 解决 Prettier 和 ESLint 冲突
 - CI 流程如何接入
 
+分工
+
+- EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
+- Prettier 作为**代码格式化**工具
+- 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做
+
 ## 菜单
 
 - [lint-example](#lint-example)
@@ -105,7 +111,6 @@ quote_type = single
 
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
-
 ### prettier
 
 usage
@@ -190,6 +195,8 @@ package.json
   ],
 }
 ```
+
+- https://juejin.cn/post/6844903864722784264
 
 ### commitlint
 
@@ -288,7 +295,10 @@ npm i -D eslint @babel/eslint-parser
 npm i -D eslint-config-airbnb-base
 
 # prettier
+# 如果不加此项，prettier 规则和 eslint 规则就可能冲突
+# 规则不同时，会出现 prettier 去掉尾分号，执行 eslint:fix 又给加上
 npm i -D eslint-config-prettier # 关闭所有可能和 Prettier 冲突的 ESLint 规则
+
 # 推荐使用 prettier-eslint prettier-stylelint
 npm i -D prettier-eslint prettier-stylelint
 # eslint-plugin-prettier 不推荐使用，有问题
@@ -357,6 +367,13 @@ npm i -D stylelint-config-css-modules stylelint-config-prettier stylelint-config
 npm i -D prettier-plugin-jsdoc prettier-plugin-style-order
 ```
 
+配置 .stylelintignore 文件(默认不格式化 node_modules)
+
+vscode 插件
+
+- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+- [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
+
 ### browserlist
 
 ```json5
@@ -405,12 +422,6 @@ config
 - https://zhuanlan.zhihu.com/p/51894196
 
 ## IDE 编辑器接入 lint
-
-分工
-
-- EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
-- Prettier 作为**代码格式化**工具
-- 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做
 
 VSCode 相关插件
 

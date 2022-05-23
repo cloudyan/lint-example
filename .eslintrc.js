@@ -51,7 +51,7 @@ module.exports = {
 
   extends: [
     'eslint-config-airbnb-base',
-    // 'prettier',
+    'prettier', // 需要放在 extends 最后，且去除所有后续的 rules
     // 'prettier/react', // has been merged into "prettier" in eslint-config-prettier 8.0.0
   ],
   // .concat
@@ -259,7 +259,7 @@ module.exports = {
         asyncArrow: 'ignore',
       },
     ],
-    semi: ['off', 'never'],
+    // semi: ['off', 'never'],
     'func-names': 'off',
     'consistent-return': 'off',
   },
