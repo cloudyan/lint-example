@@ -82,10 +82,9 @@ TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
 > .editorconfig 是可移植自定义编辑器设置。
 > 实现跨平台、编辑器和 IDE 统一编程风格, 提高代码阅读质量。
+> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
 
 即使团队统一编程风格、编辑器，仍不能保证历史遗留代码、第三方开源库等风格一致，还可能存在编码问题，非 utf-8 等
-
-> EditorConfig 设置优先于全局 Visual Studio 文本编辑器设置
 
 config
 
@@ -109,6 +108,8 @@ trim_trailing_whitespace = true
 [*.{js,ts}]
 quote_type = single
 ```
+
+EditorConfig 解决了编辑器配置层面的编码风格一致性问题。但代码风格的部分并未涉及，比如句尾分号、逗号、多行对象书写规范等
 
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
@@ -704,3 +705,32 @@ module.exports = {
   - [ ] 使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点
   - [ ] commitlint 如何交互式操作
   - [ ] prettier 和 markdownlint 的规则冲突
+
+解决方案
+
+### prettier 与 editorconfig 配置相交？
+
+有了 Prettier 还需要 EditorConfig 吗？两者配置不同会怎么样？
+
+我们需要重演一下两者的作用过程：
+
+  - EditorConfig 作用于预览和输入阶段
+  - Prettier 在保存和提交阶段重新组织代码，Prettier 会成为代码形态的最终决定者。
+
+实际上如 [Prettier 编辑器配置](https://prettier.io/docs/en/configuration.html#editorconfig) 所描述，Prettier 对 `.editorconfig` 文件在特定配置下做了转换。
+
+如果`options.editorconfig`是true并且您的项目中有一个`.editorconfig`文件，Prettier 将解析它并将其属性转换为相应的 Prettier 配置。此配置将被`.prettierrc`等覆盖。目前，支持以下 EditorConfig 属性：
+
+  - `end_of_line`
+  - `indent_style`
+  - `indent_size/tab_width`
+  - `max_line_length`
+
+```js
+// 最新的 VSCode 配置项如下, 没发现配置项 `options.editorconfig`
+// useEditorConfig: true
+// 为 ture, 优先级关系是: .editorconfig 配置 > .prettierrc.js 配置 > Prettier 默认值。
+"prettier.useEditorConfig": true
+```
+
+考虑到 EditorConfig 覆盖所有类型的文件，所以建议是 EditorConfig 管理相交属性，其他属性则由 Prettier 控制。
