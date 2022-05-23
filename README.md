@@ -177,8 +177,11 @@ package.json
 
 ```json
 "lint-staged": {
-  "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}": [
+  "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,html}": [
     "prettier --write"
+  ],
+  "*.{js,jsx,ts,tsx,vue,html}": [
+    "npm run eslint:fix"
   ],
   "*.ts?(x)": [
     "prettier --parser=typescript --write --ignore-unknown"
@@ -380,7 +383,7 @@ module.exports = {
 
 package.json
 
-```js
+```json
   "eslint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue",
   "eslint:fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx,.vue",
 
@@ -423,7 +426,9 @@ vscode 插件
 
 ### browserlist
 
-```json5
+package.json
+
+```json
   "browserslist": [
     "> 1%",
     "last 2 versions",
@@ -431,8 +436,11 @@ vscode 插件
     "Android >= 4",
     "ios >= 8"
   ],
+```
 
-// 或
+或
+
+```json
   "browserslist": {
     "production": [
       ">0.2%",
@@ -499,7 +507,7 @@ VSCode 相关插件
 
 在项目中新建配置 `.vscode/settings.json`
 
-```json
+```js
 {
   "editor.formatOnSave": true, // 保存时自动格式化
   // 保存代码时，自动修复
@@ -562,20 +570,7 @@ vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修
 
 怎么解决
 
-推荐使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 先把代码用 prettier 格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
-
-```json
-  "editor.formatOnSave": false, // 保存时自动格式化
-  "[javascript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    // "editor.defaultFormatter": "esbenp.prettier-vscode", // 格式化时使用 prettier
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-```
+推荐使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 会用 prettier 先格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
 
   - <https://zhuanlan.zhihu.com/p/347339865>
   - <https://zhuanlan.zhihu.com/p/142105418>
@@ -588,7 +583,7 @@ vscode 配置了在文件保存时进行 Prettier 格式化 和 ESLint 自动修
 
 调试为 prettier 对应的规则，或关闭 prettier 格式化
 
-```json
+```js
   // "[markdown]": {
   //   "editor.defaultFormatter": "esbenp.prettier-vscode"
   // },
