@@ -3,6 +3,6 @@
 
 # npx --no-install lint-staged
 # npx --no-install lint-staged --concurrent false
-npm run precommit
+npm run lint-staged
 
 npm test

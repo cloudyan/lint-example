@@ -378,16 +378,14 @@ module.exports = {
 package.json
 
 ```json
-  "eslint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue",
-  "eslint:fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx,.vue",
-
-  "eslint": "eslint .",
-  "eslint:fix": "eslint --fix .",
+{
+  "eslint": "cross-env TIMING=1 eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+  "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+}
 ```
 
-```bash
-npm run eslint:fix -- --ext '.{js,jsx,ts,tsx,json,vue,yml,yaml,css,less,scss,md,html}'
-```
+  - [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
+  - [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
 
 ### babel
 

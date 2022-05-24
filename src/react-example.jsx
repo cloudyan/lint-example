@@ -1,10 +1,10 @@
-import { sleep } from './utils'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { sleep } from './utils/utils'
 
 console.log(useState)
 await sleep(1000)
 
-const Hello = () => {
+function Hello() {
   const [number, setNumber] = useState(0)
 
   const handleClick = () => {
@@ -13,7 +13,7 @@ const Hello = () => {
 
   return (
     <>
-      <div onClick={handleClick}></div>
+      <div onClick={handleClick} />
       <div>Title</div>
       <p>{number}</p>
     </>
