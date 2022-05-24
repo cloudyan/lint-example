@@ -6,22 +6,6 @@
     "source.fixAll.eslint": true, // 保存时使用eslint校验文件
     "source.fixAll.stylelint": true
   },
-  // "[javascript]": {
-  //   // 没生效？
-  //   "editor.formatOnSave": true,
-  //   // "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode" // 格式化时使用 prettier
-  // },
-  // "[typescript]": {
-  //   "editor.formatOnSave": true,
-  //   // "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode" // 格式化时使用 prettier
-  // },
-  // "[jsonc]": {
-  //   "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  // },
-  // "editor.defaultFormatter": "esbenp.prettier-vscode",
-
   "eslint.workingDirectories": [{ "mode": "auto" }],
   // "eslint.options": {
   //   "overrideConfigFile": "babel.config.js"
