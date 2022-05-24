@@ -14,12 +14,14 @@
 
 ## 分工与适用范围
 
-editorconfig, prettier, eslint 各自适用哪些 ext
+editorconfig, prettier 与 eslint 各自都做什么，功能重叠的部分怎么办，都适用哪些文件类型 ext
 
-  - editorconfig 覆盖所有类型的文件, 仅做基础格式要求
+明确分工
+
+  - editorconfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
   - prettier 专注于**代码格式化**
     - `.{js,ts,jsx,tsx,css,less,scss,json,json5}` 以及 `.{vue,html,graphql,markdown,yml,yaml}` 等
-  - eslint 专注于**代码质量**，做语法检查、查找并修复 JavaScript 代码中的问题（格式化让给 prettier 来做）
+  - eslint 专注于**代码质量**，做语法检查、查找并修复 JavaScript 代码中的问题（格式化的事儿，让 Prettier 来做）
     - 针对 `.{js,ts,jsx,tsx}` 以及 `.{vue,html,md}` 中的脚本
 
 prettier 支持自动推断解析器，所以无需手动配置。更多参考 <https://prettier.io/docs/en/options.html#parser>

@@ -2,21 +2,13 @@
 
 lint example
 
-## 如何执行落地？
-
-集成到 vscode, webpack 以及 CI 流程上。
+## lint 接入
 
   - 项目中如何接入
   - IDE 编辑器如何接入
-    - `"editor.formatOnSave": true,`
-    - 解决 Prettier 和 ESLint 冲突
   - CI 流程如何接入
 
-分工
-
-  - EditorConfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
-  - Prettier 作为**代码格式化**工具
-  - 其余的，也就是**代码质量**方面的语法检查，用 `ESLint` 来做(格式化的事儿，让 Prettier 来做)
+集成到 vscode, webpack 以及 CI 流程上能有效保证执行落地。
 
 ## 进度
 
@@ -48,7 +40,7 @@ lint example
       - [browserlist](#browserlist)
       - [typecheck](#typecheck)
       - [conventional-changelog](#conventional-changelog)
-      - [sonar](#sonar)
+      - [sonarlint](#sonar)
       - [markdownlint](#markdownlint)
     - [IDE 编辑器接入 lint](#ide-编辑器接入-lint)
     - [扩展阅读](#扩展阅读)
@@ -497,9 +489,9 @@ config
   - [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
   - <https://zhuanlan.zhihu.com/p/51894196>
 
-### sonar
+### sonarlint
 
-接入 sonar
+接入 SonarQube
 
 ### markdownlint
 
@@ -515,12 +507,49 @@ config
 
 ```js
 {
-  "editor.formatOnSave": true, // 保存时自动格式化
-  "editor.defaultFormatter": "stylelint.vscode-stylelint",
   // 保存代码时，自动修复
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true, // 保存时使用eslint校验文件
     "source.fixAll.stylelint": true
+  },
+
+  "editor.formatOnSave": true, // 保存时自动格式化
+  // "editor.defaultFormatter": "esbenp.prettier-vscode", // 不能全部用 prettier
+  // 需要分类处理
+  // prettier -> js,ts,json,json5,css,less,scss,postcss,pug,html
+  "[json,json5]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css,less,scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[html]": {
+    // "editor.defaultFormatter": "HookyQR.beautify"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript,javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  // "[markdown]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "files.associations": {
+    // 文件关联语言的优先级配置
+    "*.vue": "vue",
+    "*.cshtml": "html",
+    "*.js": "javascript",
+    "*.dwt": "html"
   },
 }
 ```
