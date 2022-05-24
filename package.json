@@ -18,7 +18,7 @@
     "alex": "alex .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "eslint": "eslint .",
-    "eslint:fix": "eslint --fix .",
+    "eslint:fix": "eslint --cache --fix .",
     "format": "npm run prettier -- --write",
     "lint": "lint-staged --allow-empty",
     "lint:md": "markdownlint --config ./.markdownlint.json README.md */README.md",

@@ -109,6 +109,18 @@ trim_trailing_whitespace = true
 quote_type = single
 ```
 
+通配符
+
+```ini
+*                匹配除/之外的任意字符串
+**               匹配任意字符串
+?                匹配任意单个字符
+[name]           匹配name中的任意一个单一字符
+[!name]          匹配不存在name中的任意一个单一字符
+{s1,s2,s3}       匹配给定的字符串中的任意一个(用逗号分隔)
+{num1..num2}     匹配num1到num2之间的任意一个整数, 这里的num1和num2可以为正整数也可以为负整数
+```
+
 EditorConfig 解决了编辑器配置层面的编码风格一致性问题。但代码风格的部分并未涉及，比如句尾分号、逗号、多行对象书写规范等
 
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
@@ -361,12 +373,6 @@ eslint 只检查 `.{js,ts,jsx,tsx,vue,html}` 中的脚本, 不会处理 `.css`, 
     - `eslint-plugin-jest` 仅在与测试相关的文件上运行规则
     - `eslint-plugin-html` 用于检查和修复 HTML 文件中包含的内联脚本
 
-每个规则有【3】个错误级别
-
-  - "off"或 0: 关闭规则
-  - "warn"或 1: 打开规则, 作为警告（不会导致程序退出）
-  - "error"或 2: 打开规则, 作为错误（触发时程序会退出，退出代码为 1）
-
 接入 eslint
 
 ```bash
@@ -448,6 +454,18 @@ package.json
 ```bash
 npm run eslint:fix -- --ext '.{js,jsx,ts,tsx,json,vue,yml,yaml,css,less,scss,md,html}'
 ```
+
+每个规则有【3】个错误级别
+
+  - "off"或 0: 关闭规则
+  - "warn"或 1: 打开规则, 作为警告（不会导致程序退出）
+  - "error"或 2: 打开规则, 作为错误（触发时程序会退出，退出代码为 1）
+
+退出码
+
+  - `0`: 检测成功，没有错误。如果 `--max-warnings` 标志被设置为 `n`，那么警告数量最多为`n`。
+  - `1`: 检测成功，并且至少有一个错误，或者警告多于 `--max-warnings` 选项所允许的警告。
+  - `2`: 由于配置问题或内部错误，检测未能成功。
 
 ### babel
 
