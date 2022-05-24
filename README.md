@@ -171,7 +171,8 @@ npm run prepare
 # Add a hook:
 npx husky add .husky/pre-commit "npm test"
 npx husky add .husky/pre-commit "npm run lint-staged"
-npx husky add .husky/commit-msg 'npx --no commitlint --edit "$1"' # 这个执行有问题
+npx husky add .husky/commit-msg 'npx --no commitlint --edit $1' # 这个执行有问题
+yarn husky add .husky/commit-msg 'npx --no -- commitlint --edit "${1}"' # 这个可以
 
 # husky uninstall
 npm uninstall husky && git config --unset core.hooksPath
@@ -821,6 +822,7 @@ module.exports = {
   - [全面梳理代码规范化：EditorConfig + Prettier + ESLint](https://juejin.cn/post/6952842182252298248)
   - [ESLint 工作原理探讨](https://zhuanlan.zhihu.com/p/53680918)
   - [自定义 Git - Git 钩子](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90)
+  - [lint-staged如何做到只lint staged?](https://juejin.cn/post/6844903864722784264)
 
 ### 知识点
 
