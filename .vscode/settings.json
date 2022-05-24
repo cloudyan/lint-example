@@ -43,6 +43,11 @@
     // ".*ignore"
     // "gitignore"
   ]
+  // "eslint.validate": [
+  //   "javascript",
+  //   "javascriptreact",
+  //   "vue"
+  // ],
 
   // "typescript.tsdk": "node_modules/typescript/lib",
   // "jest.jestCommandLine": "yarn jest --watchAll",

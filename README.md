@@ -426,11 +426,7 @@ module.exports = {
   },
   plugins: [
     // 插件加载规则 extPlugin = `plugin:${pluginName}/${configName}`
-    // plugin:(此处不能有空格)包名/配置名称。解析时plugin是解析成 eslint-plugin-vue。如果有空格会解析失败
     // plugin 可以省略包名的前缀 `eslint-plugin-`
-    // 'eslint:recommended',
-    // 'plugin:vue/vue3-recommended',   // vue3.x
-    // 'plugin:vue/recommended',        // vue2.x
 
     'react',
     '@typescript-eslint',
