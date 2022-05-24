@@ -11,9 +11,10 @@ const Hello = () => {
 
   return (
     <>
-      <div onClick={handleClick}></div>
-      <div>Title</div>
-      <p>{number}</p>
+      <div onClick={handleClick}>
+        <div>Title</div>
+        <p>{number}</p>
+      </div>
     </>
   )
 }

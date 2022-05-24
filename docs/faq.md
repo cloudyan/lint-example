@@ -1,16 +1,16 @@
 # 常见问题
 
   - [常见问题](#常见问题)
-    - [分工与适用范围](#分工与适用范围)
-    - [prettier 与 editorconfig 配置不同](#prettier-与-editorconfig-配置不同)
-    - [prettier 与 eslint 规则冲突](#prettier-与-eslint-规则冲突)
-    - [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
-    - [prettier 与 markdownlint 规则冲突](#prettier-与-markdownlint-规则冲突)
-    - [commit msg 交互式操作](#commit-msg-交互式操作)
-    - [eslint 如何在本地开发运行时中卡点（webpack?）](#eslint-如何在本地开发运行时中卡点webpack)
-    - [prettier 和 eslint 在 VSCode editor.formatOnSave 生效](#prettier-和-eslint-在-vscode-editorformatonsave-生效)
-    - [commitlint 如何在 CI 中卡点](#commitlint-如何在-ci-中卡点)
-    - [使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点](#使用-lint-staged-后prettier-或-eslint-如何在-ci-中卡点)
+    - [x] [分工与适用范围](#分工与适用范围)
+    - [x] [prettier 与 editorconfig 配置不同](#prettier-与-editorconfig-配置不同)
+    - [x] [prettier 与 eslint 规则冲突](#prettier-与-eslint-规则冲突)
+    - [ ] [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
+    - [x] [prettier 与 markdownlint 规则冲突](#prettier-与-markdownlint-规则冲突)
+    - [ ] [commit msg 交互式操作](#commit-msg-交互式操作)
+    - [x] [eslint 如何在本地开发运行时中卡点（webpack?）](#eslint-如何在本地开发运行时中卡点webpack)
+    - [ ] [prettier 和 eslint 在 VSCode editor.formatOnSave 生效](#prettier-和-eslint-在-vscode-editorformatonsave-生效)
+    - [ ] [commitlint 如何在 CI 中卡点](#commitlint-如何在-ci-中卡点)
+    - [ ] [使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点](#使用-lint-staged-后prettier-或-eslint-如何在-ci-中卡点)
 
 ## 分工与适用范围
 

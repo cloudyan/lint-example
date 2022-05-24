@@ -198,7 +198,7 @@ package.json
 }
 ```
 
-  - <https://juejin.cn/post/6844903864722784264>
+  - [lint-staged如何做到只lint staged?](https://juejin.cn/post/6844903864722784264)
 
 ### commitlint
 
