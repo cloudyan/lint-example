@@ -19,6 +19,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit": "commit",
     "cz": "git-cz",
+    "ccz": "./node_modules/cz-customizable/standalone.js",
     "eslint": "cross-env TIMING=1 eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "format": "npm run prettier -- --write",
@@ -42,7 +43,10 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./.cz-config.js"
     }
   },
   "dependencies": {
@@ -66,6 +70,7 @@
     "conventional-changelog-cli": "^2.2.2",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^6.3.0",
     "eslint": "^8.16.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",

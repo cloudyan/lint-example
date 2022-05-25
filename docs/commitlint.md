@@ -86,6 +86,8 @@ commitlint 提供了两个 `commitizen` 适配器:
   - [`@commitlint/prompt`](https://www.npmjs.com/package/@commitlint/prompt) 42k 提供了一种交互方式 `@commitlint/prompt-cli`
   - [`@commitlint/cz-commitlint`](https://www.npmjs.com/package/@commitlint/cz-commitlint) 15k 受 [`cz-conventional-changelog`](https://www.npmjs.com/package/cz-conventional-changelog) 1M 启发，它提供了一种更现代的交互方式。
 
+commitizen 可以全局安装，提供 `git cz` 替代 `git commit`
+
 **`@commitlint/prompt`**
 
 交互效果同 `@commitlint/prompt-cli`
@@ -145,7 +147,6 @@ commitizen init cz-conventional-changelog --save --save-exact
 # }
 #
 # config.commitizen 下有很多配置，types: { feat: {} }, 可定义分类
-
 ```
 
 ### 定制化项目提交说明
@@ -165,7 +166,6 @@ git cz # 替代 git commit
 ```js
 // 官方示例 https://github.com/leoforfree/cz-customizable/blob/master/cz-config-EXAMPLE.js
 // 汉化版
-'use strict';
 
 module.exports = {
   types: [
