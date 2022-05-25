@@ -142,13 +142,17 @@ module.exports = {
 ```js
 {
   // https://github.com/microsoft/vscode-eslint#settings-migration
+  "javascript.format.enable": false, // 关闭默认js格式化程序
+  "eslint.format.enable": false, // 不用 eslint 做格式化
+  "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
+
   // eslint 工作目录, 根据 package.json, eslintrc 位置自动推断，Mono 存储库可指定位置 ['./src']
   // 此配置可以一个项目多个目录指定不通的 eslintrc 规则来校验
   "eslint.workingDirectories": [{ "mode": "auto" }],
-  "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
-  "javascript.format.enable": false, // 关闭默认js格式化程序
-  "eslint.format.enable": false, // 不用 eslint 做格式化
 
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
   // 保存代码时，自动修复 fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
@@ -191,9 +195,8 @@ module.exports = {
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
   },
-  "eslint.codeAction.showDocumentation": {
-    "enable": true
-  }
+  // 关闭vetur内的js格式化程序?
+  // "vetur.format.defaultFormatter.js": "none",
 
   // eslint.probe 尝试验证文件的语言标识符, 默认值为["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "vue", "markdown"]
   // html 和 vue, 建议添加到 Vue 项目的工作区配置中（依赖 eslint-plugin-{html,vue}）

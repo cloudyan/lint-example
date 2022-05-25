@@ -518,9 +518,11 @@ config
   // https://github.com/microsoft/vscode-eslint#settings-migration
   "javascript.format.enable": false, // 关闭默认js格式化程序
   "eslint.format.enable": false, // 不用 eslint 做格式化
-  "eslint.workingDirectories": [{ "mode": "auto" }],
   "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
-
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
   // 保存代码时，自动修复 fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
@@ -562,9 +564,6 @@ config
   // vetur
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
-  },
-  "eslint.codeAction.showDocumentation": {
-    "enable": true
   }
 }
 ```
