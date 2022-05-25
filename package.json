@@ -42,7 +42,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "@commitlint/prompt"
+      "path": "@commitlint/cz-commitlint"
     }
   },
   "dependencies": {
@@ -56,6 +56,7 @@
     "@babel/preset-typescript": "^7.17.12",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
+    "@commitlint/cz-commitlint": "^17.0.0",
     "@commitlint/prompt": "^17.0.0",
     "@commitlint/prompt-cli": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.26.0",

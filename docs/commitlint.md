@@ -91,7 +91,7 @@ commitlint 提供了两个 `commitizen` 适配器:
 ```bash
 {
   "scripts": {
-    "commit": "git-cz"
+    "cz": "git-cz"
   },
   "config": {
     "commitizen": {
@@ -102,6 +102,25 @@ commitlint 提供了两个 `commitizen` 适配器:
 ```
 
 `@commitlint/cz-commitlint` 要求 node>12.1.2
+
+让 commitizen 基于 commitlint.config.js 工作，只需要维护一个配置文件
+
+  - commitizen 用于提交
+  - commitlint 用于校验
+  - 共享配置文件 commitlint.config.js
+
+```json
+{
+  "scripts": {
+    "cz": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  }
+}
+```
 
 如果使用 `cz-conventional-changelog` 适配器, 初始化命令如下
 
