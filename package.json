@@ -41,14 +41,6 @@
       "npm run eslint:fix"
     ]
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": "./.cz-config.js"
-    }
-  },
   "dependencies": {
     "react": "^17.0.2"
   },

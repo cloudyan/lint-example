@@ -153,21 +153,30 @@ commitizen init cz-conventional-changelog --save --save-exact
 
 上面的提交说明都是英文的，如果想定制项目的提交说明，可以试试 [`cz-customizable`](https://www.npmjs.com/package/cz-customizable), 它还能与 [semantic-release](https://github.com/semantic-release/semantic-release) 完美配合
 
-该模块还可以全局使用
+该模块还可以全局使用, 推荐使用 [Option 2 - cz-customizable in standalone mode (New)](https://github.com/leoforfree/cz-customizable#option-2---cz-customizable-in-standalone-mode-new) 配置，此时不依赖 `commitzen`
 
 ```bash
-npm i -g cz-customizable
-
-git cz # 替代 git commit
+npm i -D cz-customizable
 ```
 
-新增配置 `~/.cz.config.js`
+package.json
+
+```json
+"scripts" : {
+  "cz": "./node_modules/cz-customizable/standalone.js"
+}
+```
+
+文档提示说，可以新增配置在用户根目录下 `~/.cz.config.js`, 但验证未通过, 提示 `Unable to find a configuration file`
+
+而放在项目根目录下验证通过
 
 ```js
 // 官方示例 https://github.com/leoforfree/cz-customizable/blob/master/cz-config-EXAMPLE.js
 // 汉化版
 
 module.exports = {
+  // prettier-ignore
   types: [
     {value: 'feat',     name: '特性: 一个新的特性'},
     {value: 'fix',      name: '修复: 修复一个Bug'},
@@ -177,15 +186,14 @@ module.exports = {
     {value: 'pref',     name: '性能: 提升性能'},
     {value: 'test',     name: '测试: 添加一个测试'},
     {value: 'chore',    name: '工具: 开发工具变动(构建、脚手架工具等)'},
-    {value: 'revert',   name: '回滚: 代码回退'}
+    {value: 'revert',   name: '回滚: 代码回退'},
     {value: 'WIP',      name: 'WIP: 工作中'}
   ],
-
+  // prettier-ignore
   scopes: [
-    {name: '模块1'},
-    {name: '模块2'},
-    {name: '模块3'},
-    {name: '模块4'}
+    {name: 'commitizen'},
+    {name: 'react'},
+    {name: 'ts'},
   ],
 
   allowTicketNumber: false,
@@ -214,7 +222,7 @@ module.exports = {
     body: '详细变更描述 (可选)。可使用 "|" 换行:\n',
     breaking: '非兼容性更新说明 (可选):\n',
     footer: '关联关闭的issue (可选)。例如: #31, #34:\n',
-    confirmCommit: '确定提交说明?'
+    confirmCommit: '确定提交说明?',
   },
 
   allowCustomScopes: true,
@@ -227,7 +235,7 @@ module.exports = {
   // breaklineChar: '|', // It is supported for fields body and footer.
   // footerPrefix : 'ISSUES CLOSED:'
   // askForBreakingChangeFirst : true, // default is false
-};
+}
 ```
 
 ### 给 commit 加表情
