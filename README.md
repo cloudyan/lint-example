@@ -10,7 +10,7 @@ lint example
     - [x] eslint
     - [x] babel
     - [ ] stylelint
-    - [ ] browserlist
+    - [x] browserlist
     - [x] lint-staged
     - [x] husky
     - [x] commitlint
@@ -18,7 +18,7 @@ lint example
     - [ ] sonarlint
     - [ ] markdownlint
   - IDE 编辑器接入
-    - [ ] vscode
+    - [x] vscode
   - CI 流程接入
     - [ ] format
     - [ ] eslint
