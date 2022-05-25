@@ -5,6 +5,14 @@ module.exports = {
     node: true,
     es2021: true,
   },
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
   extends: [
     // npm i -D eslint-config-airbnb-base eslint-config-prettier
     // npm i -D @typescript-eslint/eslint-plugin eslint-plugin-react
@@ -17,14 +25,6 @@ module.exports = {
 
     'prettier', // 需要放在 extends 最后，且去除所有后续的 rules
   ],
-  parser: '@babel/eslint-parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
   plugins: [
     // npm i -D eslint-plugin-react eslint-plugin-promise eslint-plugin-react-hooks
     // 'eslint-comments',

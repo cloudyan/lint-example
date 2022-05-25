@@ -17,6 +17,12 @@ commit msg 规范。
 
 `commitizen` 一个格式化 `commit message` 的工具
 
+  - commitizen
+  - cz-conventional-changelog
+  - cz-customizable
+  - @commitlint/prompt-cli `add scripts "commit": "commit"; npm run commit`
+  - @commitlint/cz-commitlint
+
 ```bash
 commitizen init cz-conventional-changelog --save --save-exact
 ```
@@ -45,7 +51,6 @@ npm i -D cz-customizable
 'use strict';
 
 module.exports = {
-
   types: [
     {value: '特性', name: '特性: 一个新的特性'},
     {value: '修复', name: '修复: 修复一个Bug'},

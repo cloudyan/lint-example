@@ -631,6 +631,7 @@ CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂�
   - [browserslist](https://github.com/browserslist/browserslist)
   - [lint-staged](https://github.com/okonet/lint-staged)
   - [husky](https://typicode.github.io/husky/#/)
+  - [commitlint](https://commitlint.js.org/)
   - [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
   - [sonarlint](https://www.sonarlint.org/)
   - [sonarqube](https://www.sonarqube.org/)
