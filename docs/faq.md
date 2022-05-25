@@ -141,9 +141,17 @@ module.exports = {
 
 ```js
 {
-  // 保存代码时，自动修复
+  // https://github.com/microsoft/vscode-eslint#settings-migration
+  // eslint 工作目录, 根据 package.json, eslintrc 位置自动推断，Mono 存储库可指定位置 ['./src']
+  // 此配置可以一个项目多个目录指定不通的 eslintrc 规则来校验
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
+  "javascript.format.enable": false, // 关闭默认js格式化程序
+  "eslint.format.enable": false, // 不用 eslint 做格式化
+
+  // 保存代码时，自动修复 fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
 
@@ -183,6 +191,29 @@ module.exports = {
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
   },
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  }
+
+  // eslint.probe 尝试验证文件的语言标识符, 默认值为["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "vue", "markdown"]
+  // html 和 vue, 建议添加到 Vue 项目的工作区配置中（依赖 eslint-plugin-{html,vue}）
+  // "eslint.validate" 不再需要配置
+
+
+  // 下面的不是 eslint 相关的
+  // "typescript.tsdk": "node_modules/typescript/lib",
+  // "jest.jestCommandLine": "yarn jest --watchAll",
+
+  //自动格式化粘贴的代码
+  // "files.autoSave": "afterDelay"
+
+  // "files.associations": {
+  //   // 文件关联语言的优先级配置
+  //   "*.vue": "vue",
+  //   "*.cshtml": "html",
+  //   "*.js": "javascript",
+  //   "*.dwt": "html"
+  // },
 }
 ```
 

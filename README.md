@@ -128,6 +128,16 @@ config
 
 规则配置详见 [.prettierrc.js](.prettierrc.js)
 
+[vscode 格式化快捷键](https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode)
+
+代码格式可通过以下快捷方式在 Visual Studio Code 中使用：
+
+  - 在 Windows <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
+  - 在 Mac <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>F</kbd>
+  - 在 Linux <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
+
+<kbd>Ctrl</kbd> 或者，您可以通过带有++ （或Mac上的<kbd>Shift</kbd> ++ ）的编辑器中提供的“命令面板”找到快捷方式以及其他快捷方式，然后搜索**格式文档**。<kbd>P</kbd> <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>P</kbd>
+
 ### husky
 
 usage
@@ -505,9 +515,15 @@ config
 
 ```js
 {
-  // 保存代码时，自动修复
+  // https://github.com/microsoft/vscode-eslint#settings-migration
+  "javascript.format.enable": false, // 关闭默认js格式化程序
+  "eslint.format.enable": false, // 不用 eslint 做格式化
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
+
+  // 保存代码时，自动修复 fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
 
@@ -547,14 +563,9 @@ config
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
   },
-
-  "files.associations": {
-    // 文件关联语言的优先级配置
-    "*.vue": "vue",
-    "*.cshtml": "html",
-    "*.js": "javascript",
-    "*.dwt": "html"
-  },
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  }
 }
 ```
 

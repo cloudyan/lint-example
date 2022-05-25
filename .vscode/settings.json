@@ -1,7 +1,13 @@
 {
-  // 保存代码时，自动修复
+  // https://github.com/microsoft/vscode-eslint#settings-migration
+  "javascript.format.enable": false, // 关闭默认js格式化程序
+  "eslint.format.enable": false, // 不用 eslint 做格式化
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
+
+  // 保存代码时，自动修复 fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
 
@@ -41,34 +47,7 @@
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
   },
-
-  "eslint.format.enable": true,
-  "eslint.workingDirectories": [{ "mode": "auto" }],
   "eslint.codeAction.showDocumentation": {
     "enable": true
-  },
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-    // "markdown",
-    // 以上是默认, 下面新增 html vue,
-    // 因为需要 plugin 包支持，建议这两个添加到 Vue 相关项目的工作区环境配置中
-    // "html", // 需要 eslint-plugin-html
-    // "vue", // 需要 eslint-plugin-vue
-    // ".*ignore"
-    // "gitignore"
-  ]
-  // "eslint.validate": [
-  //   "javascript",
-  //   "javascriptreact",
-  //   "vue"
-  // ],
-
-  // "typescript.tsdk": "node_modules/typescript/lib",
-  // "jest.jestCommandLine": "yarn jest --watchAll",
-
-  // //自动格式化粘贴的代码
-  // "files.autoSave": "afterDelay"
+  }
 }
