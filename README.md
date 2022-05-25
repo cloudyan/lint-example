@@ -333,6 +333,23 @@ vscode 插件
 ### browserlist
 
 > Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env
+> 国内情况复杂，如要精准配置，需要用户覆盖统计数据
+
+`.browserslistrc` 独立配置文件
+
+```conf
+# .browserslistrc
+# https://github.com/browserslist/browserslist#queries
+
+defaults
+last 2 versions
+> 0.1%
+ios >= 9
+android >= 4.4
+
+# npx browserslist "defaults, last 2 versions, > 0.1%, ios >= 9, android >= 4.4"
+# https://browserslist.dev
+```
 
 package.json
 
@@ -341,36 +358,23 @@ package.json
     "> 1%",
     "last 2 versions",
     "not dead",
-    "Android >= 4",
-    "ios >= 8"
+    "Android >= 4.4",
+    "iOS >= 10"
   ],
 ```
 
-或
+测试预览
 
-```json
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-```
+```bash
+# 项目中
+npx browserslist
 
-独立配置文件
-
-```conf
-# .browserslistrc
-
-defaults
-not IE 11
-maintained node versions
+# Use CLI tool instead of the website
+npx browserslist "last 2 version, >1%"
+# pc
+npx browserslist "defaults, last 2 versions, > 0.1%, safari >= 9, ie >= 10"
+# mobile
+npx browserslist "defaults, last 2 versions, > 0.1%, safari >= 9, iOS >= 9, android >= 4.4"
 ```
 
 ### lint-staged
