@@ -20,7 +20,9 @@ commit msg 规范。
   - commitizen
   - cz-conventional-changelog
   - cz-customizable
-  - @commitlint/prompt-cli `add scripts "commit": "commit"; npm run commit`
+  - @commitlint/prompt-cli
+    - `npm set-script commit "commit1"`
+    - `npm run commit`
   - @commitlint/cz-commitlint
 
 ```bash
