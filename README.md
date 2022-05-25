@@ -126,14 +126,14 @@ usage
 npm i prettier lint-staged -D
 
 prettier --write .                              # -w
-prettier -write --ignore-unknown "src/**/*.js"  # -w -u
-prettier -write 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss,md,html}'
+prettier --write --ignore-unknown "src/**/*.js" # -w -u
+prettier --write 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}'
 
 prettier --check "src/**/*.js"                  # -c
 prettier --list-different "src/**/*.js"         # -l
 
 # prettier diff
-prettier --write '**/?(.)*.{md,css,scss,js,json,yaml,yml}' && git --no-pager diff && git checkout -- .
+prettier --write '**/?(.)*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}' && git --no-pager diff && git checkout -- .
 ```
 
 config
