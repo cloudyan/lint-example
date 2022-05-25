@@ -512,9 +512,22 @@ config
   },
 
   "editor.formatOnSave": true, // 保存时自动格式化
+
   // "editor.defaultFormatter": "esbenp.prettier-vscode", // 不能全部用 prettier
-  // 需要分类处理
-  // prettier -> js,ts,json,json5,css,less,scss,postcss,pug,html
+  // 需要分类处理, prettier 可以处理以下格式
+  // js,jsx, ts,tsx, json,json5, css,less,scss, pug,html
+  "[javascript,javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // typescript,typescriptreact 卸载一起保存时未生效
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[json,json5]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -522,24 +535,17 @@ config
     "editor.defaultFormatter": "esbenp.prettier-vscode"
     // "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "[html]": {
+  "[pug,html]": {
     // "editor.defaultFormatter": "HookyQR.beautify"
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript,javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "octref.vetur"
   },
   // "[markdown]": {
   //   "editor.defaultFormatter": "esbenp.prettier-vscode"
   // },
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+
+  // vetur
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
   },
 
   "files.associations": {

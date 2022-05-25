@@ -4,11 +4,11 @@
     - [x] [分工与适用范围](#分工与适用范围)
     - [x] [prettier 与 editorconfig 配置不同](#prettier-与-editorconfig-配置不同)
     - [x] [prettier 与 eslint 规则冲突](#prettier-与-eslint-规则冲突)
-    - [ ] [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
+    - [x] [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
     - [x] [prettier 与 markdownlint 规则冲突](#prettier-与-markdownlint-规则冲突)
     - [ ] [commit msg 交互式操作](#commit-msg-交互式操作)
     - [x] [eslint 如何在本地开发运行时中卡点（webpack?）](#eslint-如何在本地开发运行时中卡点webpack)
-    - [ ] [prettier 和 eslint 在 VSCode editor.formatOnSave 生效](#prettier-和-eslint-在-vscode-editorformatonsave-生效)
+    - [x] [prettier 和 eslint 在 VSCode editor.formatOnSave 生效](#prettier-和-eslint-在-vscode-editorformatonsave-生效)
     - [ ] [commitlint 如何在 CI 中卡点](#commitlint-如何在-ci-中卡点)
     - [ ] [使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点](#使用-lint-staged-后prettier-或-eslint-如何在-ci-中卡点)
 
@@ -88,6 +88,10 @@ prettier 支持自动推断解析器，所以无需手动配置。更多参考 <
 
 同样的规则约束两边各有一个配置，一个开，一个关，冲突就产生了。
 
+解决方案
+
+需要将不一致的规则，处理掉，最好是集成自己的共享配置
+
 ## prettier 与 markdownlint 规则冲突
 
 基于原则，格式化交给 prettier 处理，就需要适配对应格式对标 prettier。否则对此文件格式，关闭 prettier 格式化
@@ -132,6 +136,55 @@ module.exports = {
 ```
 
 ## prettier 和 eslint 在 VSCode editor.formatOnSave 生效
+
+需要正确配置 vscode 的配置项
+
+```js
+{
+  // 保存代码时，自动修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true, // 保存时使用eslint校验文件
+    "source.fixAll.stylelint": true
+  },
+
+  "editor.formatOnSave": true, // 保存时自动格式化
+
+  // "editor.defaultFormatter": "esbenp.prettier-vscode", // 不能全部用 prettier
+  // 需要分类处理, prettier 可以处理以下格式
+  // js,jsx, ts,tsx, json,json5, css,less,scss, pug,html
+  "[javascript,javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // typescript,typescriptreact 卸载一起保存时未生效
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json,json5]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css,less,scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[pug,html]": {
+    // "editor.defaultFormatter": "HookyQR.beautify"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // "[markdown]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+
+  // vetur
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+}
+```
 
 ## commitlint 如何在 CI 中卡点
 
