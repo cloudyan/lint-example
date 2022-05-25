@@ -88,6 +88,8 @@ commitlint 提供了两个 `commitizen` 适配器:
 
 **`@commitlint/prompt`**
 
+交互效果同 `@commitlint/prompt-cli`
+
 ```bash
 {
   "scripts": {
@@ -109,6 +111,8 @@ commitlint 提供了两个 `commitizen` 适配器:
   - commitlint 用于校验
   - 共享配置文件 commitlint.config.js
 
+交互过程的灵感来自 cz-conventional-changelog，交互体验更好
+
 ```json
 {
   "scripts": {
@@ -122,9 +126,13 @@ commitlint 提供了两个 `commitizen` 适配器:
 }
 ```
 
-如果使用 `cz-conventional-changelog` 适配器, 初始化命令如下
+如果使用 `cz-conventional-changelog` 适配器
 
 ```bash
+# 初始化命令
+# 本质就是安装该适配器后，修改 "path": "@commitlint/cz-commitlint"
+# 变更适配器 "path": "./node_modules/cz-conventional-changelog"
+# 交互体验同 "@commitlint/cz-commitlint"，但交互细节略好些
 commitizen init cz-conventional-changelog --save --save-exact
 
 # 初始化命令主要做了 2 件事
@@ -136,9 +144,9 @@ commitizen init cz-conventional-changelog --save --save-exact
 #   }
 # }
 #
-```
+# config.commitizen 下有很多配置，types: { feat: {} }, 可定义分类
 
-接下来可以使用 cz 的命令 `git cz` 代替 `git commit` 进行提交说明
+```
 
 ### 定制化项目提交说明
 
