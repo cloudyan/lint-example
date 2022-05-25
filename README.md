@@ -2,6 +2,27 @@
 
 lint example
 
+## 进度
+
+  - 项目接入
+    - [x] editorconfig
+    - [x] prettier
+    - [x] eslint
+    - [x] babel
+    - [ ] stylelint
+    - [ ] browserlist
+    - [x] lint-staged
+    - [x] husky
+    - [x] commitlint
+    - [x] conventional-changelog
+    - [ ] sonarlint
+    - [ ] markdownlint
+  - IDE 编辑器接入
+    - [ ] vscode
+  - CI 流程接入
+    - [ ] format
+    - [ ] eslint
+
 ## lint 接入
 
   - 项目中如何接入
@@ -10,39 +31,30 @@ lint example
 
 集成到 vscode, webpack 以及 CI 流程上能有效保证执行落地。
 
-## 进度
-
-  - [x] editorconfig
-  - [x] prettier
-  - [x] husky
-  - [x] lint-staged
-  - [x] commitlint
-  - [ ] eslint
-  - [ ] stylelint
-
-## 项目中接入 lint
+## 项目接入
 
 接入步骤
 
   - [lint-example](#lint-example)
-    - [如何执行落地？](#如何执行落地)
     - [进度](#进度)
-    - [项目中接入 lint](#项目中接入-lint)
+    - [lint 接入](#lint-接入)
+    - [项目接入](#项目接入)
       - [版本控制](#版本控制)
       - [editorconfig](#editorconfig)
       - [prettier](#prettier)
-      - [husky](#husky)
-      - [lint-staged](#lint-staged)
-      - [commitlint](#commitlint)
       - [eslint](#eslint)
       - [babel](#babel)
       - [stylelint](#stylelint)
       - [browserlist](#browserlist)
-      - [typecheck](#typecheck)
+      - [lint-staged](#lint-staged)
+      - [husky](#husky)
+      - [commitlint](#commitlint)
       - [conventional-changelog](#conventional-changelog)
-      - [sonarlint](#sonar)
+      - [typecheck](#typecheck)
+      - [sonarlint](#sonarlint)
       - [markdownlint](#markdownlint)
-    - [IDE 编辑器接入 lint](#ide-编辑器接入-lint)
+    - [IDE 编辑器接入](#ide-编辑器接入)
+    - [CI 流程接入](#ci-流程接入)
     - [扩展阅读](#扩展阅读)
       - [知识点](#知识点)
 
@@ -50,7 +62,9 @@ lint example
 
 ### 版本控制
 
-add `.npmrc` && `.nvmrc`, 并且 lock 文件要入库。
+> 保证项目开发维护的稳定性。
+
+项目下 add `.npmrc` && `.nvmrc`, 并且 lock 文件要入库。
 
 ```bash
 node -v > .nvmrc
@@ -71,11 +85,13 @@ package.json
   }
 ```
 
-CI 流程通过 `npm ci` 校验 lock 文件等
+CI 流程通过 `npm ci` 安装依赖，此时会校验 lock 文件等
 
 TODO: 应该通过工具检查需要添加的控制，并给出完善指导
 
 ### editorconfig
+
+> EditorConfig 实现跨平台、编辑器和 IDE 统一编程风格, 提高代码阅读质量。
 
 ```ini
 # .editorconfig
@@ -98,6 +114,11 @@ quote_type = single
 在 EditorConfig 文件中设置的约定当前无法在 CI/CD 管道中强制为生成错误或警告。
 
 ### prettier
+
+> 一个“有态度”的代码格式化工具。
+
+  - Prettier 郑重提出：大家不要吵！咱们先提高代码的可读性和可维护性再说，具体什么风格我给你们定。
+  - 这就是 Prettier 的 **opinionated**!
 
 usage
 
@@ -138,130 +159,6 @@ config
 
 <kbd>Ctrl</kbd> 或者，您可以通过带有++ （或Mac上的<kbd>Shift</kbd> ++ ）的编辑器中提供的“命令面板”找到快捷方式以及其他快捷方式，然后搜索**格式文档**。<kbd>P</kbd> <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>P</kbd>
 
-### husky
-
-usage
-
-```bash
-# 自动安装（推荐）
-# https://typicode.github.io/husky/#/?id=automatic-recommended
-npx husky-init && npm install       # npm
-npx husky-init && yarn              # Yarn 1
-yarn dlx husky-init --yarn2 && yarn # Yarn 2+
-pnpm dlx husky-init && pnpm install # pnpm
-
-或使用
-
-npx auto-husky
-```
-
-config
-
-```bash
-# usage 启用 Git 挂钩
-npm set-script prepare "husky install"
-npm run prepare
-
-# Add a hook:
-npx husky add .husky/pre-commit "npm test"
-npx husky add .husky/pre-commit "npm run lint-staged"
-npx husky add .husky/commit-msg 'npx --no commitlint --edit $1' # 这个执行有问题
-yarn husky add .husky/commit-msg 'npx --no -- commitlint --edit "${1}"' # 这个可以
-
-# husky uninstall
-npm uninstall husky && git config --unset core.hooksPath
-```
-
-### lint-staged
-
-如果对项目中所有文件一次性格式化，大范围的修改很可能出现不可控的情况。
-
-这时可以借助 lint-staged 将处理范围限制在 Git 暂存区内 (staged) 的文件。
-
-config
-
-```bash
-npx husky add .husky/pre-commit "npx --no-install lint-staged"
-```
-
-package.json
-
-```json
-"lint-staged": {
-  "*.{js,jsx,ts,tsx,vue,json,yml,yaml,css,less,scss,html}": [
-    "prettier --write"
-  ],
-  "*.{js,jsx,ts,tsx,vue,html}": [
-    "npm run eslint:fix"
-  ],
-  "*.ts?(x)": [
-    "prettier --parser=typescript --write --ignore-unknown"
-  ],
-}
-```
-
-  - [lint-staged如何做到只lint staged?](https://juejin.cn/post/6844903864722784264)
-
-### commitlint
-
-usage
-
-```bash
-npm install @commitlint/cli @commitlint/config-conventional -D
-```
-
-config
-
-```bash
-# Add hook
-cat <<EEE > .husky/commit-msg
-#!/bin/sh
-. "\$(dirname "\$0")/_/husky.sh"
-
-npx --no -- commitlint --edit "\${1}"
-EEE
-
-
-# Make hook executable
-chmod a+x .husky/commit-msg
-```
-
-规则配置文件
-
-```js
-// commitlint.config.js
-module.exports = {
-  extends: ['@commitlint/config-conventional'],
-  rules: {
-    'header-max-length': [1, 'always', 100],
-    // prettier-ignore
-    'type-enum': [
-      2,
-      'always',
-      [
-        'feat',
-        'fix',
-        'enhance',
-        'chore',
-        'test',
-        'doc',
-        'refactor',
-        'style',
-        'revert',
-      ],
-    ],
-  },
-}
-```
-
-测试
-
-```bash
-npx commitlint --from HEAD~1 --to HEAD --verbose
-
-echo 'foo: xxx' | npx commitlint --verbose
-```
-
 ### eslint
 
 > 查找并修复 JavaScript 代码中的问题
@@ -269,12 +166,11 @@ echo 'foo: xxx' | npx commitlint --verbose
 一些原则
 
   - 按照 prettier 原则，尽量减少格式化对开发的干扰
-    - 不应该因为尾分号分心，满篇飘红，而应交给格式化工具自动处理，此时 eslint 应关闭格式化相关规则
-    - eslint 更应该关注语法检查
+    - 不应该因为分号、逗号分心，满篇飘红，应关注代码逻辑，格式化应让工具自动处理
+  - prettier 专注于 format
+  - eslint 专注于 check syntax and find problems
 
-接入之前有必要先熟悉下一些配置和常识
-
-eslint 只检查 `.{js,ts,jsx,tsx,vue,html}` 中的脚本, 不会处理 `.css`, `.less`, `.scss`, or `.json` 这些文件，prettier 可以
+接入之前有必要先熟悉下一些常见的库配置
 
   - Parser, 指定解析器, 能帮助 eslint 确定什么是解析错误。
     - eslint 的默认解析器 `espree`, 不支持 babel 提供的实验性（如新功能）语法
@@ -344,15 +240,11 @@ npm i -D eslint-config-prettier
 npm i -D prettier-eslint prettier-stylelint
 ```
 
-关于 `.eslintrc.js`
+`.eslintrc.js`
 
 ```js
+// 示例
 module.exports = {
-  /**
-   * 默认情况下，ESLint会在所有父级目录里寻找配置文件，一直到根目录。
-   * 为了将ESLint限制在一个特定的项目，设置root: true；
-   * ESLint一旦发现配置文件中有 root: true，就会停止在父级目录中寻找。
-   */
   root: true,
   env: {
     browser: true,
@@ -385,7 +277,7 @@ module.exports = {
 }
 ```
 
-package.json
+config package.json
 
 ```json
 {
@@ -399,7 +291,7 @@ package.json
 
 ### babel
 
-eslint 需要 babel 配合
+> eslint 需要 babel 配合, 按需配置
 
 ```bash
 npm i -D @babel/core @babel/preset-env
@@ -414,6 +306,8 @@ module.exports = {
 ```
 
 ### stylelint
+
+> Stylelint 是一个强大、先进的 CSS 代码检查器（linter），可以帮助你规避 CSS 代码中的错误并保持一致的编码风格。
 
 接入 stylelint
 
@@ -437,6 +331,8 @@ vscode 插件
   - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
 
 ### browserlist
+
+> Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env
 
 package.json
 
@@ -467,20 +363,157 @@ package.json
   },
 ```
 
-### typecheck
+独立配置文件
+
+```conf
+# .browserslistrc
+
+defaults
+not IE 11
+maintained node versions
+```
+
+### lint-staged
+
+> Run linters against staged git files and don't let 💩 slip into your code base!
+
+  - 如果对项目中所有文件一次性格式化，大范围的修改很可能出现不可控的情况。
+  - 借助 lint-staged 可将处理范围限制在 Git 暂存区内 (staged) 的文件。
+
+useage
+
+```bash
+npx husky add .husky/pre-commit "npx --no-install lint-staged"
+```
+
+package.json
 
 ```json
-{
-  "test:typecheck": "tsc -p .",
-  "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit"
+  "scripts": {
+    "format": "npm run prettier -- --write",
+    "eslint": "cross-env TIMING=1 eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "format": "npm run prettier -- --write",
+    "lint-staged": "lint-staged --allow-empty",
+    "prettier": "prettier .",
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "npm run eslint:fix"
+    ]
+  },
+```
+
+### husky
+
+> Modern native git hooks made easy
+
+usage
+
+```bash
+# 自动安装（推荐）
+# https://typicode.github.io/husky/#/?id=automatic-recommended
+npx husky-init && npm install       # npm
+npx husky-init && yarn              # Yarn 1
+yarn dlx husky-init --yarn2 && yarn # Yarn 2+
+pnpm dlx husky-init && pnpm install # pnpm
+
+或使用
+
+npx auto-husky
+
+或手动操作
+
+npm i -D husky
+# 手动启用 Git 挂钩
+npm set-script prepare "husky install"
+npm run prepare
+```
+
+config
+
+```bash
+# Add a hook:
+npx husky add .husky/pre-commit "npm test"
+npx husky add .husky/pre-commit "npm run lint-staged"
+npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1' # 这个执行有问题
+yarn husky add .husky/commit-msg 'npx --no -- commitlint --edit "${1}"' # 这个可以
+
+# husky uninstall
+npm uninstall husky && git config --unset core.hooksPath
+```
+
+### commitlint
+
+> Lint commit messages
+
+usage
+
+```bash
+npm install @commitlint/cli @commitlint/config-conventional -D
+```
+
+config
+
+```bash
+# Add hook
+cat <<EEE > .husky/commit-msg
+#!/bin/sh
+. "\$(dirname "\$0")/_/husky.sh"
+
+npx --no -- commitlint --edit "\${1}"
+EEE
+
+
+# Make hook executable
+chmod a+x .husky/commit-msg
+```
+
+规则配置文件
+
+```js
+// commitlint.config.js
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'header-max-length': [1, 'always', 100],
+    // prettier-ignore
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat',
+        'fix',
+        'enhance',
+        'chore',
+        'test',
+        'doc',
+        'refactor',
+        'style',
+        'revert',
+      ],
+    ],
+  },
 }
+```
+
+测试
+
+```bash
+npx commitlint --from HEAD~1 --to HEAD --verbose
+
+echo 'foo: xxx' | npx commitlint --verbose
 ```
 
 ### conventional-changelog
 
-Commit 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
+> Generate changelogs and release notes from a project's commit messages and metadata.
 
-conventional-changelog 是一款可以根据项目的 commit 和 metadata 信息自动生成 changelogs 和 release notes 的系列工具，并且在辅助 [standard-version](https://github.com/conventional-changelog/standard-version) 工具的情况下，可以自动帮你完成生成 version、打 tag, 生成 CHANGELOG 等系列过程。
+  - commit msg 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
+  - conventional-changelog 就是一款可以根据项目的 commit 和 metadata 信息自动生成 changelogs 和 release notes 的工具，并且在辅助工具 [standard-version](https://github.com/conventional-changelog/standard-version) 下，可以自动帮你完成生成 version、打 tag, 生成 CHANGELOG 等系列过程。
 
 ```bash
 npm i conventional-changelog-cli -D
@@ -494,20 +527,27 @@ config
 }
 ```
 
-  - [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
-  - <https://zhuanlan.zhihu.com/p/51894196>
+### typecheck
+
+```json
+{
+  "test:typecheck": "tsc -p .",
+  "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit"
+}
+```
 
 ### sonarlint
 
-接入 SonarQube
+> SonarLint 在 IDE 编写代码时解决质量和安全问题
+> SonarQube 在 CI 流程控制代码质量和安全问题
+
+接入 SonarLint, SonarQube
 
 ### markdownlint
 
 关于 markdown 格式优化
 
-  - <https://github.com/DavidAnson/markdownlint>
-
-## IDE 编辑器接入 lint
+## IDE 编辑器接入
 
 这里只涉及到 vscode
 
@@ -568,14 +608,37 @@ config
 }
 ```
 
-## 扩展阅读
+## CI 流程接入
 
+CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂度。（每次 push 会包含多个 commit）
+
+目前仅支持全量检测
+
+  - format
+  - eslint
+
+## 参考文档
+
+  - [editorconfig](https://editorconfig.org/)
+  - [prettier](https://prettier.io/)
+  - [eslint](https://eslint.org/)
+  - [babel](https://babeljs.io/)
+  - [stylelint](https://stylelint.io/)
+  - [browserslist](https://github.com/browserslist/browserslist)
+  - [lint-staged](https://github.com/okonet/lint-staged)
+  - [husky](https://typicode.github.io/husky/#/)
+  - [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
+  - [sonarlint](https://www.sonarlint.org/)
+  - [sonarqube](https://www.sonarqube.org/)
+  - [markdownlint](https://github.com/DavidAnson/markdownlint)
+  - [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
   - [全面梳理代码规范化：EditorConfig + Prettier + ESLint](https://juejin.cn/post/6952842182252298248)
-  - [ESLint 工作原理探讨](https://zhuanlan.zhihu.com/p/53680918)
+  - [git commit 、CHANGELOG 和版本发布的标准自动化](https://zhuanlan.zhihu.com/p/51894196)
+
+### 扩展阅读
+
   - [自定义 Git - Git 钩子](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90)
+  - [ESLint 工作原理探讨](https://zhuanlan.zhihu.com/p/53680918)
   - [lint-staged如何做到只lint staged?](https://juejin.cn/post/6844903864722784264)
-
-### 知识点
-
   - [mrm](https://www.npmjs.com/package/mrm) 是配置文件生成工具, Command line tool to help you keep configuration (package.json, .gitignore, .eslintrc, etc.) of your open source projects in sync.
   - [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) 为您的程序搜索并加载配置。

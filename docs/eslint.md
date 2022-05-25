@@ -188,3 +188,16 @@ config.module.rule('eslint').use('eslint-loader')
   - `0`: 检测成功，没有错误。如果 `--max-warnings` 标志被设置为 `n`，那么警告数量最多为`n`。
   - `1`: 检测成功，并且至少有一个错误，或者警告多于 `--max-warnings` 选项所允许的警告。
   - `2`: 由于配置问题或内部错误，检测未能成功。
+
+.eslintrc.js
+
+```js
+module.exports = {
+  /**
+   * 默认情况下，ESLint会在所有父级目录里寻找配置文件，一直到根目录。
+   * 为了将ESLint限制在一个特定的项目，设置root: true；
+   * ESLint一旦发现配置文件中有 root: true，就会停止在父级目录中寻找。
+   */
+  root: true,
+}
+```
