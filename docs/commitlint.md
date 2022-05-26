@@ -29,6 +29,8 @@ commit msg 规范。
     - `npm run commit`
 
 ```bash
+npm i -D @commitlint/prompt-cli
+
 # 交互步骤效果如下
 # 需要先 git add .
 ➜  lint-example git:(dev) ✗ npm run commit
@@ -93,6 +95,12 @@ commitizen 可以全局安装，提供 `git cz` 替代 `git commit`
 交互效果同 `@commitlint/prompt-cli`
 
 ```bash
+npm i -D @commitlint/prompt
+```
+
+package.json
+
+```json
 {
   "scripts": {
     "cz": "git-cz"
@@ -106,6 +114,10 @@ commitizen 可以全局安装，提供 `git cz` 替代 `git commit`
 ```
 
 `@commitlint/cz-commitlint` 要求 node>12.1.2
+
+```bash
+npm i -D @commitlint/cz-commitlint
+```
 
 让 commitizen 基于 commitlint.config.js 工作，只需要维护一个配置文件
 
@@ -134,7 +146,7 @@ commitizen 可以全局安装，提供 `git cz` 替代 `git commit`
 # 初始化命令
 # 本质就是安装该适配器后，修改 "path": "@commitlint/cz-commitlint"
 # 变更适配器 "path": "./node_modules/cz-conventional-changelog"
-# 交互体验同 "@commitlint/cz-commitlint"，但交互细节略好些
+# 交互体验同 "@commitlint/cz-commitlint"
 commitizen init cz-conventional-changelog --save --save-exact
 
 # 初始化命令主要做了 2 件事
@@ -172,14 +184,14 @@ package.json
 通过查看源码，确认了逻辑，目前要使用 `~/.cz-config.js` 配置，还需要在 package.json 中指定配置路径 `pkg.config['cz-customizable'].config = "/xx/xx/.cz-config.js"`。
 
 > 已提交 [PR](https://github.com/leoforfree/cz-customizable/pull/177)
-> 项目内可以临时使用 `npx patch-package cz-customizable`
-> 注意: 本地验证需要去除 project root 下的 .cz-config.js
+> 项目内可以临时使用 `npx patch-package cz-customizable`（仍存在的问题，独立模式的支持全局调用配合全局配置就好了）
+> 注意: 验证此逻辑需要去除 project root 下的 .cz-config.js
 
 ```js
 {
   "config": {
     "cz-customizable": {
-      // 只能填写绝对路径, 不能配置 ~/.cz-config.js
+      // 路径只能相对于当前项目，或使用绝对路径, 不支持 ~/.cz-config.js
       "config": "/xx/xx/.cz-config.js"
     }
   },
@@ -254,6 +266,14 @@ module.exports = {
   // askForBreakingChangeFirst : true, // default is false
 }
 ```
+
+还可以通过 [cz-customizable-ghooks](https://github.com/uglow/cz-customizable-ghooks#readme) 将 `cz-customizable` 与 `ghooks` 或 `husky` 集成，可自行尝试。
+
+整体上来说，交互体验最好的是 `cz-customizable` 独立模式, 也无需 `commitizen`
+
+将上述无用的包移除 `npm uninstall @commitlint/prompt-cli commitizen @commitlint/prompt @commitlint/cz-commitlint cz-conventional-changelog`
+
+TODO: 目前这个体验上还不好，需要 `npm run czz` 而不是直接无感使用 `git commit` 就可以完成
 
 ### 给 commit 加表情
 
