@@ -83,8 +83,8 @@ feat(commitlint): update md
 
 commitlint 提供了两个 `commitizen` 适配器:
 
-  - [`@commitlint/prompt`](https://www.npmjs.com/package/@commitlint/prompt) 42k 提供了一种交互方式 `@commitlint/prompt-cli`
-  - [`@commitlint/cz-commitlint`](https://www.npmjs.com/package/@commitlint/cz-commitlint) 15k 受 [`cz-conventional-changelog`](https://www.npmjs.com/package/cz-conventional-changelog) 1M 启发，它提供了一种更现代的交互方式。
+  - [`@commitlint/prompt`](https://www.npmjs.com/package/@commitlint/prompt) 42K 提供了一种交互方式 `@commitlint/prompt-cli`
+  - [`@commitlint/cz-commitlint`](https://www.npmjs.com/package/@commitlint/cz-commitlint) 15K 受 [`cz-conventional-changelog`](https://www.npmjs.com/package/cz-conventional-changelog) 1M 启发，它提供了一种更现代的交互方式。
 
 commitizen 可以全局安装，提供 `git cz` 替代 `git commit`
 
@@ -151,7 +151,7 @@ commitizen init cz-conventional-changelog --save --save-exact
 
 ### 定制化项目提交说明
 
-上面的提交说明都是英文的，如果想定制项目的提交说明，可以试试 [`cz-customizable`](https://www.npmjs.com/package/cz-customizable), 它还能与 [semantic-release](https://github.com/semantic-release/semantic-release) 完美配合
+上面的提交说明都是英文的，如果想定制项目的提交说明，可以试试 [`cz-customizable`](https://www.npmjs.com/package/cz-customizable) 73K, 它还能与 [semantic-release](https://github.com/semantic-release/semantic-release) 完美配合
 
 该模块还可以全局使用, 推荐使用 [Option 2 - cz-customizable in standalone mode (New)](https://github.com/leoforfree/cz-customizable#option-2---cz-customizable-in-standalone-mode-new) 配置，此时不依赖 `commitzen`
 
@@ -163,13 +163,30 @@ package.json
 
 ```json
 "scripts" : {
-  "cz": "./node_modules/cz-customizable/standalone.js"
+  "czz": "./node_modules/cz-customizable/standalone.js"
 }
 ```
 
-文档提示说，可以新增配置在用户根目录下 `~/.cz.config.js`, 但验证未通过, 提示 `Unable to find a configuration file`
+[文档提示](https://github.com/leoforfree/cz-customizable#option-2---no-changes-to-your-git-repository)说，可以仅新增配置在用户根目录(home directory)下 `~/.cz-config.js`, 但验证未通过, 提示 `Unable to find a configuration file`。
 
-而放在项目根目录下验证通过
+通过查看源码，确认了逻辑，目前要使用 `~/.cz-config.js` 配置，还需要在 package.json 中指定配置路径 `pkg.config['cz-customizable'].config = "/xx/xx/.cz-config.js"`。
+
+> 已提交 [PR](https://github.com/leoforfree/cz-customizable/pull/177)
+> 项目内可以临时使用 `npx patch-package cz-customizable`
+> 注意: 本地验证需要去除 project root 下的 .cz-config.js
+
+```js
+{
+  "config": {
+    "cz-customizable": {
+      // 只能填写绝对路径, 不能配置 ~/.cz-config.js
+      "config": "/xx/xx/.cz-config.js"
+    }
+  },
+}
+```
+
+而放在项目根目录下是直接验证通过的
 
 ```js
 // 官方示例 https://github.com/leoforfree/cz-customizable/blob/master/cz-config-EXAMPLE.js
@@ -255,3 +272,5 @@ git commit --verbose
 # 将 Git 配置为始终使用详细模式
 git config --global commit.verbose true
 ```
+
+  - AngularJS team CONTRIBUTING.md [git commit guidelines](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
