@@ -27,6 +27,8 @@
     "prepare": "husky install",
     "prettier": "prettier .",
     "sort": "npx sort-package-json",
+    "stylelint": "stylelint --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
+    "stylelint:fix": "stylelint --fix --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
     "test": "echo 'test success'",
     "test:fail": "echo \"Error: no test specified\" && exit 1",
     "test:staged": "jest --bail --findRelatedTests",

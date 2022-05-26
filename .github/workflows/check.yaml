@@ -42,6 +42,11 @@ jobs:
           node-version: 16.x
           cache: npm # npm, yarn or pnpm
 
+      # https://github.com/stylelint/stylelint-demo/blob/main/.github/workflows/nodejs.yml
+      # - name: Get Node.js version from package.json
+      #   run: |
+      #     node -p 'require("./package.json").engines.node' | tee .node-version
+
       - name: Env
         run: npm version # node -v && npm -v
 
@@ -61,6 +66,12 @@ jobs:
       - name: Show results from JSON output
         if: ${{ always() }}
         run: echo ${{ toJSON(steps.run_commitlint.outputs.results) }}
+
+      - name: stylelint
+        uses: reviewdog/action-stylelint@v1
+        with:
+          reporter: github-pr-review # Change reporter.
+          stylelint_input: "src/**/*.{css,scss}"
 
       # https://github.com/marketplace/actions/lint-action
       # 需要结合 lint-staged 做 lint, 检查区间
