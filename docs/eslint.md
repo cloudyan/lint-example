@@ -3,6 +3,8 @@
 ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是通过对代码解析得到的 AST（Abstract Syntax Tree，抽象语法树）进行模式匹配，来分析代码达到检查代码质量和风格问题的能力。
 
   - [eslint](#eslint)
+    - [常见相关库](#常见相关库)
+    - [package.json](#packagejson)
     - [common deps](#common-deps)
       - [babel](#babel)
     - [react](#react)
@@ -11,6 +13,64 @@ ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是�
       - [taro vue](#taro-vue)
     - [vue](#vue)
     - [uniapp](#uniapp)
+    - [扩展](#扩展)
+
+## 常见相关库
+
+接入之前有必要先熟悉下一些常见的库配置
+
+  - Parser, 指定解析器, 能帮助 eslint 确定什么是解析错误。
+    - eslint 的默认解析器 `espree`, 不支持 babel 提供的实验性（如新功能）语法
+    - `@babel/eslint-parser` 支持 eslint 在 babel 转换的源代码上运行
+      - `@babel/eslint-plugin`
+    - `@typescript-eslint/parser` 支持 eslint 对 typescript 源代码进行 lint
+      - `@typescript-eslint/eslint-plugin`
+    - `vue-eslint-parser` 支持 eslint 解析 .vue 文件
+      - `eslint-plugin-vue`
+  - [Airbnb JavaScript Style](https://github.com/airbnb/javascript)
+    - `eslint-config-airbnb-base` If you don't need React
+      - `eslint`
+      - `eslint-plugin-import` 支持对 ES2015+ `import/export` 语法的校验
+    - `eslint-config-airbnb` 包含以下五项，不包含 `eslint-config-airbnb/hooks`
+      - `eslint`
+      - `eslint-plugin-import`
+      - `eslint-plugin-react` React 专用的校验规则插件 `plugin:react/recommended`
+      - `eslint-plugin-react-hooks`
+      - `eslint-plugin-jsx-a11y` 专注于检查 jsx 元素的可访问性
+    - `eslint-config-airbnb/hooks`
+  - [JavaScript Standard Style](https://standardjs.com/)
+    - `eslint-config-standard`
+  - AlloyTeam
+    - [`eslint-config-alloy`](https://github.com/AlloyTeam/eslint-config-alloy)
+  - Prettier
+    - `eslint-config-prettier` 解决 eslint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 prettier 冲突的 eslint 规则**。
+    - `prettier-eslint` 将 prettier 首先运行，执行结果给 eslint --fix
+    - `prettier-stylelint`
+  - typescript
+    - `@typescript-eslint/eslint-plugin`
+  - vue
+    - `eslint-plugin-vue`
+  - 其他
+    - `eslint-plugin-eslint-comments` 支持 eslint 指令注释，如 `//eslint-disable-line`, 底层没直接支持吗？
+    - `eslint-plugin-markdown` 支持 lint markdown 中的 JS、JSX、TypeScript 等
+    - `eslint-plugin-promise` 支持 lint promise
+    - `eslint-plugin-unicorn` XO, 🦄 独角兽, 一系列 eslint 规则
+    - `eslint-formatter-pretty` XO, 格式化 eslint 检查结果
+    - `eslint-plugin-compat` Lint 代码的浏览器兼容性，基于 browserslist 配置
+    - `eslint-plugin-jest` 仅在与测试相关的文件上运行规则
+    - `eslint-plugin-html` 用于检查和修复 HTML 文件中包含的内联脚本
+
+## package.json
+
+```json
+{
+  "eslint": "cross-env TIMING=1 eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+  "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+}
+```
+
+  - [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
+  - [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
 
 ## common deps
 

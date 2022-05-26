@@ -1,22 +1,37 @@
 # stylelint
 
+> Stylelint 是一个强大、先进的 CSS 代码检查器（linter），可以帮助你规避 CSS 代码中的错误并保持一致的编码风格。
+
   - <https://stylelint.io/>
   - https://github.com/stylelint/stylelint-demo
   - 14.x 版本不支持 node@10
 
 ```bash
 npm i -D stylelint stylelint-config-standard stylelint-config-prettier
+```
 
-# .stylelintrc.js
+添加配置 .stylelintrc.js
+
+```js
 module.exports = {
   extends: ["stylelint-config-standard", "stylelint-config-prettier"]
 }
+```
 
+测试
+
+```bash
 npx stylelint "src/**/*.css"
 
+# 更多规则
 npm i -D stylelint-config-css-modules stylelint-config-rational-order stylelint-no-unsupported-browser-features
+# 注意 stylelint-config-rational-order 有多项风险，需要执行 npx audit fix --force
+
 npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
 ```
+
+  - 完善配置，具体参见 [.stylelintrc.js](./../.stylelintrc.js)
+  - 配置 `.stylelintignore` 文件(默认不格式化 node_modules)
 
 共享配置
 
@@ -39,10 +54,10 @@ npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
       - [stylelint-config-prettier-scss](https://www.npmjs.com/package/stylelint-config-prettier-scss)
     - [stylelint-config-css-modules](https://www.npmjs.com/package/stylelint-config-css-modules)
       - 包含 optionalDependencies: stylelint-scss，如不使用 SCSS，安装时可以使用 `--no-optional` 或 `--ignore-optional` 避免安装
-    - [stylelint-config-rational-order](https://www.npmjs.com/package/stylelint-config-rational-order) 控制排序
+    - [stylelint-config-rational-order](https://www.npmjs.com/package/stylelint-config-rational-order)
       - 13 vulnerabilities (1 moderate, 12 high) 需要 `npm audit fix`
       - 此配置包含
-        - [stylelint-order](https://www.npmjs.com/package/stylelint-order)
+        - [stylelint-order](https://www.npmjs.com/package/stylelint-order) css 属性排序插件，合理的排序加快页面渲染
     - [stylelint-no-unsupported-browser-features](https://www.npmjs.com/package/stylelint-no-unsupported-browser-features)
       - 使用 [doiuse](https://github.com/anandthakker/doiuse) 来检测浏览器支持
       - 底层使用 [caniuse](http://caniuse.com/) 数据库
