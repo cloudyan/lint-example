@@ -104,6 +104,7 @@ dist
 .tern-port
 
 # custom
+.stylelintcache
 .DS_Store
 .dccache
 target/

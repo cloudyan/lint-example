@@ -67,12 +67,6 @@ jobs:
         if: ${{ always() }}
         run: echo ${{ toJSON(steps.run_commitlint.outputs.results) }}
 
-      - name: stylelint
-        uses: reviewdog/action-stylelint@v1
-        with:
-          reporter: github-pr-review # Change reporter.
-          stylelint_input: "src/**/*.{css,scss}"
-
       # https://github.com/marketplace/actions/lint-action
       # 需要结合 lint-staged 做 lint, 检查区间
       - name: Check formatting
@@ -80,6 +74,9 @@ jobs:
 
       - name: ESLint
         run: npm run eslint -- --max-warnings 0
+
+      - name: StyleLint
+        run: npm run stylelint -- --max-warnings 0
 
       - name: Test
         run: npm test

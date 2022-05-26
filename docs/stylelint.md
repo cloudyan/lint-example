@@ -2,6 +2,7 @@
 
   - <https://stylelint.io/>
   - https://github.com/stylelint/stylelint-demo
+  - 14.x 版本不支持 node@10
 
 ```bash
 npm i -D stylelint stylelint-config-standard stylelint-config-prettier
@@ -12,13 +13,19 @@ module.exports = {
 }
 
 npx stylelint "src/**/*.css"
+
+npm i -D stylelint-config-css-modules stylelint-config-rational-order stylelint-no-unsupported-browser-features
+npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
 ```
 
 共享配置
 
   - stylelint-config-standard 标准配置，[详细](https://stylelint.io/user-guide/configure#extends)
     - stylelint-config-recommended 推荐配置(只打开避免错误的规则)
-  - stylelint-config-prettier 解决与 prettier 规则冲突
+  - [stylelint-config-prettier](https://www.npmjs.com/package/stylelint-config-prettier) 解决与 prettier 规则冲突
+    - 附带一个 cli 小工具，可以检查规则冲突 `./node_modules/.bin/stylelint-config-prettier-check`
+  - [prettier-stylelint](https://github.com/hugomrdias/prettier-stylelint)
+    - 灵感来自 prettier-eslint
   - 社区共享配置
     - [SCSS](https://sass-lang.com/)
       - [stylelint-config-standard-scss](https://www.npmjs.com/package/stylelint-config-standard-scss)
@@ -33,6 +40,7 @@ npx stylelint "src/**/*.css"
     - [stylelint-config-css-modules](https://www.npmjs.com/package/stylelint-config-css-modules)
       - 包含 optionalDependencies: stylelint-scss，如不使用 SCSS，安装时可以使用 `--no-optional` 或 `--ignore-optional` 避免安装
     - [stylelint-config-rational-order](https://www.npmjs.com/package/stylelint-config-rational-order) 控制排序
+      - 13 vulnerabilities (1 moderate, 12 high) 需要 `npm audit fix`
       - 此配置包含
         - [stylelint-order](https://www.npmjs.com/package/stylelint-order)
     - [stylelint-no-unsupported-browser-features](https://www.npmjs.com/package/stylelint-no-unsupported-browser-features)
@@ -48,6 +56,9 @@ npx stylelint "src/**/*.css"
     - [postcss-scss](https://www.npmjs.com/package/postcss-sass)
     - [sugarss](https://www.npmjs.com/package/sugarss)
   - 其他
+    - [stylelint-find-rules](https://github.com/alexilyaev/stylelint-find-rules) Find stylelint rules that are not configured in your stylelint config
+      - 东西挺好的，应该是未升级适配，所以运行报错
+      - 灵感来自 [eslint-find-rules](https://github.com/sarbbottam/eslint-find-rules)
 
 样式属性排序
 
