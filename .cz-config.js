@@ -17,9 +17,19 @@ module.exports = {
   ],
   // prettier-ignore
   scopes: [
-    {name: 'commitizen'},
-    {name: 'react'},
-    {name: 'ts'},
+    {name: 'editorconfig'},
+    {name: 'prettier'},
+    {name: 'babel'},
+    {name: 'eslint'},
+    {name: 'stylelint'},
+    {name: 'browserlist'},
+    {name: 'lint-staged'},
+    {name: 'husky'},
+    {name: 'commitlint'},
+    {name: 'conventional-changelog'},
+    {name: 'sonarlint'},
+    {name: 'markdownlint'},
+    {name: 'IDE'},
   ],
 
   allowTicketNumber: false,

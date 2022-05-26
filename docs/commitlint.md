@@ -273,7 +273,7 @@ module.exports = {
 
 将上述无用的包移除 `npm uninstall @commitlint/prompt-cli commitizen @commitlint/prompt @commitlint/cz-commitlint cz-conventional-changelog`
 
-TODO: 目前这个体验上还不好，需要 `npm run czz` 而不是直接无感使用 `git commit` 就可以完成
+TODO: 目前这个体验上还不好，需要 `npm run cz` 而不是直接无感使用 `git commit` 就可以完成
 
 ### 给 commit 加表情
 
