@@ -1,0 +1,26 @@
+diff --git a/node_modules/cz-customizable/index.js b/node_modules/cz-customizable/index.js
+index d00e06b..9739b2b 100755
+--- a/node_modules/cz-customizable/index.js
++++ b/node_modules/cz-customizable/index.js
+@@ -16,7 +16,7 @@ const buildCommit = require('./buildCommit');
+ /* istanbul ignore next */
+ const readConfigFile = () => {
+   // First try to find the .cz-config.js config file
+-  const czConfig = findConfig.require(CZ_CONFIG_NAME, { home: false });
++  let czConfig = findConfig.require(CZ_CONFIG_NAME, { home: false });
+ 
+   if (czConfig) {
+     return czConfig;
+@@ -39,6 +39,12 @@ const readConfigFile = () => {
+     }
+   }
+ 
++  // If no config found, it will look for .cz-config.js or or .config/cz-config.js in your home directory
++  if (!czConfig) {
++    czConfig = findConfig.require(CZ_CONFIG_NAME, { home: true });
++    return czConfig
++  }
++
+   log.warn(
+     'Unable to find a configuration file. Please refer to documentation to learn how to ser up: https://github.com/leonardoanalista/cz-customizable#steps "'
+   );

@@ -1,5 +1,15 @@
 # browserslist
 
+The config to share target browsers and Node.js versions between different front-end tools. It is used in:
+
+  - Autoprefixer
+  - Babel
+  - postcss-preset-env
+  - eslint-plugin-compat
+  - stylelint-no-unsupported-browser-features
+  - postcss-normalize
+  - obsolete-webpack-plugin
+
 > [browserslist](https://github.com/browserslist/browserslist): Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env
 > 国内情况复杂，如要精准配置，需要用户覆盖统计数据
 

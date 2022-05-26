@@ -1,5 +1,7 @@
 # lint-staged
 
+避免每次全量检测代码, 仅过滤Git暂存区的代码
+
 原理
 
 lint-staged 由 git 命令获取暂存区的文件 `git diff --staged --diff-filter=ACMR --name-only -z`，整体步骤大致如下

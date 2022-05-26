@@ -10,7 +10,7 @@ lint example
     - [x] eslint
     - [x] babel
     - [ ] stylelint
-    - [ ] browserlist
+    - [x] browserlist
     - [x] lint-staged
     - [x] husky
     - [x] commitlint
@@ -18,7 +18,7 @@ lint example
     - [ ] sonarlint
     - [ ] markdownlint
   - IDE 编辑器接入
-    - [ ] vscode
+    - [x] vscode
   - CI 流程接入
     - [ ] format
     - [ ] eslint
@@ -115,7 +115,8 @@ quote_type = single
 
 ### prettier
 
-> 一个“有态度”的代码格式化工具。
+> An opinionated code formatter.
+> 一个"有主观约束性"的代码格式化工具。
 
   - Prettier 郑重提出：大家不要吵！咱们先提高代码的可读性和可维护性再说，具体什么风格我给你们定。
   - 这就是 Prettier 的 **opinionated**!
@@ -631,6 +632,7 @@ CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂�
   - [browserslist](https://github.com/browserslist/browserslist)
   - [lint-staged](https://github.com/okonet/lint-staged)
   - [husky](https://typicode.github.io/husky/#/)
+  - [commitlint](https://commitlint.js.org/)
   - [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
   - [sonarlint](https://www.sonarlint.org/)
   - [sonarqube](https://www.sonarqube.org/)
