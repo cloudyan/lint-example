@@ -9,7 +9,7 @@ lint example
     - [x] prettier
     - [x] eslint
     - [x] babel
-    - [ ] stylelint
+    - [x] stylelint
     - [x] browserlist
     - [x] lint-staged
     - [x] husky
@@ -18,10 +18,15 @@ lint example
     - [ ] sonarlint
     - [ ] markdownlint
   - IDE 编辑器接入
-    - [x] vscode
+    - vscode
+      - [x] prettier
+      - [x] eslint
+      - [x] stylelint
   - CI 流程接入
-    - [ ] format
-    - [ ] eslint
+    - github-actions
+      - [x] prettier
+      - [x] eslint
+      - [x] stylelint
 
 ## lint 接入
 
@@ -55,8 +60,8 @@ lint example
       - [markdownlint](#markdownlint)
     - [IDE 编辑器接入](#ide-编辑器接入)
     - [CI 流程接入](#ci-流程接入)
-    - [扩展阅读](#扩展阅读)
-      - [知识点](#知识点)
+    - [参考文档](#参考文档)
+      - [扩展阅读](#扩展阅读)
 
 ---
 
@@ -143,22 +148,12 @@ config
 
 ```json
 "scripts": {
-  "prettier": "prettier -w .",
-  "prettier:ci": "prettier -c ."
+  "prettier": "prettier .",
+  "prettier:ci": "npm run prettier -- --check"
 }
 ```
 
 规则配置详见 [.prettierrc.js](.prettierrc.js)
-
-[vscode 格式化快捷键](https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode)
-
-代码格式可通过以下快捷方式在 Visual Studio Code 中使用：
-
-  - 在 Windows <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
-  - 在 Mac <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>F</kbd>
-  - 在 Linux <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
-
-<kbd>Ctrl</kbd> 或者，您可以通过带有++ （或Mac上的<kbd>Shift</kbd> ++ ）的编辑器中提供的“命令面板”找到快捷方式以及其他快捷方式，然后搜索**格式文档**。<kbd>P</kbd> <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>P</kbd>
 
 ### eslint
 
@@ -170,49 +165,6 @@ config
     - 不应该因为分号、逗号分心，满篇飘红，应关注代码逻辑，格式化应让工具自动处理
   - prettier 专注于 format
   - eslint 专注于 check syntax and find problems
-
-接入之前有必要先熟悉下一些常见的库配置
-
-  - Parser, 指定解析器, 能帮助 eslint 确定什么是解析错误。
-    - eslint 的默认解析器 `espree`, 不支持 babel 提供的实验性（如新功能）语法
-    - `@babel/eslint-parser` 支持 eslint 在 babel 转换的源代码上运行
-      - `@babel/eslint-plugin`
-    - `@typescript-eslint/parser` 支持 eslint 对 typescript 源代码进行 lint
-      - `@typescript-eslint/eslint-plugin`
-    - `vue-eslint-parser` 支持 eslint 解析 .vue 文件
-      - `eslint-plugin-vue`
-  - [Airbnb JavaScript Style](https://github.com/airbnb/javascript)
-    - `eslint-config-airbnb-base` If you don't need React
-      - `eslint`
-      - `eslint-plugin-import` 支持对 ES2015+ `import/export` 语法的校验
-    - `eslint-config-airbnb` 包含以下五项，不包含 `eslint-config-airbnb/hooks`
-      - `eslint`
-      - `eslint-plugin-import`
-      - `eslint-plugin-react` React 专用的校验规则插件 `plugin:react/recommended`
-      - `eslint-plugin-react-hooks`
-      - `eslint-plugin-jsx-a11y` 专注于检查 jsx 元素的可访问性
-    - `eslint-config-airbnb/hooks`
-  - [JavaScript Standard Style](https://standardjs.com/)
-    - `eslint-config-standard`
-  - AlloyTeam
-    - [`eslint-config-alloy`](https://github.com/AlloyTeam/eslint-config-alloy)
-  - Prettier
-    - `eslint-config-prettier` 解决 eslint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 prettier 冲突的 eslint 规则**。
-    - `prettier-eslint` 将 prettier 首先运行，执行结果给 eslint --fix
-    - `prettier-stylelint`
-  - typescript
-    - `@typescript-eslint/eslint-plugin`
-  - vue
-    - `eslint-plugin-vue`
-  - 其他
-    - `eslint-plugin-eslint-comments` 支持 eslint 指令注释，如 `//eslint-disable-line`, 底层没直接支持吗？
-    - `eslint-plugin-markdown` 支持 lint markdown 中的 JS、JSX、TypeScript 等
-    - `eslint-plugin-promise` 支持 lint promise
-    - `eslint-plugin-unicorn` XO, 🦄 独角兽, 一系列 eslint 规则
-    - `eslint-formatter-pretty` XO, 格式化 eslint 检查结果
-    - `eslint-plugin-compat` Lint 代码的浏览器兼容性，基于 browserslist 配置
-    - `eslint-plugin-jest` 仅在与测试相关的文件上运行规则
-    - `eslint-plugin-html` 用于检查和修复 HTML 文件中包含的内联脚本
 
 接入 eslint
 
@@ -241,42 +193,7 @@ npm i -D eslint-config-prettier
 npm i -D prettier-eslint prettier-stylelint
 ```
 
-`.eslintrc.js`
-
-```js
-// 示例
-module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    node: true,
-    es2021: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-  plugins: [
-    // 插件加载规则 extPlugin = `plugin:${pluginName}/${configName}`
-    // plugin 可以省略包名的前缀 `eslint-plugin-`
-
-    'react',
-    '@typescript-eslint',
-  ],
-  rules: {
-
-  },
-}
-```
+配置具体参见 [`.eslintrc.js`](./.eslintrc.js)
 
 config package.json
 
@@ -310,26 +227,36 @@ module.exports = {
 
 > Stylelint 是一个强大、先进的 CSS 代码检查器（linter），可以帮助你规避 CSS 代码中的错误并保持一致的编码风格。
 
-接入 stylelint
-
-  - `stylelint-config-standard` stylelint 的推荐配置
-  - `stylelint-order` css 属性排序插件，合理的排序加快页面渲染
-  - `stylelint-scss` 增加支持 scss 语法
+  - <https://stylelint.io/>
+  - https://github.com/stylelint/stylelint-demo
+  - 14.x 版本不支持 node@10
 
 ```bash
-npm i -D stylelint prettier-stylelint
-npm i -D stylelint-config-css-modules stylelint-config-prettier stylelint-config-rational-order stylelint-config-standard stylelint-declaration-block-no-ignored-properties stylelint-no-unsupported-browser-features stylelint-order
-
-# prettier
-npm i -D prettier-plugin-jsdoc prettier-plugin-style-order
+npm i -D stylelint stylelint-config-standard stylelint-config-prettier
 ```
 
-配置 `.stylelintignore` 文件(默认不格式化 node_modules)
+添加配置 .stylelintrc.js
 
-vscode 插件
+```js
+module.exports = {
+  extends: ["stylelint-config-standard", "stylelint-config-prettier"]
+}
+```
 
-  - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-  - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
+测试
+
+```bash
+npx stylelint "src/**/*.css"
+
+# 更多规则
+npm i -D stylelint-config-css-modules stylelint-config-rational-order stylelint-no-unsupported-browser-features
+# 注意 stylelint-config-rational-order 有多项风险，需要执行 npx audit fix --force
+
+npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
+```
+
+  - 完善配置，具体参见 [.stylelintrc.js](./.stylelintrc.js)
+  - 配置 `.stylelintignore` 文件(默认不格式化 node_modules)
 
 ### browserlist
 
@@ -554,73 +481,45 @@ config
 
 ## IDE 编辑器接入
 
-这里只涉及到 vscode
+这里只涉及到 vscode, 相关插件如下
 
-在项目中新建配置 `.vscode/settings.json`
+  - prettier
+    - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+    - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+  - eslint
+    - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - stylelint (以下二选一)
+    - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+    - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
 
-```js
-{
-  // https://github.com/microsoft/vscode-eslint#settings-migration
-  "javascript.format.enable": false, // 关闭默认js格式化程序
-  "eslint.format.enable": false, // 不用 eslint 做格式化
-  "eslint.useESLintClass": true, // 指定使用新 Engine(>8 默认)
-  "eslint.workingDirectories": [{ "mode": "auto" }],
-  "eslint.codeAction.showDocumentation": {
-    "enable": true
-  },
-  // 保存代码时，自动修复 fix
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
-  },
+在项目中新建配置 [`.vscode/settings.json`](./.vscode/settings.json)
 
-  "editor.formatOnSave": true, // 保存时自动格式化
+**快捷键**
 
-  // "editor.defaultFormatter": "esbenp.prettier-vscode", // 不能全部用 prettier
-  // 需要分类处理, prettier 可以处理以下格式
-  // js,jsx, ts,tsx, json,json5, css,less,scss, pug,html
-  "[javascript,javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+[vscode 格式化快捷键](https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode)
 
-  // typescript,typescriptreact 卸载一起保存时未生效
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-    // "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json,json5]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css,less,scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-    // "editor.defaultFormatter": "stylelint.vscode-stylelint"
-  },
-  "[pug,html]": {
-    // "editor.defaultFormatter": "HookyQR.beautify"
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  // "[markdown]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
+代码格式可通过以下快捷方式在 Visual Studio Code 中使用：
 
-  // vetur
-  "[vue]": {
-    "editor.defaultFormatter": "octref.vetur"
-  }
-}
-```
+  - 在 Windows <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
+  - 在 Mac <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>F</kbd>
+  - 在 Linux <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
+
+<kbd>Ctrl</kbd> 或者，您可以通过带有++ （或Mac上的<kbd>Shift</kbd> ++ ）的编辑器中提供的“命令面板”找到快捷方式以及其他快捷方式，然后搜索**格式文档**。<kbd>P</kbd> <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>P</kbd>
 
 ## CI 流程接入
 
-CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂度。（每次 push 会包含多个 commit）
-
 目前仅支持全量检测
 
-  - format
+  - prettier
+    - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+    - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
   - eslint
+    - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - stylelint (以下二选一)
+    - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+    - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
+
+CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂度。（每次 push 会包含多个 commit）
 
 ## 参考文档
 
