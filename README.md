@@ -533,6 +533,8 @@ CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂�
   - [husky](https://typicode.github.io/husky/#/)
   - [commitlint](https://commitlint.js.org/)
   - [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
+  - [conventionalcommits](https://www.conventionalcommits.org/)
+  - [release-please](https://github.com/googleapis/release-please) 维护发布 PR
   - [sonarlint](https://www.sonarlint.org/)
   - [sonarqube](https://www.sonarqube.org/)
   - [markdownlint](https://github.com/DavidAnson/markdownlint)
