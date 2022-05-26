@@ -521,8 +521,6 @@ config
 
 CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂度。（每次 push 会包含多个 commit）
 
-
-
 ## 参考文档
 
   - [editorconfig](https://editorconfig.org/)
