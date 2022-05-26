@@ -27,7 +27,7 @@
     "prepare": "husky install",
     "prettier": "prettier .",
     "sort": "npx sort-package-json",
-    "stylelint": "stylelint --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}' --max-warnings=0",
+    "stylelint": "stylelint --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
     "stylelint:fix": "stylelint --fix --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
     "stylelint-prettier-check": "stylelint-config-prettier-check",
     "test": "echo 'test success'",
@@ -40,7 +40,8 @@
       "prettier --write"
     ],
     "*.{js,jsx,ts,tsx}": [
-      "npm run eslint:fix"
+      "npm run eslint:fix",
+      "npm run stylelint:fix"
     ]
   },
   "dependencies": {
