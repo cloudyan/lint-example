@@ -1,16 +1,16 @@
 # 常见问题
 
-  - [常见问题](#常见问题)
-    - [x] [分工与适用范围](#分工与适用范围)
-    - [x] [prettier 与 editorconfig 配置不同](#prettier-与-editorconfig-配置不同)
-    - [x] [prettier 与 eslint 规则冲突](#prettier-与-eslint-规则冲突)
-    - [x] [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
-    - [x] [prettier 与 markdownlint 规则冲突](#prettier-与-markdownlint-规则冲突)
-    - [x] [commit msg 交互式操作](#commit-msg-交互式操作)
-    - [x] [eslint 如何在本地开发运行时中卡点（webpack?）](#eslint-如何在本地开发运行时中卡点webpack)
-    - [x] [prettier 和 eslint 在 VSCode editor.formatOnSave 生效](#prettier-和-eslint-在-vscode-editorformatonsave-生效)
-    - [ ] [commitlint 如何在 CI 中卡点](#commitlint-如何在-ci-中卡点)
-    - [ ] [使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点](#使用-lint-staged-后prettier-或-eslint-如何在-ci-中卡点)
+- [常见问题](#常见问题)
+  - [分工与适用范围](#分工与适用范围)
+  - [prettier 与 editorconfig 配置不同](#prettier-与-editorconfig-配置不同)
+  - [prettier 与 eslint 规则冲突](#prettier-与-eslint-规则冲突)
+  - [@typescript-eslint/eslint-plugin 与 eslint 规则冲突](#typescript-eslinteslint-plugin-与-eslint-规则冲突)
+  - [prettier 与 markdownlint 规则冲突](#prettier-与-markdownlint-规则冲突)
+  - [commit msg 交互式操作](#commit-msg-交互式操作)
+  - [eslint 如何在本地开发运行时中卡点（webpack?）](#eslint-如何在本地开发运行时中卡点webpack)
+  - [prettier 和 eslint 在 VSCode editor.formatOnSave 生效](#prettier-和-eslint-在-vscode-editorformatonsave-生效)
+  - [commitlint 如何在 CI 中卡点](#commitlint-如何在-ci-中卡点)
+  - [使用 lint-staged 后，prettier 或 eslint 如何在 CI 中卡点](#使用-lint-staged-后prettier-或-eslint-如何在-ci-中卡点)
 
 ## 分工与适用范围
 
@@ -18,11 +18,11 @@ editorconfig, prettier 与 eslint 各自都做什么，功能重叠的部分怎�
 
 明确分工
 
-  - editorconfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
-  - prettier 专注于**代码格式化**
-    - `.{js,ts,jsx,tsx,css,less,scss,json,json5}` 以及 `.{vue,html,graphql,markdown,yml,yaml}` 等
-  - eslint 专注于**代码质量**，做语法检查、查找并修复 JavaScript 代码中的问题（格式化的事儿，让 Prettier 来做）
-    - 针对 `.{js,ts,jsx,tsx}` 以及 `.{vue,html,md}` 中的脚本
+- editorconfig 统一各种编辑器的配置, 处理编辑器相关配置(行尾、缩进样式、缩进距离...等)
+- prettier 专注于**代码格式化**
+  - `.{js,ts,jsx,tsx,css,less,scss,json,json5}` 以及 `.{vue,html,graphql,markdown,yml,yaml}` 等
+- eslint 专注于**代码质量**，做语法检查、查找并修复 JavaScript 代码中的问题（格式化的事儿，让 Prettier 来做）
+  - 针对 `.{js,ts,jsx,tsx}` 以及 `.{vue,html,md}` 中的脚本
 
 prettier 支持自动推断解析器，所以无需手动配置。更多参考 <https://prettier.io/docs/en/options.html#parser>
 
@@ -34,18 +34,18 @@ prettier 支持自动推断解析器，所以无需手动配置。更多参考 <
 
 对比两者的作用过程：
 
-  - EditorConfig 作用于预览和输入阶段
-  - Prettier 在保存和提交阶段重新组织代码，Prettier 会成为代码形态的最终决定者。
-  - 要考虑配置优先级
+- EditorConfig 作用于预览和输入阶段
+- Prettier 在保存和提交阶段重新组织代码，Prettier 会成为代码形态的最终决定者。
+- 要考虑配置优先级
 
 实际上如 [Prettier 编辑器配置](https://prettier.io/docs/en/configuration.html#editorconfig) 所描述，Prettier 对 `.editorconfig` 文件在特定配置下做了转换。
 
 如果`options.editorconfig`是true，并且您的项目中有一个`.editorconfig`文件，Prettier 将解析它并将其属性转换为相应的 Prettier 配置。此配置将被`.prettierrc`等覆盖。目前，支持以下 EditorConfig 属性：
 
-  - `end_of_line`
-  - `indent_style`
-  - `indent_size/tab_width`
-  - `max_line_length`
+- `end_of_line`
+- `indent_style`
+- `indent_size/tab_width`
+- `max_line_length`
 
 没发现配置项 `options.editorconfig`，最新的 VSCode 配置项如下 `useEditorConfig: true`, 默认为 true
 
@@ -60,8 +60,8 @@ prettier 支持自动推断解析器，所以无需手动配置。更多参考 <
 
 考虑到 EditorConfig 覆盖所有类型的文件，所以
 
-  - EditorConfig 配置优先
-  - 其他格式化属性由 Prettier 控制
+- EditorConfig 配置优先
+- 其他格式化属性由 Prettier 控制
 
 ## prettier 与 eslint 规则冲突
 
@@ -78,11 +78,11 @@ prettier 支持自动推断解析器，所以无需手动配置。更多参考 <
 
 怎么解决
 
-  - 使用 `eslint-config-prettier` 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
-  - 使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 解决格式化先后问题，默认会用 prettier 先格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
+- 使用 `eslint-config-prettier` 解决 ESLint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 Prettier 冲突的 ESLint 规则**。使用时需要将 prettier 加到 extends 数组的最后。
+- 使用 [`prettier-eslint`](https://github.com/prettier/prettier-eslint), 解决格式化先后问题，默认会用 prettier 先格式化，然后再用 ESLint fix。这和 vscode 保存文件时的流程是相反的。
 
-  - <https://zhuanlan.zhihu.com/p/347339865>
-  - <https://zhuanlan.zhihu.com/p/142105418>
+- <https://zhuanlan.zhihu.com/p/347339865>
+- <https://zhuanlan.zhihu.com/p/142105418>
 
 ## @typescript-eslint/eslint-plugin 与 eslint 规则冲突
 

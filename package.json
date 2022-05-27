@@ -21,6 +21,7 @@
     "cz": "./node_modules/cz-customizable/standalone.js",
     "eslint": "cross-env TIMING=1 eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "eslint:report": "eslint --output-file ./eslint-report.json --ext .js,.jsx,.ts,.tsx --format json ./src",
     "format": "npm run prettier -- --write",
     "lint-staged": "lint-staged --allow-empty",
     "lint:md": "markdownlint --config ./.markdownlint.json README.md */README.md",
@@ -36,7 +37,7 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}": [
+    "*.{js,jsx,ts,tsx,json,md,yml,yaml,css,less,scss}": [
       "prettier --write"
     ],
     "*.{js,jsx,ts,tsx}": [

@@ -4,35 +4,35 @@ lint example
 
 ## 进度
 
-  - 项目接入
-    - [x] editorconfig
+- 项目接入
+  - [x] editorconfig
+  - [x] prettier
+  - [x] eslint
+  - [x] babel
+  - [x] stylelint
+  - [x] browserlist
+  - [x] lint-staged
+  - [x] husky
+  - [x] commitlint
+  - [x] conventional-changelog
+  - [ ] sonarlint
+  - [ ] markdownlint
+- IDE 编辑器接入
+  - vscode
     - [x] prettier
     - [x] eslint
-    - [x] babel
     - [x] stylelint
-    - [x] browserlist
-    - [x] lint-staged
-    - [x] husky
-    - [x] commitlint
-    - [x] conventional-changelog
-    - [ ] sonarlint
-    - [ ] markdownlint
-  - IDE 编辑器接入
-    - vscode
-      - [x] prettier
-      - [x] eslint
-      - [x] stylelint
-  - CI 流程接入
-    - github-actions
-      - [x] prettier
-      - [x] eslint
-      - [x] stylelint
+- CI 流程接入
+  - github-actions
+    - [x] prettier
+    - [x] eslint
+    - [x] stylelint
 
 ## lint 接入
 
-  - 项目中如何接入
-  - IDE 编辑器如何接入
-  - CI 流程如何接入
+- 项目中如何接入
+- IDE 编辑器如何接入
+- CI 流程如何接入
 
 集成到 vscode, webpack 以及 CI 流程上能有效保证执行落地。
 
@@ -40,28 +40,28 @@ lint example
 
 接入步骤
 
-  - [lint-example](#lint-example)
-    - [进度](#进度)
-    - [lint 接入](#lint-接入)
-    - [项目接入](#项目接入)
-      - [版本控制](#版本控制)
-      - [editorconfig](#editorconfig)
-      - [prettier](#prettier)
-      - [eslint](#eslint)
-      - [babel](#babel)
-      - [stylelint](#stylelint)
-      - [browserlist](#browserlist)
-      - [lint-staged](#lint-staged)
-      - [husky](#husky)
-      - [commitlint](#commitlint)
-      - [conventional-changelog](#conventional-changelog)
-      - [typecheck](#typecheck)
-      - [sonarlint](#sonarlint)
-      - [markdownlint](#markdownlint)
-    - [IDE 编辑器接入](#ide-编辑器接入)
-    - [CI 流程接入](#ci-流程接入)
-    - [参考文档](#参考文档)
-      - [扩展阅读](#扩展阅读)
+- [lint-example](#lint-example)
+  - [进度](#进度)
+  - [lint 接入](#lint-接入)
+  - [项目接入](#项目接入)
+    - [版本控制](#版本控制)
+    - [editorconfig](#editorconfig)
+    - [prettier](#prettier)
+    - [eslint](#eslint)
+    - [babel](#babel)
+    - [stylelint](#stylelint)
+    - [browserlist](#browserlist)
+    - [lint-staged](#lint-staged)
+    - [husky](#husky)
+    - [commitlint](#commitlint)
+    - [conventional-changelog](#conventional-changelog)
+    - [typecheck](#typecheck)
+    - [sonarlint](#sonarlint)
+    - [markdownlint](#markdownlint)
+  - [IDE 编辑器接入](#ide-编辑器接入)
+  - [CI 流程接入](#ci-流程接入)
+  - [参考文档](#参考文档)
+    - [扩展阅读](#扩展阅读)
 
 ---
 
@@ -123,8 +123,8 @@ quote_type = single
 > An opinionated code formatter.
 > 一个"有主观约束性"的代码格式化工具。
 
-  - Prettier 郑重提出：大家不要吵！咱们先提高代码的可读性和可维护性再说，具体什么风格我给你们定。
-  - 这就是 Prettier 的 **opinionated**!
+- Prettier 郑重提出：大家不要吵！咱们先提高代码的可读性和可维护性再说，具体什么风格我给你们定。
+- 这就是 Prettier 的 **opinionated**!
 
 usage
 
@@ -161,10 +161,10 @@ config
 
 一些原则
 
-  - 按照 prettier 原则，尽量减少格式化对开发的干扰
-    - 不应该因为分号、逗号分心，满篇飘红，应关注代码逻辑，格式化应让工具自动处理
-  - prettier 专注于 format
-  - eslint 专注于 check syntax and find problems
+- 按照 prettier 原则，尽量减少格式化对开发的干扰
+  - 不应该因为分号、逗号分心，满篇飘红，应关注代码逻辑，格式化应让工具自动处理
+- prettier 专注于 format
+- eslint 专注于 check syntax and find problems
 
 接入 eslint
 
@@ -204,8 +204,8 @@ config package.json
 }
 ```
 
-  - [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
-  - [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
+- [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
+- [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
 
 ### babel
 
@@ -227,9 +227,8 @@ module.exports = {
 
 > Stylelint 是一个强大、先进的 CSS 代码检查器（linter），可以帮助你规避 CSS 代码中的错误并保持一致的编码风格。
 
-  - <https://stylelint.io/>
-  - https://github.com/stylelint/stylelint-demo
-  - 14.x 版本不支持 node@10
+- <https://github.com/stylelint/stylelint-demo>
+- 14.x 版本不支持 node@10
 
 ```bash
 npm i -D stylelint stylelint-config-standard stylelint-config-prettier
@@ -255,8 +254,8 @@ npm i -D stylelint-config-css-modules stylelint-config-rational-order stylelint-
 npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
 ```
 
-  - 完善配置，具体参见 [.stylelintrc.js](./.stylelintrc.js)
-  - 配置 `.stylelintignore` 文件(默认不格式化 node_modules)
+- 完善配置，具体参见 [.stylelintrc.js](./.stylelintrc.js)
+- 配置 `.stylelintignore` 文件(默认不格式化 node_modules)
 
 ### browserlist
 
@@ -309,8 +308,8 @@ npx browserslist "defaults, last 2 versions, > 0.1%, safari >= 9, iOS >= 9, andr
 
 > Run linters against staged git files and don't let 💩 slip into your code base!
 
-  - 如果对项目中所有文件一次性格式化，大范围的修改很可能出现不可控的情况。
-  - 借助 lint-staged 可将处理范围限制在 Git 暂存区内 (staged) 的文件。
+- 如果对项目中所有文件一次性格式化，大范围的修改很可能出现不可控的情况。
+- 借助 lint-staged 可将处理范围限制在 Git 暂存区内 (staged) 的文件。
 
 useage
 
@@ -444,8 +443,8 @@ echo 'foo: xxx' | npx commitlint --verbose
 
 > Generate changelogs and release notes from a project's commit messages and metadata.
 
-  - commit msg 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
-  - conventional-changelog 就是一款可以根据项目的 commit 和 metadata 信息自动生成 changelogs 和 release notes 的工具，并且在辅助工具 [standard-version](https://github.com/conventional-changelog/standard-version) 下，可以自动帮你完成生成 version、打 tag, 生成 CHANGELOG 等系列过程。
+- commit msg 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
+- conventional-changelog 就是一款可以根据项目的 commit 和 metadata 信息自动生成 changelogs 和 release notes 的工具，并且在辅助工具 [standard-version](https://github.com/conventional-changelog/standard-version) 下，可以自动帮你完成生成 version、打 tag, 生成 CHANGELOG 等系列过程。
 
 ```bash
 npm i conventional-changelog-cli -D
@@ -475,77 +474,91 @@ config
 
 接入 SonarLint, SonarQube
 
+一些实施方案
+
+- [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
+- [eslint-config-sonarqube](https://github.com/SonarSource/eslint-config-sonarqube)
+
+可以将 ESlint 规则导出为 JSON 以供 Sonar 导入（在构建期间）
+
+> npm run eslint:report
+> ./node_modules/.bin/eslint --output-file ./eslint-report.json --ext .js,.jsx,.ts,.tsx --format json ./src
+
+在 `sonar-project.properties` 文件中或通过命令行参数设置此 Sonar 属性（其中 `eslint-report.json` 是上面生成的输出报告）
+
+```conf
+sonar.eslint.reportPaths=eslint-report.json
+```
+
+ESLint 报告中的任何问题都将出现在标有 EsLint 徽章的 Sonar 问题中。
+
+作为旁注，此命令对于 eslint 也很有用，可以输出任何错误的 HTML 报告，非常适合查看或共享：
+
+```bash
+./node_modules/.bin/eslint --output-file ./eslint-report.html --ext .js,.jsx,.ts,.tsx --format html ./src
+```
+
 ### markdownlint
 
 关于 markdown 格式优化
+
+- prettier 高度符合 [CommonMark 规范](https://commonmark.org/)，并由优秀的[remark-parse](https://github.com/remarkjs/remark)软件包提供支持。
 
 ## IDE 编辑器接入
 
 这里只涉及到 vscode, 相关插件如下
 
-  - prettier
-    - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-    - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
-  - eslint
-    - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  - stylelint (以下二选一)
-    - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-    - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
+- prettier
+  - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+- eslint
+  - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- stylelint (以下二选一)
+  - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+  - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
 
 在项目中新建配置 [`.vscode/settings.json`](./.vscode/settings.json)
-
-**快捷键**
-
-[vscode 格式化快捷键](https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode)
-
-代码格式可通过以下快捷方式在 Visual Studio Code 中使用：
-
-  - 在 Windows <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
-  - 在 Mac <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>F</kbd>
-  - 在 Linux <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
-
-<kbd>Ctrl</kbd> 或者，您可以通过带有++ （或Mac上的<kbd>Shift</kbd> ++ ）的编辑器中提供的“命令面板”找到快捷方式以及其他快捷方式，然后搜索**格式文档**。<kbd>P</kbd> <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>P</kbd>
 
 ## CI 流程接入
 
 目前仅支持全量检测
 
-  - prettier
-    - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-    - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
-  - eslint
-    - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  - stylelint (以下二选一)
-    - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-    - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
+- prettier
+  - [Prettier - Code formatter 插件](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - 待确认 [Prettier ESLint 插件](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+- eslint
+  - [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- stylelint (以下二选一)
+  - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+  - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
 
 CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂度。（每次 push 会包含多个 commit）
 
 ## 参考文档
 
-  - [editorconfig](https://editorconfig.org/)
-  - [prettier](https://prettier.io/)
-  - [eslint](https://eslint.org/)
-  - [babel](https://babeljs.io/)
-  - [stylelint](https://stylelint.io/)
-  - [browserslist](https://github.com/browserslist/browserslist)
-  - [lint-staged](https://github.com/okonet/lint-staged)
-  - [husky](https://typicode.github.io/husky/#/)
-  - [commitlint](https://commitlint.js.org/)
-  - [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
-  - [conventionalcommits](https://www.conventionalcommits.org/)
-  - [release-please](https://github.com/googleapis/release-please) 维护发布 PR
-  - [sonarlint](https://www.sonarlint.org/)
-  - [sonarqube](https://www.sonarqube.org/)
-  - [markdownlint](https://github.com/DavidAnson/markdownlint)
-  - [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
-  - [全面梳理代码规范化：EditorConfig + Prettier + ESLint](https://juejin.cn/post/6952842182252298248)
-  - [git commit 、CHANGELOG 和版本发布的标准自动化](https://zhuanlan.zhihu.com/p/51894196)
+- [editorconfig](https://editorconfig.org/)
+- [prettier](https://prettier.io/)
+- [eslint](https://eslint.org/)
+- [babel](https://babeljs.io/)
+- [stylelint](https://stylelint.io/)
+- [browserslist](https://github.com/browserslist/browserslist)
+- [lint-staged](https://github.com/okonet/lint-staged)
+- [husky](https://typicode.github.io/husky/#/)
+- [commitlint](https://commitlint.js.org/)
+- [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
+- [conventionalcommits](https://www.conventionalcommits.org/)
+- [release-please](https://github.com/googleapis/release-please) 维护发布 PR
+- [sonarlint](https://www.sonarlint.org/)
+- [sonarqube](https://www.sonarqube.org/)
+- [markdownlint](https://github.com/DavidAnson/markdownlint)
+- [Commit message 和 Change log 编写指南](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
+- [全面梳理代码规范化：EditorConfig + Prettier + ESLint](https://juejin.cn/post/6952842182252298248)
+- [git commit 、CHANGELOG 和版本发布的标准自动化](https://zhuanlan.zhihu.com/p/51894196)
 
 ### 扩展阅读
 
-  - [自定义 Git - Git 钩子](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90)
-  - [ESLint 工作原理探讨](https://zhuanlan.zhihu.com/p/53680918)
-  - [lint-staged如何做到只lint staged?](https://juejin.cn/post/6844903864722784264)
-  - [mrm](https://www.npmjs.com/package/mrm) 是配置文件生成工具, Command line tool to help you keep configuration (package.json, .gitignore, .eslintrc, etc.) of your open source projects in sync.
-  - [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) 为您的程序搜索并加载配置。
+- [自定义 Git - Git 钩子](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90)
+- [ESLint 工作原理探讨](https://zhuanlan.zhihu.com/p/53680918)
+- [lint-staged如何做到只lint staged?](https://juejin.cn/post/6844903864722784264)
+- [mrm](https://www.npmjs.com/package/mrm) 是配置文件生成工具, Command line tool to help you keep configuration (package.json, .gitignore, .eslintrc, etc.) of your open source projects in sync.
+- [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) 为您的程序搜索并加载配置。

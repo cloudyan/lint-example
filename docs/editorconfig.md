@@ -33,4 +33,4 @@ EditorConfig 解决了编辑器配置层面的编码风格一致性问题。但�
 
 参考
 
-  - [前端综合能力系列之EditorConfig](https://juejin.cn/post/6844903590855704583)
+- [前端综合能力系列之EditorConfig](https://juejin.cn/post/6844903590855704583)

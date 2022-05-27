@@ -19,46 +19,46 @@ ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是�
 
 接入之前有必要先熟悉下一些常见的库配置
 
-  - Parser, 指定解析器, 能帮助 eslint 确定什么是解析错误。
-    - eslint 的默认解析器 `espree`, 不支持 babel 提供的实验性（如新功能）语法
-    - `@babel/eslint-parser` 支持 eslint 在 babel 转换的源代码上运行
-      - `@babel/eslint-plugin`
-    - `@typescript-eslint/parser` 支持 eslint 对 typescript 源代码进行 lint
-      - `@typescript-eslint/eslint-plugin`
-    - `vue-eslint-parser` 支持 eslint 解析 .vue 文件
-      - `eslint-plugin-vue`
-  - [Airbnb JavaScript Style](https://github.com/airbnb/javascript)
-    - `eslint-config-airbnb-base` If you don't need React
-      - `eslint`
-      - `eslint-plugin-import` 支持对 ES2015+ `import/export` 语法的校验
-    - `eslint-config-airbnb` 包含以下五项，不包含 `eslint-config-airbnb/hooks`
-      - `eslint`
-      - `eslint-plugin-import`
-      - `eslint-plugin-react` React 专用的校验规则插件 `plugin:react/recommended`
-      - `eslint-plugin-react-hooks`
-      - `eslint-plugin-jsx-a11y` 专注于检查 jsx 元素的可访问性
-    - `eslint-config-airbnb/hooks`
-  - [JavaScript Standard Style](https://standardjs.com/)
-    - `eslint-config-standard`
-  - AlloyTeam
-    - [`eslint-config-alloy`](https://github.com/AlloyTeam/eslint-config-alloy)
-  - Prettier
-    - `eslint-config-prettier` 解决 eslint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 prettier 冲突的 eslint 规则**。
-    - `prettier-eslint` 将 prettier 首先运行，执行结果给 eslint --fix
-    - `prettier-stylelint`
-  - typescript
+- Parser, 指定解析器, 能帮助 eslint 确定什么是解析错误。
+  - eslint 的默认解析器 `espree`, 不支持 babel 提供的实验性（如新功能）语法
+  - `@babel/eslint-parser` 支持 eslint 在 babel 转换的源代码上运行
+    - `@babel/eslint-plugin`
+  - `@typescript-eslint/parser` 支持 eslint 对 typescript 源代码进行 lint
     - `@typescript-eslint/eslint-plugin`
-  - vue
+  - `vue-eslint-parser` 支持 eslint 解析 .vue 文件
     - `eslint-plugin-vue`
-  - 其他
-    - `eslint-plugin-eslint-comments` 支持 eslint 指令注释，如 `//eslint-disable-line`, 底层没直接支持吗？
-    - `eslint-plugin-markdown` 支持 lint markdown 中的 JS、JSX、TypeScript 等
-    - `eslint-plugin-promise` 支持 lint promise
-    - `eslint-plugin-unicorn` XO, 🦄 独角兽, 一系列 eslint 规则
-    - `eslint-formatter-pretty` XO, 格式化 eslint 检查结果
-    - `eslint-plugin-compat` Lint 代码的浏览器兼容性，基于 browserslist 配置
-    - `eslint-plugin-jest` 仅在与测试相关的文件上运行规则
-    - `eslint-plugin-html` 用于检查和修复 HTML 文件中包含的内联脚本
+- [Airbnb JavaScript Style](https://github.com/airbnb/javascript)
+  - `eslint-config-airbnb-base` If you don't need React
+    - `eslint`
+    - `eslint-plugin-import` 支持对 ES2015+ `import/export` 语法的校验
+  - `eslint-config-airbnb` 包含以下五项，不包含 `eslint-config-airbnb/hooks`
+    - `eslint`
+    - `eslint-plugin-import`
+    - `eslint-plugin-react` React 专用的校验规则插件 `plugin:react/recommended`
+    - `eslint-plugin-react-hooks`
+    - `eslint-plugin-jsx-a11y` 专注于检查 jsx 元素的可访问性
+  - `eslint-config-airbnb/hooks`
+- [JavaScript Standard Style](https://standardjs.com/)
+  - `eslint-config-standard`
+- AlloyTeam
+  - [`eslint-config-alloy`](https://github.com/AlloyTeam/eslint-config-alloy)
+- Prettier
+  - `eslint-config-prettier` 解决 eslint 和 prettier 规则冲突问题，以 prettier 规则为准，**关闭所有可能和 prettier 冲突的 eslint 规则**。
+  - `prettier-eslint` 将 prettier 首先运行，执行结果给 eslint --fix
+  - `prettier-stylelint`
+- typescript
+  - `@typescript-eslint/eslint-plugin`
+- vue
+  - `eslint-plugin-vue`
+- 其他
+  - `eslint-plugin-eslint-comments` 支持 eslint 指令注释，如 `//eslint-disable-line`, 底层没直接支持吗？
+  - `eslint-plugin-markdown` 支持 lint markdown 中的 JS、JSX、TypeScript 等
+  - `eslint-plugin-promise` 支持 lint promise
+  - `eslint-plugin-unicorn` XO, 🦄 独角兽, 一系列 eslint 规则
+  - `eslint-formatter-pretty` XO, 格式化 eslint 检查结果
+  - `eslint-plugin-compat` Lint 代码的浏览器兼容性，基于 browserslist 配置
+  - `eslint-plugin-jest` 仅在与测试相关的文件上运行规则
+  - `eslint-plugin-html` 用于检查和修复 HTML 文件中包含的内联脚本
 
 ## package.json
 
@@ -69,8 +69,8 @@ ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是�
 }
 ```
 
-  - [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
-  - [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
+- [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
+- [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
 
 ## common deps
 
@@ -224,7 +224,7 @@ module.exports = {
 
 eslint plugin for vue-cli
 
-  - [`@vue/cli-plugin-eslint`](https://www.npmjs.com/package/@vue/cli-plugin-eslint)
+- [`@vue/cli-plugin-eslint`](https://www.npmjs.com/package/@vue/cli-plugin-eslint)
 
 ```js
 config.module.rule('eslint')
@@ -239,15 +239,15 @@ config.module.rule('eslint').use('eslint-loader')
 
 每个规则有【3】个错误级别
 
-  - "off"或 0: 关闭规则
-  - "warn"或 1: 打开规则, 作为警告（不会导致程序退出）
-  - "error"或 2: 打开规则, 作为错误（触发时程序会退出，退出代码为 1）
+- "off"或 0: 关闭规则
+- "warn"或 1: 打开规则, 作为警告（不会导致程序退出）
+- "error"或 2: 打开规则, 作为错误（触发时程序会退出，退出代码为 1）
 
 退出码
 
-  - `0`: 检测成功，没有错误。如果 `--max-warnings` 标志被设置为 `n`，那么警告数量最多为`n`。
-  - `1`: 检测成功，并且至少有一个错误，或者警告多于 `--max-warnings` 选项所允许的警告。
-  - `2`: 由于配置问题或内部错误，检测未能成功。
+- `0`: 检测成功，没有错误。如果 `--max-warnings` 标志被设置为 `n`，那么警告数量最多为`n`。
+- `1`: 检测成功，并且至少有一个错误，或者警告多于 `--max-warnings` 选项所允许的警告。
+- `2`: 由于配置问题或内部错误，检测未能成功。
 
 .eslintrc.js
 

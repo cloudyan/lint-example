@@ -2,31 +2,31 @@
 
 检验提交的说明是否符合规范，不符合则不可以提交
 
-  - [@commitlint/cli](https://www.npmjs.com/package/@commitlint/cli)
-  - 传统提交格式
-    - [conventional commit format](https://www.conventionalcommits.org/)
-    - [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum)
+- [@commitlint/cli](https://www.npmjs.com/package/@commitlint/cli)
+- 传统提交格式
+  - [conventional commit format](https://www.conventionalcommits.org/)
+  - [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum)
 
 commit msg 规范。
 
 为什么要，好处：
 
-  - 提供更多的历史信息，方便快速浏览
-  - 可以过滤某些 `commit`，便于筛选代码 `review`
-  - 可以追踪 `commit` 生成更新日志
-  - 可以关联 `issues`
+- 提供更多的历史信息，方便快速浏览
+- 可以过滤某些 `commit`，便于筛选代码 `review`
+- 可以追踪 `commit` 生成更新日志
+- 可以关联 `issues`
 
 ## 扩展
 
 ### 交互式方案
 
-  - [Guide: Use prompt](https://commitlint.js.org/#/guides-use-prompt)
+- [Guide: Use prompt](https://commitlint.js.org/#/guides-use-prompt)
 
 交互方案 1
 
-  - [`@commitlint/prompt-cli`](https://www.npmjs.com/package/@commitlint/prompt-cli) 29k
-    - `npm set-script commit "commit"`
-    - `npm run commit`
+- [`@commitlint/prompt-cli`](https://www.npmjs.com/package/@commitlint/prompt-cli) 29k
+  - `npm set-script commit "commit"`
+  - `npm run commit`
 
 ```bash
 npm i -D @commitlint/prompt-cli
@@ -85,8 +85,8 @@ feat(commitlint): update md
 
 commitlint 提供了两个 `commitizen` 适配器:
 
-  - [`@commitlint/prompt`](https://www.npmjs.com/package/@commitlint/prompt) 42K 提供了一种交互方式 `@commitlint/prompt-cli`
-  - [`@commitlint/cz-commitlint`](https://www.npmjs.com/package/@commitlint/cz-commitlint) 15K 受 [`cz-conventional-changelog`](https://www.npmjs.com/package/cz-conventional-changelog) 1M 启发，它提供了一种更现代的交互方式。
+- [`@commitlint/prompt`](https://www.npmjs.com/package/@commitlint/prompt) 42K 提供了一种交互方式 `@commitlint/prompt-cli`
+- [`@commitlint/cz-commitlint`](https://www.npmjs.com/package/@commitlint/cz-commitlint) 15K 受 [`cz-conventional-changelog`](https://www.npmjs.com/package/cz-conventional-changelog) 1M 启发，它提供了一种更现代的交互方式。
 
 commitizen 可以全局安装，提供 `git cz` 替代 `git commit`
 
@@ -121,9 +121,9 @@ npm i -D @commitlint/cz-commitlint
 
 让 commitizen 基于 commitlint.config.js 工作，只需要维护一个配置文件
 
-  - commitizen 用于提交
-  - commitlint 用于校验
-  - 共享配置文件 commitlint.config.js
+- commitizen 用于提交
+- commitlint 用于校验
+- 共享配置文件 commitlint.config.js
 
 交互过程的灵感来自 cz-conventional-changelog，交互体验更好
 
@@ -293,4 +293,4 @@ git commit --verbose
 git config --global commit.verbose true
 ```
 
-  - AngularJS team CONTRIBUTING.md [git commit guidelines](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
+- AngularJS team CONTRIBUTING.md [git commit guidelines](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)

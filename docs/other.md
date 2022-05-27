@@ -10,13 +10,13 @@
 
 列出几个 opinionated 和 unopinionated 的软件, 你还能想到哪些
 
-  - Opinionated
-    - Prettier
-    - Vite
-  - Unopinionated
-    - eslint
-    - styleint
-    - webpack?
+- Opinionated
+  - Prettier
+  - Vite
+- Unopinionated
+  - eslint
+  - styleint
+  - webpack?
 
 ## patch-package
 
@@ -32,11 +32,11 @@ npx patch-package @my/package/@my/other-package
 
 ## codecov
 
-  - [codecov](https://about.codecov.io/) 是一个开源的测试结果展示平台, 将测试结果可视化
+- [codecov](https://about.codecov.io/) 是一个开源的测试结果展示平台, 将测试结果可视化
 
 ## stylelint-demo
 
-  - <https://github.com/stylelint/stylelint-demo>
+- <https://github.com/stylelint/stylelint-demo>
 
 扩展
 
@@ -53,10 +53,10 @@ npx patch-package @my/package/@my/other-package
 
 提供有三个命令
 
-  - npm-run-all
-  - 速记命令
-    - run-s 用于顺序
-    - run-p 用于并行
+- npm-run-all
+- 速记命令
+  - run-s 用于顺序
+  - run-p 用于并行
 
 详细使用参看项目测试用例
 

@@ -109,3 +109,4 @@ dist
 .dccache
 target/
 temp
+eslint-report.*

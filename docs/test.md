@@ -3,20 +3,20 @@
 
 src 包含各类型的测试源代码, 用于测试验证，包括但不限于以下类型
 
-  - js
-  - ts
-  - jsx
-  - tsx
-  - json X
-  - json5
-  - md X
-  - css
-  - less
-  - scss
-  - yaml,yml
-  - ejs,html
-  - vue
-  - react
+- js
+- ts
+- jsx
+- tsx
+- json X
+- json5
+- md X
+- css
+- less
+- scss
+- yaml,yml
+- ejs,html
+- vue
+- react
 
 可以使用 jest 结合 lint-staged 只检测发生改动的文件
 
@@ -28,8 +28,8 @@ src 包含各类型的测试源代码, 用于测试验证，包括但不限于�
 
 `"test:staged": "jest --bail --findRelatedTests",`
 
-  - bail: 只要遇到运行失败的单测用例即退出
-  - findRelatedTests: 检测指定的文件路径
+- bail: 只要遇到运行失败的单测用例即退出
+- findRelatedTests: 检测指定的文件路径
 
 ```js
 // jest.config.js
@@ -69,4 +69,4 @@ module.exports = {
 }
 ```
 
-  - <https://www.cnblogs.com/xumengxuan/p/14921634.html>
+- <https://www.cnblogs.com/xumengxuan/p/14921634.html>
