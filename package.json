@@ -25,6 +25,7 @@
     "format": "npm run prettier -- --write",
     "lint-staged": "lint-staged --allow-empty",
     "lint:md": "markdownlint --config ./.markdownlint.json README.md */README.md",
+    "mdlint": "npx markdownlint-cli './**/*.md' --ignore node_modules",
     "prepare": "husky install",
     "prettier": "prettier .",
     "sort": "npx sort-package-json",

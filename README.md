@@ -474,10 +474,10 @@ config
 
 接入 SonarLint, SonarQube
 
-一些实施方案
-
 - [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
 - [eslint-config-sonarqube](https://github.com/SonarSource/eslint-config-sonarqube)
+
+一种实施方案
 
 可以将 ESlint 规则导出为 JSON 以供 Sonar 导入（在构建期间）
 
@@ -503,6 +503,8 @@ ESLint 报告中的任何问题都将出现在标有 EsLint 徽章的 Sonar 问�
 关于 markdown 格式优化
 
 - prettier 高度符合 [CommonMark 规范](https://commonmark.org/)，并由优秀的[remark-parse](https://github.com/remarkjs/remark)软件包提供支持。
+
+目前未使用 markdownlint, 而是使用 prettier 做格式化
 
 ## IDE 编辑器接入
 

@@ -2,18 +2,18 @@
 
 ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是通过对代码解析得到的 AST（Abstract Syntax Tree，抽象语法树）进行模式匹配，来分析代码达到检查代码质量和风格问题的能力。
 
-  - [eslint](#eslint)
-    - [常见相关库](#常见相关库)
-    - [package.json](#packagejson)
-    - [common deps](#common-deps)
-      - [babel](#babel)
-    - [react](#react)
-    - [taro](#taro)
-      - [taro react](#taro-react)
-      - [taro vue](#taro-vue)
-    - [vue](#vue)
-    - [uniapp](#uniapp)
-    - [扩展](#扩展)
+- [eslint](#eslint)
+  - [常见相关库](#常见相关库)
+  - [package.json](#packagejson)
+  - [common deps](#common-deps)
+    - [babel](#babel)
+  - [react](#react)
+  - [taro](#taro)
+    - [taro react](#taro-react)
+    - [taro vue](#taro-vue)
+  - [vue](#vue)
+  - [uniapp](#uniapp)
+  - [扩展](#扩展)
 
 ## 常见相关库
 

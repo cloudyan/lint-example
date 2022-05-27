@@ -3,7 +3,7 @@
 > Stylelint 是一个强大、先进的 CSS 代码检查器（linter），可以帮助你规避 CSS 代码中的错误并保持一致的编码风格。
 
 - <https://stylelint.io/>
-- https://github.com/stylelint/stylelint-demo
+- <https://github.com/stylelint/stylelint-demo>
 - 14.x 版本不支持 node@10
 
 ```bash
