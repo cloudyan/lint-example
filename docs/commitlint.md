@@ -4,7 +4,7 @@
 
 - [@commitlint/cli](https://www.npmjs.com/package/@commitlint/cli)
 - 传统提交格式
-  - [conventional commit format](https://www.conventionalcommits.org/)
+  - [conventional commit format](https://www.conventionalcommits.org/zh-hans/)
   - [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum)
 
 commit msg 规范。
@@ -293,4 +293,4 @@ git commit --verbose
 git config --global commit.verbose true
 ```
 
-- AngularJS team CONTRIBUTING.md [git commit guidelines](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
+- AngularJS team [git commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)

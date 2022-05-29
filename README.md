@@ -54,12 +54,14 @@ lint example
     - [lint-staged](#lint-staged)
     - [husky](#husky)
     - [commitlint](#commitlint)
+    - [commitizen](#commitizen)
     - [conventional-changelog](#conventional-changelog)
     - [typecheck](#typecheck)
     - [sonarlint](#sonarlint)
     - [markdownlint](#markdownlint)
   - [IDE 编辑器接入](#ide-编辑器接入)
   - [CI 流程接入](#ci-流程接入)
+  - [便捷规范接入](#便捷规范接入)
   - [参考文档](#参考文档)
     - [扩展阅读](#扩展阅读)
 
@@ -381,6 +383,20 @@ npm uninstall husky && git config --unset core.hooksPath
 
 > Lint commit messages
 
+主要是基于 angular.js 提供的提交格式，这是目前使用最广的写法，比较合理和系统化，并且有配套的工具。
+
+- AngularJS team [git commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
+
+主要包含三部分：Header，Body 和 Footer, 格式规范如下
+
+```js
+<type>(<scope>): <subject> // header 必填
+// 空一行
+<body>
+// 空一行
+<footer>
+```
+
 usage
 
 ```bash
@@ -439,6 +455,21 @@ npx commitlint --from HEAD~1 --to HEAD --verbose
 echo 'foo: xxx' | npx commitlint --verbose
 ```
 
+### commitizen
+
+规范代码提交格式的工具
+
+代码提交一般使用的是 `git commit` 命令，输入的内容并没有格式化处理。为了更好地记录log，就出现了 `commitizen` 工具帮助我们规范录入。
+
+全局安装 `git-cz` 后直接用 `git cz` 替换 `git commit`
+
+changelog.config.js
+
+```js
+// changelog配置，commit 规则也在这里进行配置
+// 参考文档：https://www.npmjs.com/package/git-cz
+```
+
 ### conventional-changelog
 
 > Generate changelogs and release notes from a project's commit messages and metadata.
@@ -446,8 +477,20 @@ echo 'foo: xxx' | npx commitlint --verbose
 - commit msg 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
 - conventional-changelog 就是一款可以根据项目的 commit 和 metadata 信息自动生成 changelogs 和 release notes 的工具，并且在辅助工具 [standard-version](https://github.com/conventional-changelog/standard-version) 下，可以自动帮你完成生成 version、打 tag, 生成 CHANGELOG 等系列过程。
 
+结合
+
+- [standard-version](https://www.npmjs.com/package/standard-version) 是 npmversion命令的直接替代品，可处理自动版本碰撞、标记和 CHANGELOG 生成。
+- [semantic-release](https://github.com/semantic-release/semantic-release) 发布过程完全自动化作为 CI/CD 的输出，请考虑使用语义发布。
+- [conventional-changelog-conventionalcommits] 用于自动 CHANGELOG 生成和版本管理的规范的具体实现 。
+
 ```bash
 npm i conventional-changelog-cli -D
+
+# 生成 changelog,
+npx conventional-changelog -p angular -i CHANGELOG.md -s
+
+# 初始化 changelog, 包含历史 log
+npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0
 ```
 
 config
@@ -535,6 +578,16 @@ ESLint 报告中的任何问题都将出现在标有 EsLint 徽章的 Sonar 问�
   - [stylelint-plus](https://marketplace.visualstudio.com/items?itemName=hex-ci.stylelint-plus)
 
 CI 流程需要接入，但因为使用了 list-staged，导致存在了复杂度。（每次 push 会包含多个 commit）
+
+## 便捷规范接入
+
+便捷规范接入
+
+```bash
+npm i --save-dev @xxx/lint eslint stylelint prettier @commitlint/cli husky lint-staged
+```
+
+> 不需要安装其他 Lint 插件或者插件集，@xxx/lint 中已包含这部分依赖。
 
 ## 参考文档
 
