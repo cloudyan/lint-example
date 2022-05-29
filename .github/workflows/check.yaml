@@ -39,7 +39,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 14
           cache: pnpm # npm, yarn or pnpm
 
       # https://github.com/stylelint/stylelint-demo/blob/main/.github/workflows/nodejs.yml
@@ -50,13 +50,10 @@ jobs:
       - name: Env
         run: npm version # node -v && npm -v
 
-      - name: install pnpm
-        run: curl -fsSL https://get.pnpm.io/install.sh | sh -
-
       - name: Install deps
         # run: npm ci # --prefer-offline # npm ci or yarn
         # run: yarn install --frozen-lockfile # npm ci or yarn
-        run: pnpm i --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       # https://stackoverflow.com/questions/67307001/how-to-run-commitlint-in-github-workflow-on-every-commit-of-a-push
       # https://github.com/marketplace/actions/commit-linter
