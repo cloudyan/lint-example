@@ -3,7 +3,7 @@
 使用 @applint/spec
 
 ```bash
-npm i -D @applint/spec eslint prettier stylelint husky lint-staged eslint-config-prettier eslint-formatter-pretty stylelint-config-prettier prettier-eslint
+npm i -D @applint/spec eslint prettier stylelint husky lint-staged @commitlint/cli eslint-config-prettier eslint-formatter-pretty stylelint-config-prettier prettier-eslint
 ```
 
 ## prettier
