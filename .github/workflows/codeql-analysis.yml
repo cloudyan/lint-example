@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: 'CodeQL'
 
 # https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#patterns-to-match-branches-and-tags
 on:
@@ -21,7 +21,7 @@ on:
     branches:
       - fix/*
   schedule:
-    - cron: "22 15 * * 3"
+    - cron: '22 15 * * 3'
 
 jobs:
   analyze:
@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript"]
+        language: ['javascript']
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
         # Learn more:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
