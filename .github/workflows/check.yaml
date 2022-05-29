@@ -51,7 +51,7 @@ jobs:
         run: npm version # node -v && npm -v
 
       - name: Install
-        run: npm ci --prefer-offline # npm ci or yarn
+        run: npm ci # --prefer-offline # npm ci or yarn
 
       # https://stackoverflow.com/questions/67307001/how-to-run-commitlint-in-github-workflow-on-every-commit-of-a-push
       # https://github.com/marketplace/actions/commit-linter
