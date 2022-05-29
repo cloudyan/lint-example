@@ -1,8 +1,8 @@
-export const sleep = (t) =>
+export const sleep = (delay) =>
   new Promise((resolve) => {
-    setTimeout(resolve, t, 'done')
-  })
+    setTimeout(resolve, delay, 'done');
+  });
 
 export const config = {
   env: 'dev',
-}
+};

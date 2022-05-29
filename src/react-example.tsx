@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import React, { useState } from 'react'
-import { sleep } from './utils/ts-utils'
+import React, { useState } from 'react';
 
-console.log(useState)
-await sleep(1000)
+console.log(useState);
+// await sleep(1000);
 
 const PillSelector: React.FC = () => {
-  const [pill, setPill] = useState<'blue' | 'red' | undefined>('blue')
+  const [pill, setPill] = useState<'blue' | 'red' | undefined>('blue');
 
   return (
     <>
@@ -16,7 +15,7 @@ const PillSelector: React.FC = () => {
       <button onClick={() => setPill('blue')}>Blue pill</button>
       <span>You chose {pill} pill!</span>
     </>
-  )
-}
+  );
+};
 
-export default PillSelector
+export default PillSelector;

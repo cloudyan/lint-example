@@ -1,15 +1,14 @@
-import { useState } from 'react'
-import { sleep } from './utils/utils'
+import { useState } from 'react';
 
-console.log(useState)
-await sleep(1000)
+console.log(useState);
+// await sleep(1000)
 
 function Hello() {
-  const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0);
 
   const handleClick = () => {
-    setNumber((n) => n + 1)
-  }
+    setNumber((num) => num + 1);
+  };
 
   return (
     <>
@@ -17,7 +16,7 @@ function Hello() {
       <div>Title</div>
       <p>{number}</p>
     </>
-  )
+  );
 }
 
-export default Hello
+export default Hello;
