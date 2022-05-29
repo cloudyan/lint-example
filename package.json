@@ -16,7 +16,7 @@
   "main": "index.js",
   "scripts": {
     "alex": "alex .",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "commit": "commit",
     "cz": "./node_modules/cz-customizable/standalone.js",
     "eslint": "cross-env TIMING=1 eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",

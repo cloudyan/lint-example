@@ -477,19 +477,17 @@ changelog.config.js
 - commit msg 规范化之后，就可以通过工具把关键信息找出来，自动生成到 CHANGELOG 中。
 - conventional-changelog 就是一款可以根据项目的 commit 和 metadata 信息自动生成 changelogs 和 release notes 的工具，并且在辅助工具 [standard-version](https://github.com/conventional-changelog/standard-version) 下，可以自动帮你完成生成 version、打 tag, 生成 CHANGELOG 等系列过程。
 
-结合
-
-- [standard-version](https://www.npmjs.com/package/standard-version) 是 npmversion命令的直接替代品，可处理自动版本碰撞、标记和 CHANGELOG 生成。
-- [semantic-release](https://github.com/semantic-release/semantic-release) 发布过程完全自动化作为 CI/CD 的输出，请考虑使用语义发布。
-- [conventional-changelog-conventionalcommits] 用于自动 CHANGELOG 生成和版本管理的规范的具体实现 。
-
 ```bash
 npm i conventional-changelog-cli -D
 
-# 生成 changelog,
+# 不会覆盖以前的 Change log，只会在 CHANGELOG.md 的头部加上自从上次发布以来的变动
+# 注意：需要先更新版本号
 npx conventional-changelog -p angular -i CHANGELOG.md -s
 
-# 初始化 changelog, 包含历史 log
+# 命令行输出
+# npx conventional-changelog -p angular
+
+# 初始化 生成所有发布的 Change log
 npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0
 ```
 
@@ -497,9 +495,17 @@ config
 
 ```json
 "scripts": {
-  "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+  "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
 }
 ```
+
+如果你的所有 commit 都符合 Angular 格式，那么发布新版本时，那么自动生成 changelog 包括以下三个部分。
+
+- New features
+- Bug fixes
+- Breaking changes.
+
+每个部分都会罗列相关的 commit ，并且有指向这些 commit 的链接。
 
 ### typecheck
 
