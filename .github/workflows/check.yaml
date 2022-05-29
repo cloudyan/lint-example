@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: yarn # npm, yarn or pnpm
+          cache: npm # npm, yarn or pnpm
 
       # https://github.com/stylelint/stylelint-demo/blob/main/.github/workflows/nodejs.yml
       # - name: Get Node.js version from package.json
@@ -51,8 +51,8 @@ jobs:
         run: npm version # node -v && npm -v
 
       - name: Install deps
-        # run: npm ci # --prefer-offline # npm ci or yarn
-        run: yarn install --frozen-lockfile # npm ci or yarn
+        run: npm ci # --prefer-offline # npm ci or yarn
+        # run: yarn install --frozen-lockfile # npm ci or yarn
         # run: pnpm install --frozen-lockfile
 
       # https://stackoverflow.com/questions/67307001/how-to-run-commitlint-in-github-workflow-on-every-commit-of-a-push
