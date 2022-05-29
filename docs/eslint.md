@@ -1,6 +1,15 @@
 # eslint
 
+> 查找并修复 JavaScript 代码中的问题
+
 ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是通过对代码解析得到的 AST（Abstract Syntax Tree，抽象语法树）进行模式匹配，来分析代码达到检查代码质量和风格问题的能力。
+
+一些原则
+
+- 按照 prettier 原则，尽量减少格式化对开发的干扰
+  - 不应该因为分号、逗号分心，满篇飘红，应关注代码逻辑，格式化应让工具自动处理
+- prettier 专注于 format
+- eslint 专注于 check syntax and find problems
 
 - [eslint](#eslint)
   - [常见相关库](#常见相关库)
@@ -72,11 +81,19 @@ ESLint 是一款插件化的 JavaScript 代码静态检查工具，其核心是�
 - [TIMING=1](https://eslint.org/docs/1.0.0/developer-guide/working-with-rules)
 - [--format=pretty](https://www.npmjs.com/package/eslint-formatter-pretty)
 
+接入 eslint
+
 ## common deps
 
-初始化 `npm init @eslint/config`
-
 ```bash
+# 初始化配置
+npm init @eslint/config
+# 选择: To check syntax and find problems
+
+# react 所有依赖
+npm i -D @babel/eslint-parser @babel/eslint-plugin @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-airbnb-base eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier prettier-eslint
+
+# 分步安装依赖
 # parser js/ts
 # eslint babel
 npm i -D @babel/eslint-parser @babel/eslint-plugin
@@ -87,6 +104,28 @@ npm i -D @typescript-eslint/parser @typescript-eslint/eslint-plugin
 npm i -D eslint babel-plugin-import
 # 等效于
 npm i -D eslint-config-airbnb-base
+# error  Parsing error: No Babel config file detected for xxx.js. Either disable config file checking with requireConfigFile: false, or configure Babel so that it can find the config files
+# 报错: 缺少 babel 配置, 添加 babel.config.js 后 OK
+
+# prettier
+npm i -D eslint-config-prettier
+# 如果不加此项，prettier 规则和 eslint 规则就可能冲突
+# 规则不同时，会出现 prettier 去掉尾分号，执行 eslint:fix 又给加上
+
+# eslint-plugin-prettier 不推荐使用
+# 推荐使用 prettier-eslint prettier-stylelint
+npm i -D prettier-eslint prettier-stylelint
+```
+
+配置具体参见 [`.eslintrc.js`](../.eslintrc.js)
+
+config package.json
+
+```js
+{
+  "eslint": "cross-env TIMING=1 eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+  "eslint:fix": "npm run eslint -- --fix",
+}
 ```
 
 ### babel

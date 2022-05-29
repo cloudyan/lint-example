@@ -131,17 +131,7 @@ quote_type = single
 usage
 
 ```bash
-npm i prettier lint-staged -D
-
-prettier --write .                              # -w
-prettier --write --ignore-unknown "src/**/*.js" # -w -u
-prettier --write 'src/**/*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}'
-
-prettier --check "src/**/*.js"                  # -c
-prettier --list-different "src/**/*.js"         # -l
-
-# prettier diff
-prettier --write '**/?(.)*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}' && git --no-pager diff && git checkout -- .
+npm i -D prettier
 ```
 
 config
@@ -151,7 +141,7 @@ config
 ```json
 "scripts": {
   "prettier": "prettier .",
-  "prettier:ci": "npm run prettier -- --check"
+  "prettier:fix": "npm run prettier -- --write"
 }
 ```
 
@@ -175,24 +165,9 @@ config
 npm init @eslint/config
 # 选择: To check syntax and find problems
 
-# parser
-npm i -D @babel/eslint-parser
-npm i -D @typescript-eslint/parser
-
-# base
-npm i -D eslint eslint-plugin-import
-npm i -D eslint-config-airbnb-base
-# error  Parsing error: No Babel config file detected for xxx.js. Either disable config file checking with requireConfigFile: false, or configure Babel so that it can find the config files
-# 报错: 缺少 babel 配置, 添加 babel.config.js 后 OK
-
-# prettier
-npm i -D eslint-config-prettier
-# 如果不加此项，prettier 规则和 eslint 规则就可能冲突
-# 规则不同时，会出现 prettier 去掉尾分号，执行 eslint:fix 又给加上
-
-# eslint-plugin-prettier 不推荐使用
-# 推荐使用 prettier-eslint prettier-stylelint
-npm i -D prettier-eslint prettier-stylelint
+npm i -D eslint cross-env @babel/eslint-parser @babel/eslint-plugin @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-airbnb-base eslint-plugin-react eslint-plugin-react-hooks prettier-eslint eslint-config-airbnb-typescript eslint-formatter-pretty eslint-plugin-eslint-comments eslint-plugin-promise eslint-config-prettier
+# babel
+npm i @babel/core @babel/preset-env @babel/preset-react @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties
 ```
 
 配置具体参见 [`.eslintrc.js`](./.eslintrc.js)
@@ -202,7 +177,7 @@ config package.json
 ```json
 {
   "eslint": "cross-env TIMING=1 eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-  "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+  "eslint:fix": "npm run eslint -- --fix",
 }
 ```
 
@@ -214,7 +189,7 @@ config package.json
 > eslint 需要 babel 配合, 按需配置
 
 ```bash
-npm i -D @babel/core @babel/preset-env
+npm i -D @babel/core @babel/preset-env @babel/preset-react
 ```
 
 babel.config.js
@@ -233,14 +208,15 @@ module.exports = {
 - 14.x 版本不支持 node@10
 
 ```bash
-npm i -D stylelint stylelint-config-standard stylelint-config-prettier
+npm i -D stylelint stylelint-config-standard stylelint-config-prettier stylelint-config-css-modules stylelint-config-rational-order stylelint-no-unsupported-browser-features stylelint-order stylelint-declaration-block-no-ignored-properties
 ```
 
-添加配置 .stylelintrc.js
+package.json
 
-```js
-module.exports = {
-  extends: ["stylelint-config-standard", "stylelint-config-prettier"]
+```json
+{
+  "stylelint": "stylelint --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
+  "stylelint:fix": "npm run stylelint -- --fix",
 }
 ```
 
@@ -249,11 +225,7 @@ module.exports = {
 ```bash
 npx stylelint "src/**/*.css"
 
-# 更多规则
-npm i -D stylelint-config-css-modules stylelint-config-rational-order stylelint-no-unsupported-browser-features
-# 注意 stylelint-config-rational-order 有多项风险，需要执行 npx audit fix --force
-
-npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
+npm run stylelint
 ```
 
 - 完善配置，具体参见 [.stylelintrc.js](./.stylelintrc.js)
@@ -322,20 +294,13 @@ npx husky add .husky/pre-commit "npx --no-install lint-staged"
 package.json
 
 ```json
-  "scripts": {
-    "format": "npm run prettier -- --write",
-    "eslint": "cross-env TIMING=1 eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "format": "npm run prettier -- --write",
-    "lint-staged": "lint-staged --allow-empty",
-    "prettier": "prettier .",
-  },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}": [
-      "prettier --write"
+    "*.{js,jsx,ts,tsx,json,md,yml,yaml,css,less,scss}": [
+      "npm run prettier:fix"
     ],
     "*.{js,jsx,ts,tsx}": [
-      "npm run eslint:fix"
+      "npm run eslint:fix",
+      "npm run stylelint:fix"
     ]
   },
 ```
@@ -400,7 +365,7 @@ npm uninstall husky && git config --unset core.hooksPath
 usage
 
 ```bash
-npm install @commitlint/cli @commitlint/config-conventional -D
+npm i -D @commitlint/cli @commitlint/config-conventional
 ```
 
 config

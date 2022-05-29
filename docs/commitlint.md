@@ -1,5 +1,21 @@
 # commitlint
 
+> Lint commit messages
+
+主要是基于 angular.js 提供的提交格式，这是目前使用最广的写法，比较合理和系统化，并且有配套的工具。
+
+- AngularJS team [git commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
+
+主要包含三部分：Header，Body 和 Footer, 格式规范如下
+
+```js
+<type>(<scope>): <subject> // header 必填
+// 空一行
+<body>
+// 空一行
+<footer>
+```
+
 检验提交的说明是否符合规范，不符合则不可以提交
 
 - [@commitlint/cli](https://www.npmjs.com/package/@commitlint/cli)
@@ -15,6 +31,31 @@ commit msg 规范。
 - 可以过滤某些 `commit`，便于筛选代码 `review`
 - 可以追踪 `commit` 生成更新日志
 - 可以关联 `issues`
+
+usage
+
+```bash
+npm i -D @commitlint/cli @commitlint/config-conventional
+```
+
+config
+
+```bash
+# Add hook
+cat <<EEE > .husky/commit-msg
+#!/bin/sh
+. "\$(dirname "\$0")/_/husky.sh"
+
+npx --no -- commitlint --edit "\${1}"
+EEE
+
+
+# Make hook executable
+chmod a+x .husky/commit-msg
+```
+
+规则配置文件
+
 
 ## 扩展
 

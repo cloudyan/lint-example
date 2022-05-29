@@ -8,6 +8,9 @@
 
 ```bash
 npm i -D stylelint stylelint-config-standard stylelint-config-prettier
+
+# 汇总安装依赖
+npm i -D stylelint stylelint-config-standard stylelint-config-prettier stylelint-config-css-modules stylelint-config-rational-order stylelint-no-unsupported-browser-features stylelint-order stylelint-declaration-block-no-ignored-properties
 ```
 
 添加配置 .stylelintrc.js
@@ -28,6 +31,23 @@ npm i -D stylelint-config-css-modules stylelint-config-rational-order stylelint-
 # 注意 stylelint-config-rational-order 有多项风险，需要执行 npx audit fix --force
 
 npm i -D stylelint-order stylelint-declaration-block-no-ignored-properties
+```
+
+package.json
+
+```json
+{
+  "stylelint": "stylelint --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
+  "stylelint:fix": "npm run stylelint -- --fix",
+}
+```
+
+校验规则
+
+```bash
+npm run stylelint
+
+npx stylelint 'src/**/*.less' --syntax less
 ```
 
 - 完善配置，具体参见 [.stylelintrc.js](./../.stylelintrc.js)
