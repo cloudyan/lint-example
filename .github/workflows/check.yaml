@@ -51,7 +51,7 @@ jobs:
         run: npm version # node -v && npm -v
 
       - name: install pnpm
-        run: curl -fsSL https://get.pnpm.io/install.sh | sh -
+        run: npm i -g pnpm
 
       - name: Install deps
         # run: npm ci # --prefer-offline # npm ci or yarn
