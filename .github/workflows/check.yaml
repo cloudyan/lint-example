@@ -50,7 +50,10 @@ jobs:
       - name: Env
         run: npm version # node -v && npm -v
 
-      - name: Install
+      - name: install pnpm
+        run: curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+      - name: Install deps
         # run: npm ci # --prefer-offline # npm ci or yarn
         # run: yarn install --frozen-lockfile # npm ci or yarn
         run: pnpm i --frozen-lockfile
