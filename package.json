@@ -40,11 +40,15 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,md,yml,yaml,css,less,scss}": [
+    "*.{json,md,yml,yaml}": [
       "npm run prettier:fix"
     ],
     "*.{js,jsx,ts,tsx}": [
-      "npm run eslint:fix",
+      "npm run prettier:fix",
+      "npm run eslint:fix"
+    ],
+    "*.{css,less,scss}": [
+      "npm run prettier:fix",
       "npm run stylelint:fix"
     ]
   },
