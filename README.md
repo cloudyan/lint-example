@@ -566,10 +566,10 @@ CI 流程需要接入, 但因为使用了 `list-staged`, 导致存在了复杂�
 便捷规范接入
 
 ```bash
-npm i --save-dev @xxx/lint eslint stylelint prettier @commitlint/cli husky lint-staged
+npm i -D @deepjs/lint eslint stylelint prettier @commitlint/cli husky lint-staged cross-env
 ```
 
-> 不需要安装其他 Lint 插件或者插件集，@xxx/lint 中已包含这部分依赖。
+> 不需要安装其他 Lint 插件或者插件集，@deepjs/lint 中已包含这部分依赖。
 
 ## 参考文档
 

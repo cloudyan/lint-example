@@ -35,6 +35,7 @@ yarn-error.log
 **/es/**
 **/__snapshots__/**
 **/.node/**
+**/patches/**
 
 **/temp/**
 *.md
