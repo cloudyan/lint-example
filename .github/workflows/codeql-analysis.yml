@@ -11,12 +11,15 @@
 #
 name: "CodeQL"
 
+# https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#patterns-to-match-branches-and-tags
 on:
   push:
-    branches: [v2]
+    branches:
+      - fix/*
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [v2]
+    branches:
+      - fix/*
   schedule:
     - cron: "22 15 * * 3"
 

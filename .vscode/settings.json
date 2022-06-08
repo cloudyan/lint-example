@@ -41,9 +41,9 @@
     // "editor.defaultFormatter": "HookyQR.beautify"
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // "[markdown]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
   // vetur
   "[vue]": {

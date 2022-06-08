@@ -1,6 +1,9 @@
 module.exports = {
+  // 继承
   extends: ['@commitlint/config-conventional'],
+  // parserPreset: 'conventional-changelog-conventionalcommits',
   // https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+  // 自定义校验规则
   rules: {
     'header-max-length': [1, 'always', 100],
     // prettier-ignore

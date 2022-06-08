@@ -1,6 +1,6 @@
 {
   "name": "lint-example",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "lint example",
   "keywords": [],
   "homepage": "https://github.com/cloudyan/lint-example#readme",
@@ -16,19 +16,23 @@
   "main": "index.js",
   "scripts": {
     "alex": "alex .",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "commit": "commit",
     "cz": "./node_modules/cz-customizable/standalone.js",
-    "eslint": "cross-env TIMING=1 eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "format": "npm run prettier -- --write",
+    "eslint": "cross-env TIMING=1 eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./",
+    "eslint:fix": "npm run eslint -- --fix",
+    "eslint:report": "eslint --output-file ./eslint-report.json --ext .js,.jsx,.ts,.tsx --format json ./src",
     "lint-staged": "lint-staged --allow-empty",
     "lint:md": "markdownlint --config ./.markdownlint.json README.md */README.md",
+    "jscpd": "npx jscpd ./src",
+    "mdlint": "npx markdownlint-cli './**/*.md' --ignore node_modules",
     "prepare": "husky install",
     "prettier": "prettier .",
+    "prettier:fix": "npm run prettier -- --write",
+    "release": "standard-version",
     "sort": "npx sort-package-json",
     "stylelint": "stylelint --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
-    "stylelint:fix": "stylelint --fix --cache --allow-empty-input 'src/**/*.{css,less,scss,sass}'",
+    "stylelint:fix": "npm run stylelint -- --fix",
     "stylelint-prettier-check": "stylelint-config-prettier-check",
     "test": "echo 'test success'",
     "test:fail": "echo \"Error: no test specified\" && exit 1",
@@ -36,8 +40,8 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,yml,yaml,css,less,scss}": [
-      "prettier --write"
+    "*.{js,jsx,ts,tsx,json,md,yml,yaml,css,less,scss}": [
+      "npm run prettier:fix"
     ],
     "*.{js,jsx,ts,tsx}": [
       "npm run eslint:fix",
@@ -74,6 +78,8 @@
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
     "prettier-eslint": "^15.0.0",
+    "prettier-plugin-organize-imports": "^2.3.4",
+    "prettier-plugin-packagejson": "^2.2.18",
     "stylelint": "^14.8.5",
     "stylelint-config-css-modules": "^4.1.0",
     "stylelint-config-prettier": "^9.0.3",
