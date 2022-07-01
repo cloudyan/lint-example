@@ -58,7 +58,7 @@ jobs:
       - name: CommitLint check
         id: run_commitlint
         # Commit was forced, checking only the latest commit from push instead of a range of commit messages
-        uses: wagoid/commitlint-github-action@v4
+        uses: wagoid/commitlint-github-action@v5
         # pull_request
         # run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
