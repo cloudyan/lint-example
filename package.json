@@ -59,7 +59,7 @@
     "@babel/preset-typescript": "^7.17.12",
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.27.1",
     "alex": "^10.0.0",
     "conventional-changelog-cli": "^2.2.2",
