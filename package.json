@@ -58,7 +58,7 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.17.12",
     "@commitlint/cli": "^17.0.3",
-    "@commitlint/config-conventional": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.27.1",
     "alex": "^10.0.0",
