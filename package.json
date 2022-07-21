@@ -40,12 +40,16 @@
     "typecheck": "tsc -p ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,md,yml,yaml,css,less,scss}": [
-      "npm run prettier:fix"
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
     ],
     "*.{js,jsx,ts,tsx}": [
-      "npm run eslint:fix",
-      "npm run stylelint:fix"
+      "prettier --write",
+      "eslint --format=pretty --fix"
+    ],
+    "*.{css,less,scss}": [
+      "prettier --write",
+      "stylelint --fix"
     ]
   },
   "dependencies": {
