@@ -36,11 +36,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      # https://github.com/withastro/astro/blob/main/.github/workflows/ci.yml
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          # cache: pnpm # npm, yarn or pnpm
+          cache: pnpm # npm, yarn or pnpm
 
       # https://github.com/stylelint/stylelint-demo/blob/main/.github/workflows/nodejs.yml
       # - name: Get Node.js version from package.json
@@ -50,10 +54,10 @@ jobs:
       - name: Env
         run: npm version # node -v && npm -v
 
-      - name: install pnpm
-        run: npm i -g pnpm
+      # - name: install pnpm
+      #   run: npm i -g pnpm
 
-      - name: Install deps
+      - name: Install dependencies
         # run: npm ci # --prefer-offline # npm ci or yarn
         # run: yarn install --frozen-lockfile # npm ci or yarn
         run: pnpm install --frozen-lockfile
