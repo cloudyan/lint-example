@@ -83,7 +83,7 @@
     "prettier": "^2.7.1",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-organize-imports": "^3.0.0",
-    "prettier-plugin-packagejson": "^2.2.18",
+    "prettier-plugin-packagejson": "^2.3.0",
     "stylelint": "^14.9.1",
     "stylelint-config-css-modules": "^4.1.0",
     "stylelint-config-prettier": "^9.0.3",
