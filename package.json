@@ -86,7 +86,7 @@
     "prettier-plugin-packagejson": "^2.2.18",
     "stylelint": "^14.9.1",
     "stylelint-config-css-modules": "^4.1.0",
-    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-rational-order": "^0.0.4",
     "stylelint-config-standard": "^26.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
